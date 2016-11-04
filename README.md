@@ -44,11 +44,12 @@ QML_IMPORT_PATH
 ==================
 
 In case, SparkQML can’t display your QML file due to “xxx is not installed” error. 
-Probably is because it can’t locate the your package. To fix this problem, you may add the following lines at the end of your pro file:
+Probably is because it can’t locate your package. 
+To fix this problem, you may add the following lines at the end of your pro file:
 
      write_file(qmlimport.path, QML_IMPORT_PATH)
 
-Then run qmake. Now it would know QML_IMPORT_PATH.
+Then run qmake.  Restart SparkQML. Now it should where to find package.
 
 C++ Module
 ==========
