@@ -24,9 +24,9 @@ Integration with Qt Creator
 
 1) Build this project by open app/sparkqml/sparkqml.pro . Copy the executable to somewhere as you like
 
-2) In menu, "press Tools" -> "External" -> "Configure"
+2) In menu, press "Tools" -> "External" -> "Configure"
 
-3) Then press “Add” -> “Add Tool”. Drag the newly created tool under “Qt Quick” category
+3) Then press "Add" -> “Add Tool”. Drag the newly created tool under “Qt Quick” category
 
 You may rename it to “SparkQML Viewer"
 
@@ -43,13 +43,17 @@ It is done. Now you could trigger SparkQML while editing a QML file by “Tools�
 QML_IMPORT_PATH
 ==================
 
-In case, SparkQML can’t display your QML file due to “xxx is not installed” error. 
+In case SparkQML can’t display your QML file due to “xxx is not installed” error. 
 Probably is because it can’t locate your package. 
 To fix this problem, you may add the following lines at the end of your pro file:
 
      write_file(qmlimport.path, QML_IMPORT_PATH)
 
-Then run qmake.  Restart SparkQML. Now it should where to find package.
+Then run qmake.
+It will create a file called qmlimport.path with the value of QML_IMPORT_PATH.
+You may consider to add this file to your .gitignore.
+
+Restart SparkQML. Now it would know where to find packages.
 
 C++ Module
 ==========
