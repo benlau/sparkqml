@@ -10,6 +10,13 @@ If you find any problem, please free free to submit an issue.
 
 ![Screenshot](https://raw.githubusercontent.com/benlau/junkcode/master/docs/SparkQML.gif)
 
+Features
+========
+
+ 1. Load and display QML document
+ 2. Show available states of the QML document. Allow to change it for present transition effect
+ 3. Capture screenshot of component to file / clipboard
+
 Command Line Arguments
 ======================
 
