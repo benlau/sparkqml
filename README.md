@@ -6,7 +6,7 @@ It is useful to have a preview of transition effect between states.
 
 Remarks:  The project is still in an early stage. 
 The current version is proof-of-concept prototype. 
-If you find nay problem, please free free to submit an issue.
+If you find any problem, please free free to submit an issue.
 
 ![Screenshot](https://raw.githubusercontent.com/benlau/junkcode/master/docs/SparkQML.gif)
 
@@ -26,7 +26,7 @@ Integration with Qt Creator
 
 2) In menu, press "Tools" -> "External" -> "Configure"
 
-3) Then press "Add" -> “Add Tool”. Drag the newly created tool under “Qt Quick” category
+3) Then press "Add" -> "Add Tool". Drag the newly created tool under "Qt Quick" category
 
 You may rename it to “SparkQML Viewer"
 
