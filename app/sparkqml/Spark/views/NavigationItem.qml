@@ -1,0 +1,49 @@
+import QtQuick 2.4
+import QtQuick.Controls 2.0
+import FontAwesome 1.0
+
+MouseArea {
+    id: exitButton
+    height: 28
+    anchors.right: parent.right
+    anchors.rightMargin: 0
+    anchors.left: parent.left
+    anchors.leftMargin: 0
+
+    property alias icon: text1.text
+
+    property alias text: text2.text
+    
+    Text {
+        id: text1
+        y: 5
+        text: FontAwesome.signOut
+        anchors.left: parent.left
+        anchors.leftMargin: 8
+        anchors.verticalCenter: parent.verticalCenter
+        font.pixelSize: 14
+        font.family: FontAwesome.fontFamily
+    }
+    
+    Text {
+        id: text2
+        x: 36
+        y: 182
+        height: 24
+        text: qsTr("Exit")
+        anchors.left: parent.left
+        anchors.leftMargin: 28
+        anchors.verticalCenter: parent.verticalCenter
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        wrapMode: Text.WordWrap
+        font.pixelSize: 14
+    }
+    
+    Rectangle {
+        anchors.fill: parent
+        color: "#3FFFFFFF"
+        visible: exitButton.pressed
+    }
+    
+}
