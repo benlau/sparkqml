@@ -22,4 +22,6 @@ KeyTable {
     property string openMockupProject
 
     property string askToSaveFile
+
+    property string closeErrorPanel
 }

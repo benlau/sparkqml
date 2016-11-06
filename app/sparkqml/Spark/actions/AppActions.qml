@@ -26,4 +26,6 @@ ActionCreator {
     signal copyToClipboard()
 
     signal askToSaveFile()
+
+    signal closeErrorPanel()
 }

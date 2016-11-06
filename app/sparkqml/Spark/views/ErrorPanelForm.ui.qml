@@ -6,7 +6,13 @@ Rectangle {
     width: 500
     height: 300
     color: "#FFFDBE"
+    property alias confirmButton: confirmButton
     property string message: qsTr("Error Message")
+
+    MouseArea {
+        id: mouseArea1
+        anchors.fill: parent
+    }
 
     Text {
         id: text1
@@ -25,7 +31,7 @@ Rectangle {
     }
 
     Button {
-        id: button1
+        id: confirmButton
         x: 368
         y: 225
         text: qsTr("OK")
@@ -38,11 +44,14 @@ Rectangle {
     Text {
         id: errorMessageText
         text: component.message
+        wrapMode: Text.WordWrap
         anchors.bottomMargin: 68
         anchors.rightMargin: 32
         anchors.leftMargin: 32
         anchors.topMargin: 68
         anchors.fill: parent
         font.pixelSize: 12
+        clip: true
     }
+
 }

@@ -54,7 +54,15 @@ StoreWorker {
     }
 
     function load(source) {
+        Engine.errorString = ""; // Guarantee Engine is initialized.
         loader.source = source;
+
+        if (loader.status === Loader.Error){
+            MainStore.states = [];
+            MainStore.errorString = Engine.errorString;
+            return;
+        }
+
         loader.item.parent = mainContext.mainViewer;
         loader.item.anchors.centerIn = loader.item.parent;
         scaleToBest();
@@ -154,6 +162,13 @@ StoreWorker {
             mainFileDialog.nameFilters = [ "Image files (*.png)"];
             mainFileDialog.folder = folder;
             mainFileDialog.open();
+        }
+    }
+
+    Filter {
+        type: ActionTypes.closeErrorPanel
+        onDispatched: {
+            MainStore.errorString = "";
         }
     }
 

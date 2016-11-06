@@ -10,6 +10,7 @@
 class QmlEngine : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString errorString READ errorString WRITE setErrorString NOTIFY errorStringChanged)
 public:
     explicit QmlEngine(QObject *parent = 0);
 
@@ -17,7 +18,12 @@ public:
 
     void setEngine(QQmlEngine *engine);
 
+    QString errorString() const;
+
+    void setErrorString(const QString &errorString);
+
 signals:
+    void errorStringChanged();
 
 public slots:
 
@@ -25,9 +31,12 @@ public slots:
 
     void clearComponentCache();
 
+private slots:
+    void onWarnings(const QList<QQmlError> &warnings);
+
 private:
     QPointer<QQmlEngine> m_engine;
-
+    QString m_errorString;
 };
 
 #endif // QMLENGINE_H
