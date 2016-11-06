@@ -29,6 +29,8 @@ qmlimport.path  - A file that provides the value of QML_IMPORT_PATH. If this par
 Build Instruction
 =================
 
+Download and extract the release file from github. Then:
+
 ```
 cd app/sparkqml
 qpm install
