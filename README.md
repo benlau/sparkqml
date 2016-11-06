@@ -26,10 +26,21 @@ filename - The QML file name
 
 qmlimport.path  - A file that provides the value of QML_IMPORT_PATH. If this parameter is missing, sparkqml would try to search the file started from the document path to root folder.
 
+Build Instruction
+=================
+
+```
+cd app/sparkqml
+qpm install
+qmake
+make
+```
+
+
 Integration with Qt Creator
 ============================
 
-1) Build this project by open app/sparkqml/sparkqml.pro . Copy the executable to somewhere as you like
+1) Copy the executable build in previous step to somewhere you like
 
 2) In menu, press "Tools" -> "External" -> "Configure"
 
