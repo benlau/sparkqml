@@ -70,4 +70,4 @@ In case you have referred a component from C++.
 You need to use a mockup project. 
 It is a QML project with package and component same as the C++ plugin but it doesn’t need to implement any logic.
 
-<TODO: Explain>
+TODO: Explain how to use mockup project

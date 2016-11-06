@@ -1,0 +1,21 @@
+language : cpp
+env:
+  - DISPLAY=:99.0
+compiler:
+  - gcc
+before_install:
+    - sudo add-apt-repository --yes ppa:beineri/opt-qt551
+    - sudo add-apt-repository --yes "deb http://download.opensuse.org/repositories/home:/benlau/xUbuntu_15.10 ./"
+    - sudo apt-get update -qq
+    - apt-cache search qt5
+    - sudo apt-get install --force-yes -qq qt55quickcontrols  qt55declarative qt55script qt55graphicaleffects qpm
+    - sudo apt-get install nodejs
+    - sh -e /etc/init.d/xvfb start
+script:
+    - source /opt/qt55/bin/qt55-env.sh
+    - git clone https://github.com/benlau/qtci.git
+    - source qtci/path.env
+    - mkdir build
+    - cd build
+    - run-unittests ../tests/sparkqmltests/sparktests.pro
+
