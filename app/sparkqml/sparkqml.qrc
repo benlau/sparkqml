@@ -31,5 +31,7 @@
         <file>Spark/views/NavigationPanel.qml</file>
         <file>Spark/views/NavigationPanelForm.ui.qml</file>
         <file>Spark/views/NavigationItem.qml</file>
+        <file>Spark/views/ErrorPanel.qml</file>
+        <file>Spark/views/ErrorPanelForm.ui.qml</file>
     </qresource>
 </RCC>
