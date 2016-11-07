@@ -41,11 +41,12 @@ QFuture<bool> QmlEngine::scanImportPathList(const QString &qmlFile)
 
     auto worker = [qmlFile, thiz]() -> bool {
         QString path = QtShell::dirname(QUrl(qmlFile).path());
-        QString file = searchImportPathFile(path);
+        QString file = QmlEngine::searchImportPathFile(path);
         if (file.isEmpty()) {
             return false;
         }
-        QStringList importPathList = readImportPathFile(file);
+
+        QStringList importPathList = QmlEngine::readImportPathFile(file);
         if (importPathList.isEmpty()) {
             return false;
         }
