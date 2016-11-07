@@ -43,7 +43,7 @@ make
 Integration with Qt Creator
 ============================
 
-1) Copy the executable build in previous step to somewhere you like
+1) Copy the executable built in previous step to somewhere you like
 
 2) In menu, press "Tools" -> "External" -> "Configure"
 
@@ -72,7 +72,7 @@ To fix this problem, you may add the following lines at the end of your pro file
 
 Then run qmake.
 It will create a file called qmlimport.path with the value of QML_IMPORT_PATH.
-You may consider to add this file to your .gitignore.
+You may add this file to your .gitignore.
 
 Restart SparkQML. Now it would know where to find packages.
 
