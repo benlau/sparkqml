@@ -1,4 +1,7 @@
 #include <QtQml>
+#include <QtConcurrent>
+#include <QtShell>
+#include <QCMainThreadRunner>
 #include "qmlengine.h"
 
 QmlEngine::QmlEngine(QObject *parent) : QObject(parent)
@@ -15,6 +18,8 @@ void QmlEngine::setEngine(QQmlEngine *engine)
 {
     m_engine = engine;
     if (!m_engine.isNull()) {
+        setPreImportPathList(engine->importPathList());
+
         connect(m_engine.data(), SIGNAL(warnings(QList<QQmlError>)),
                 this , SLOT(onWarnings(QList<QQmlError>)));
     }
@@ -30,6 +35,40 @@ void QmlEngine::clearComponentCache()
     m_engine->clearComponentCache();
 }
 
+QFuture<bool> QmlEngine::scanImportPathList(const QString &qmlFile)
+{
+    QPointer<QmlEngine> thiz = this;
+
+    auto worker = [qmlFile, thiz]() -> bool {
+        QString path = QtShell::dirname(QUrl(qmlFile).path());
+        QString file = searchImportPathFile(path);
+        if (file.isEmpty()) {
+            return false;
+        }
+        QStringList importPathList = readImportPathFile(file);
+        if (importPathList.isEmpty()) {
+            return false;
+        }
+
+        bool res = false;
+
+        MAIN_THREAD {
+            if (thiz.isNull() || thiz->engine() == 0) {
+                return;
+            }
+            QStringList list = thiz->preImportPathList();
+            list.append(importPathList);
+            list.append(thiz->proImportPathList());
+            thiz->engine()->setImportPathList(list);
+            res = true;
+        };
+
+        return res;
+    };
+
+    return QtConcurrent::run(worker);
+}
+
 void QmlEngine::onWarnings(const QList<QQmlError> &warnings)
 {
     bool changed = false;
@@ -40,6 +79,26 @@ void QmlEngine::onWarnings(const QList<QQmlError> &warnings)
     if (changed) {
         emit errorStringChanged();
     }
+}
+
+QStringList QmlEngine::proImportPathList() const
+{
+    return m_proImportPathList;
+}
+
+void QmlEngine::setProImportPathList(const QStringList &proImportPathList)
+{
+    m_proImportPathList = proImportPathList;
+}
+
+QStringList QmlEngine::preImportPathList() const
+{
+    return m_preImportPathList;
+}
+
+void QmlEngine::setPreImportPathList(const QStringList &preImportPathList)
+{
+    m_preImportPathList = preImportPathList;
 }
 
 QString QmlEngine::errorString() const

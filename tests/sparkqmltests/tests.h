@@ -9,5 +9,6 @@ public:
 
 private slots:
     void MockupActor_createProject();
+    void QmlEngine_scanImagePath();
 };
 

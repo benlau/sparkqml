@@ -15,7 +15,8 @@ ROOTDIR = $$PWD/../..
 include(deployment.pri)
 include(vendor/vendor.pri)
 
-DISTFILES +=     qpm.json
+DISTFILES +=     qpm.json \
+    ../../README.md
 
 # For Qt Creator <= 4.1
 QML_IMPORT_PATH += $$ROOTDIR/mockup/designer

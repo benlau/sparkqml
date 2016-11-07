@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QQmlEngine>
 #include <QPointer>
+#include <QFuture>
 
 // Wrapper of QQmlEngine
 
@@ -22,7 +23,16 @@ public:
 
     void setErrorString(const QString &errorString);
 
+    QStringList preImportPathList() const;
+
+    void setPreImportPathList(const QStringList &preImportPathList);
+
+    QStringList proImportPathList() const;
+
+    void setProImportPathList(const QStringList &proImportPathList);
+
     static QString searchImportPathFile(QString path);
+
     static QStringList readImportPathFile(const QString &path);
 
 signals:
@@ -34,11 +44,16 @@ public slots:
 
     void clearComponentCache();
 
+    QFuture<bool> scanImportPathList(const QString& qmlFile);
+
 private slots:
     void onWarnings(const QList<QQmlError> &warnings);
 
 private:
     QPointer<QQmlEngine> m_engine;
+    QStringList m_preImportPathList;
+    QStringList m_proImportPathList;
+
     QString m_errorString;
 };
 
