@@ -4,6 +4,48 @@
 #include <QCMainThreadRunner>
 #include "qmlengine.h"
 
+static QString _searchImportPathFile(QString path)
+{
+    QString result;
+
+    QDir dir(path);
+
+    while (!dir.isRoot()) {
+        QString file = dir.absolutePath() + "/qmlimport.path";
+
+        QFileInfo info(file);
+        if (info.exists()) {
+            result = file;
+            break;
+        }
+
+        dir.cdUp();
+    }
+
+    return result;
+}
+
+static QStringList _readImportPathFile(const QString &path)
+{
+    qDebug().noquote() << "Read QML_IMPORT_PATH from" << path;
+    QFile file(path);
+    QStringList result;
+
+    if (!file.open(QIODevice::ReadOnly)) {
+        return result;
+    }
+
+    QString content = file.readAll();
+    QStringList lines = content.split("\n");
+    foreach (QString line , lines) {
+        if (!line.isEmpty()) {
+            result << line;
+        }
+    }
+
+    return result;
+}
+
 QmlEngine::QmlEngine(QObject *parent) : QObject(parent)
 {
     m_engine = 0;
@@ -41,12 +83,15 @@ QFuture<bool> QmlEngine::scanImportPathList(const QString &qmlFile)
 
     auto worker = [qmlFile, thiz]() -> bool {
         QString path = QtShell::dirname(QUrl(qmlFile).path());
-        QString file = QmlEngine::searchImportPathFile(path);
+
+        // Avoid to call a static member function due
+        // to a bug in GCC 4.7 used in travis
+        QString file = _searchImportPathFile(path);
         if (file.isEmpty()) {
             return false;
         }
 
-        QStringList importPathList = QmlEngine::readImportPathFile(file);
+        QStringList importPathList = _readImportPathFile(file);
         if (importPathList.isEmpty()) {
             return false;
         }
@@ -115,43 +160,11 @@ void QmlEngine::setErrorString(const QString &errorMessage)
 
 QString QmlEngine::searchImportPathFile(QString path)
 {
-    QString result;
-
-    QDir dir(path);
-
-    while (!dir.isRoot()) {
-        QString file = dir.absolutePath() + "/qmlimport.path";
-
-        QFileInfo info(file);
-        if (info.exists()) {
-            result = file;
-            break;
-        }
-
-        dir.cdUp();
-    }
-
-    return result;
+    return _searchImportPathFile(path);
 }
 
 QStringList QmlEngine::readImportPathFile(const QString &path)
 {
-    qDebug().noquote() << "Read QML_IMPORT_PATH from" << path;
-    QFile file(path);
-    QStringList result;
-
-    if (!file.open(QIODevice::ReadOnly)) {
-        return result;
-    }
-
-    QString content = file.readAll();
-    QStringList lines = content.split("\n");
-    foreach (QString line , lines) {
-        if (!line.isEmpty()) {
-            result << line;
-        }
-    }
-
-    return result;
+    return _readImportPathFile(path);
 }
 
