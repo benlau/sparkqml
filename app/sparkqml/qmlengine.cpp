@@ -53,3 +53,45 @@ void QmlEngine::setErrorString(const QString &errorMessage)
     emit errorStringChanged();
 }
 
+QString QmlEngine::searchImportPathFile(QString path)
+{
+    QString result;
+
+    QDir dir(path);
+
+    while (!dir.isRoot()) {
+        QString file = dir.absolutePath() + "/qmlimport.path";
+
+        QFileInfo info(file);
+        if (info.exists()) {
+            result = file;
+            break;
+        }
+
+        dir.cdUp();
+    }
+
+    return result;
+}
+
+QStringList QmlEngine::readImportPathFile(const QString &path)
+{
+    qDebug().noquote() << "Read QML_IMPORT_PATH from" << path;
+    QFile file(path);
+    QStringList result;
+
+    if (!file.open(QIODevice::ReadOnly)) {
+        return result;
+    }
+
+    QString content = file.readAll();
+    QStringList lines = content.split("\n");
+    foreach (QString line , lines) {
+        if (!line.isEmpty()) {
+            result << line;
+        }
+    }
+
+    return result;
+}
+

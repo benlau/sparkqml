@@ -22,6 +22,9 @@ public:
 
     void setErrorString(const QString &errorString);
 
+    static QString searchImportPathFile(QString path);
+    static QStringList readImportPathFile(const QString &path);
+
 signals:
     void errorStringChanged();
 

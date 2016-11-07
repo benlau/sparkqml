@@ -5,6 +5,7 @@
 #include <QDir>
 #include <QtShell>
 #include <QDesktopServices>
+#include "qmlengine.h"
 #include "appview.h"
 
 AppView::AppView(QObject *parent) : QObject(parent)
@@ -32,11 +33,11 @@ void AppView::start()
 
     if (m_importPathFile.isEmpty() &&
         !m_source.isEmpty()) {
-        importPathFile = searchImportPathFile(QtShell::dirname(QUrl(m_source).path()));
+        importPathFile = QmlEngine::searchImportPathFile(QtShell::dirname(QUrl(m_source).path()));
     }
 
     if (!importPathFile.isEmpty()) {
-        importPathList.append(readImportPathFile(importPathFile));
+        importPathList.append(QmlEngine::readImportPathFile(importPathFile));
     }
 
     importPathList << m_mockupFolder;
@@ -54,27 +55,6 @@ void AppView::start()
     if (!m_source.isEmpty()) {
         loadSource();
     }
-}
-
-QStringList AppView::readImportPathFile(const QString &path)
-{
-    qDebug().noquote() << "Read QML_IMPORT_PATH from" << path;
-    QFile file(path);
-    QStringList result;
-
-    if (!file.open(QIODevice::ReadOnly)) {
-        return result;
-    }
-
-    QString content = file.readAll();
-    QStringList lines = content.split("\n");
-    foreach (QString line , lines) {
-        if (!line.isEmpty()) {
-            result << line;
-        }
-    }
-
-    return result;
 }
 
 QString AppView::source() const
@@ -97,27 +77,6 @@ void AppView::loadSource()
     dispatcher->dispatch("load", message);
 }
 
-QString AppView::searchImportPathFile(QString path)
-{
-    QString result;
-
-    QDir dir(path);
-
-    while (!dir.isRoot()) {
-        QString file = dir.absolutePath() + "/qmlimport.path";
-
-        QFileInfo info(file);
-        if (info.exists()) {
-            result = file;
-            break;
-        }
-
-        dir.cdUp();
-    }
-
-    return result;
-}
-
 QQmlApplicationEngine *AppView::engine()
 {
     return &m_engine;
@@ -125,7 +84,7 @@ QQmlApplicationEngine *AppView::engine()
 
 void AppView::onDispatched(QString type, QJSValue message)
 {
-    Q_UNUSED(type);
+    Q_UNUSED(message);
     if (type == "openMockupProject") {
         QDesktopServices::openUrl(QUrl::fromLocalFile(m_mockupFolder + "/mockup.qmlproject"));
     }

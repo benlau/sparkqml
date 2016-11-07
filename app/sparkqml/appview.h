@@ -35,11 +35,7 @@ private slots:
     void onDispatched(QString type, QJSValue message);
 
 private:
-    QStringList readImportPathFile(const QString& file);
-
     void loadSource();
-
-    QString searchImportPathFile(QString path);
 
     QQmlApplicationEngine m_engine;
 
