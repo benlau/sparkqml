@@ -6,6 +6,7 @@ Rectangle {
     width: 500
     height: 300
     color: "#FFFDBE"
+    property alias reloadButton: reloadButton
     property alias confirmButton: confirmButton
     property string message: qsTr("Error Message")
 
@@ -30,17 +31,6 @@ Rectangle {
         elide: Text.ElideRight
     }
 
-    Button {
-        id: confirmButton
-        x: 368
-        y: 225
-        text: qsTr("OK")
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 16
-        anchors.right: parent.right
-        anchors.rightMargin: 32
-    }
-
     Text {
         id: errorMessageText
         text: component.message
@@ -52,6 +42,26 @@ Rectangle {
         anchors.fill: parent
         font.pixelSize: 12
         clip: true
+    }
+
+    Row {
+        id: row
+        height: 40
+        spacing: 16
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 16
+        anchors.right: parent.right
+        anchors.rightMargin: 32
+
+        Button {
+            id: confirmButton
+            text: qsTr("Close")
+        }
+
+        Button {
+            id: reloadButton
+            text: qsTr("Reload")
+        }
     }
 
 }

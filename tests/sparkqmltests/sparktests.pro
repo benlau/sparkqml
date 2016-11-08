@@ -16,7 +16,8 @@ include($$ROOTDIR/app/sparkqml/sparkqml.pri)
 
 
 DISTFILES +=     qpm.json \     
-    DummyItem1.qml
+    DummyItem1.qml \
+    sample/SyntaxError.qml
 
 HEADERS +=     tests.h
 

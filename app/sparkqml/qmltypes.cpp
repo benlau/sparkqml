@@ -23,7 +23,12 @@ static QObject* engineProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
     return object;
 }
 
+Q_DECLARE_METATYPE(QQmlError)
+
 static void registerTypes() {
+    qRegisterMetaType<QQmlError>();
+    qRegisterMetaType<QList<QQmlError> >();
+
     qmlRegisterType<FileWatcher>("Spark.sys", 1, 0, "FileWatcher");
 
     qmlRegisterSingletonType<QmlEngine>("Spark.sys", 1, 0, "Engine", engineProvider);
