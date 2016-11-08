@@ -35,6 +35,9 @@ public:
 
     static QStringList readImportPathFile(const QString &path);
 
+    QString defaultImportPathFile() const;
+    void setDefaultImportPathFile(const QString &defaultImportPathFile);
+
 signals:
     void errorStringChanged();
 
@@ -51,6 +54,10 @@ private slots:
 
 private:
     QPointer<QQmlEngine> m_engine;
+
+    // If this file is set, scanImportPathList() should ignore this file
+    QString m_defaultImportPathFile;
+
     QStringList m_preImportPathList;
     QStringList m_proImportPathList;
 

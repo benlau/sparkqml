@@ -78,3 +78,32 @@ void Tests::QmlEngine_scanImagePath()
     QVERIFY(engine.importPathList().last() == "qrc:///");
 
 }
+
+void Tests::QmlEngine_scanImagePath_withDefaultFile()
+{
+    QQmlApplicationEngine engine;
+    QStringList importPathList = engine.importPathList();
+    QmlEngine qmlEngine;
+
+    qmlEngine.setEngine(&engine);
+    QVERIFY(engine.importPathList() == qmlEngine.preImportPathList());
+    qmlEngine.setProImportPathList(QStringList() << "qrc:///");
+
+    QtShell::mkdir("-p", "fakeproject/App");
+    QtShell::touch("fakeproject/App/test.qml");
+    QFile importPathFile("fakeproject/qmlimport.path");
+    QVERIFY(importPathFile.open(QIODevice::WriteOnly));
+    importPathFile.write(QtShell::pwd().toLocal8Bit());
+    importPathFile.close();
+
+    qmlEngine.setDefaultImportPathFile(QFileInfo("fakeproject/qmlimport.path").absoluteFilePath());
+    QFuture<bool> future = qmlEngine.scanImportPathList("fakeproject/App/test.qml");
+    waitForFinished(future);
+
+    QVERIFY(!future.result());
+
+    QCOMPARE(importPathList.size() + 1, engine.importPathList().size());
+
+    QStringList engineImportPathList = engine.importPathList();
+    QVERIFY(engineImportPathList.last() == "qrc:///");
+}

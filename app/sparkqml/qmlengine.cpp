@@ -80,23 +80,25 @@ void QmlEngine::clearComponentCache()
 QFuture<bool> QmlEngine::scanImportPathList(const QString &qmlFile)
 {
     QPointer<QmlEngine> thiz = this;
+    QString defaultImportPathFile = m_defaultImportPathFile;
 
-    auto worker = [qmlFile, thiz]() -> bool {
+    auto worker = [qmlFile, thiz, defaultImportPathFile]() -> bool {
         QString path = QtShell::dirname(QUrl(qmlFile).path());
 
         // Avoid to call a static member function due
         // to a bug in GCC 4.7 used in travis
         QString file = _searchImportPathFile(path);
-        if (file.isEmpty()) {
-            return false;
-        }
-
-        QStringList importPathList = _readImportPathFile(file);
-        if (importPathList.isEmpty()) {
-            return false;
-        }
-
         bool res = false;
+
+        QStringList importPathList;
+
+        if (!file.isEmpty() && file != defaultImportPathFile) {
+            importPathList = _readImportPathFile(file);
+        }
+
+        if (!importPathList.isEmpty()) {
+            res = true;
+        }
 
         MAIN_THREAD {
             if (thiz.isNull() || thiz->engine() == 0) {
@@ -106,7 +108,6 @@ QFuture<bool> QmlEngine::scanImportPathList(const QString &qmlFile)
             list.append(importPathList);
             list.append(thiz->proImportPathList());
             thiz->engine()->setImportPathList(list);
-            res = true;
         };
 
         return res;
@@ -125,6 +126,16 @@ void QmlEngine::onWarnings(const QList<QQmlError> &warnings)
     if (changed) {
         emit errorStringChanged();
     }
+}
+
+QString QmlEngine::defaultImportPathFile() const
+{
+    return m_defaultImportPathFile;
+}
+
+void QmlEngine::setDefaultImportPathFile(const QString &defaultImportPathFile)
+{
+    m_defaultImportPathFile = defaultImportPathFile;
 }
 
 QStringList QmlEngine::proImportPathList() const
