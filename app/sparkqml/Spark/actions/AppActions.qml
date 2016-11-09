@@ -15,7 +15,7 @@ ActionCreator {
 
     signal setState(string state)
 
-    signal refresh()
+    signal reload()
 
     signal openDrawer()
 

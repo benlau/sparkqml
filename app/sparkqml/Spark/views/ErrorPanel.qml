@@ -7,7 +7,7 @@ ErrorPanelForm {
 
     reloadButton.onClicked: {
         AppActions.closeErrorPanel();
-        AppActions.refresh();
+        AppActions.reload();
     }
 
     confirmButton.onClicked: {

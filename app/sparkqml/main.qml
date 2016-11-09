@@ -43,7 +43,7 @@ ApplicationWindow {
     FileWatcher {
         source: MainStore.source
         onChanged: {
-            AppActions.refresh();
+            AppActions.reload();
         }
     }
 

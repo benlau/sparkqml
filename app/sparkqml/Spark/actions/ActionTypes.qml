@@ -11,7 +11,7 @@ KeyTable {
 
     property string setState
 
-    property string refresh
+    property string reload
 
     property string openDrawer
 

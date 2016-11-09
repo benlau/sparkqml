@@ -11,7 +11,7 @@ Rectangle {
     property alias clipboardButton: clipboardButton
     property alias scaleToFitButton: scaleToFitButton
     property alias barButton: barButton
-    property alias refreshButton: refreshButton
+    property alias reloadButton: reloadButton
 
     RowLayout {
         id: layout
@@ -55,7 +55,7 @@ Rectangle {
         }
 
         ToolBarButton {
-            id: refreshButton
+            id: reloadButton
             toolTip: qsTr("Reload")
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
             Layout.minimumHeight: 0

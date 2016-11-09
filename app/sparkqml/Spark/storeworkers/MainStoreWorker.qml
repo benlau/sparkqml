@@ -108,7 +108,7 @@ StoreWorker {
     }
 
     Filter {
-        type: ActionTypes.refresh
+        type: ActionTypes.reload
         onDispatched: {
             if (MainStore.source === "") {
                 return;

@@ -15,8 +15,8 @@ ToolBarForm {
         onClicked: AppActions.scaleToFit();
     }
 
-    refreshButton {
-        onClicked: AppActions.refresh();
+    reloadButton {
+        onClicked: AppActions.reload();
     }
 
     barButton {
