@@ -3,6 +3,10 @@ import QtQuick.Controls 2.0
 import Spark.actions 1.0
 
 ToolBarForm {
+    resizeButton.onClicked: {
+        AppActions.resizeToFit();
+    }
+
     saveButton.onClicked: {
         AppActions.askToSaveFile();
     }

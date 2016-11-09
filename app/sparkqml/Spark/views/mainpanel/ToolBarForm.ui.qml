@@ -7,6 +7,7 @@ Rectangle {
     width: 300
     height: 24
     color: "#313334"
+    property alias resizeButton: resizeButton
     property alias saveButton: saveButton
     property alias clipboardButton: clipboardButton
     property alias scaleToFitButton: scaleToFitButton
@@ -46,6 +47,12 @@ Rectangle {
         }
 
         ToolBarButton {
+            id: resizeButton
+            icon: FontAwesome.windowMaximize
+            toolTip: qsTr("Resize to Fit")
+        }
+
+        ToolBarButton {
             id: scaleToFitButton
             toolTip: qsTr("Scale to Fit")
             icon: FontAwesome.arrowsAlt
@@ -61,6 +68,7 @@ Rectangle {
             Layout.minimumHeight: 0
             icon: FontAwesome.refresh
         }
+
 
 
 

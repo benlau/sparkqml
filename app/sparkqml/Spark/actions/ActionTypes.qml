@@ -17,11 +17,13 @@ KeyTable {
 
     property string scaleToFit
 
+    property string resizeToFit
+
     property string copyToClipboard
 
     property string openMockupProject
 
     property string askToSaveFile
 
-    property string closeErrorPanel
+    property string closeErrorPanel    
 }

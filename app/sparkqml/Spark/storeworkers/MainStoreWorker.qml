@@ -26,6 +26,11 @@ StoreWorker {
         }
     }
 
+    function resizeToFit() {
+        loader.item.width = Qt.binding(function() { return mainContext.mainViewer.width - Constants.viewerPadding * 2});
+        loader.item.height = Qt.binding(function() { return mainContext.mainViewer.height - Constants.viewerPadding * 2});
+    }
+
     /// Given a qml file. Convert to an image file name.
     function convertToImageName(fileName, selectedState) {
         var base = FileInfo.completeBaseName(fileName);
@@ -137,6 +142,13 @@ StoreWorker {
         type: ActionTypes.scaleToFit
         onDispatched: {
             scaleToFit();
+        }
+    }
+
+    Filter {
+        type: ActionTypes.resizeToFit
+        onDispatched: {
+            resizeToFit();
         }
     }
 

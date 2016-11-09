@@ -21,6 +21,8 @@ ActionCreator {
 
     signal scaleToFit()
 
+    signal resizeToFit()
+
     signal openMockupProject()
 
     signal copyToClipboard()
@@ -28,4 +30,5 @@ ActionCreator {
     signal askToSaveFile()
 
     signal closeErrorPanel()
+
 }
