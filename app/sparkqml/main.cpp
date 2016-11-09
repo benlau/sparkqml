@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     }
 
     if (args.size() > 2) {
-        view.setImportPathFile(args[2]);
+        view.setDefaultImportPathFile(args[2]);
     }
 
     view.start();

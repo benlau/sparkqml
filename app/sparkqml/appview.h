@@ -21,8 +21,8 @@ public:
     QString mockupFolder() const;
     void setMockupFolder(const QString &mockupFolder);
 
-    QString importPathFile() const;
-    void setImportPathFile(const QString &importPathFile);
+    QString defaultImportPathFile() const;
+    void setDefaultImportPathFile(const QString &defaultImportPathFile);
 
     QString source() const;
     void setSource(const QString &source);
@@ -41,7 +41,7 @@ private:
 
     MockupActor m_mockupActor;
 
-    QString m_importPathFile;
+    QString m_defaultImportPathFile;
     QString m_mockupFolder;
     QString m_source;
 };

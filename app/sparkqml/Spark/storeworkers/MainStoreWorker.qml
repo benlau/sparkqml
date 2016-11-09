@@ -4,6 +4,7 @@ import Spark.constants 1.0
 import Spark.actions 1.0
 import Spark.stores 1.0
 import QuickPromise 1.0
+import Future 1.0
 import Shell 1.0
 import Spark.sys 1.0
 import "./lodash.min.js" as Lodash
@@ -54,6 +55,17 @@ StoreWorker {
     }
 
     function load(source) {
+        scanImportPathList(source, function(){
+            setSource(source);
+        });
+    }
+
+    function scanImportPathList(source, callback) {
+        var future = Engine.scanImportPathList(source);
+        Future.onFinished(future, callback)
+    }
+
+    function setSource(source) {
         Engine.errorString = ""; // Guarantee Engine is initialized.
         loader.source = source;
 

@@ -6,7 +6,8 @@
     "font.awesome.pri@0.0.1",
     "com.github.benlau.qtshell@0.3.2",
     "com.github.benlau.quickpromise@1.0.3",
-    "com.github.benlau.quickcross@1.0.2.20"
+    "com.github.benlau.quickcross@1.0.2.20",
+    "q.quick.future@1.0.0"
   ],
   "license": "NONE",
   "pri_filename": "",

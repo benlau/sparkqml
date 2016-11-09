@@ -20,31 +20,21 @@ void AppView::start()
     m_mockupActor.init();
     m_mockupActor.createProject();
 
-    QStringList importPathList = m_engine.importPathList();
-
-    importPathList << "qrc:///";
     m_engine.addImportPath("qrc:///");
 
-    QString importPathFile = m_importPathFile;
-
-    if (!QFile::exists(importPathFile)) {
-        importPathFile = QString();
+    if (!m_defaultImportPathFile.isEmpty() &&
+        QFile::exists(m_defaultImportPathFile)) {
+        qDebug().noquote() << "Default qmlimport.path: " << m_defaultImportPathFile;
+        QStringList importPathList = QmlEngine::readImportPathFile(m_defaultImportPathFile);
+        foreach (QString path , importPathList) {
+            m_engine.addImportPath(path);
+        }
     }
-
-    if (m_importPathFile.isEmpty() &&
-        !m_source.isEmpty()) {
-        importPathFile = QmlEngine::searchImportPathFile(QtShell::dirname(QUrl(m_source).path()));
-    }
-
-    if (!importPathFile.isEmpty()) {
-        importPathList.append(QmlEngine::readImportPathFile(importPathFile));
-    }
-
-    importPathList << m_mockupFolder;
-
-    m_engine.setImportPathList(importPathList);
-
     m_engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+
+    QmlEngine* qmlEngine = qobject_cast<QmlEngine*>(QFAppDispatcher::singletonObject(&m_engine,"Spark.sys",1,0,"Engine"));
+    qmlEngine->setDefaultImportPathFile(m_defaultImportPathFile);
+    qmlEngine->setProImportPathList(QStringList() << m_mockupFolder);
 
     QFAppDispatcher* dispatcher = QFAppDispatcher::instance(&m_engine);
     connect(dispatcher,SIGNAL(dispatched(QString,QJSValue)),
@@ -90,14 +80,14 @@ void AppView::onDispatched(QString type, QJSValue message)
     }
 }
 
-QString AppView::importPathFile() const
+QString AppView::defaultImportPathFile() const
 {
-    return m_importPathFile;
+    return m_defaultImportPathFile;
 }
 
-void AppView::setImportPathFile(const QString &importPathFile)
+void AppView::setDefaultImportPathFile(const QString &importPathFile)
 {
-    m_importPathFile = importPathFile;
+    m_defaultImportPathFile = importPathFile;
 }
 
 QString AppView::mockupFolder() const
