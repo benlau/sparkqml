@@ -9,7 +9,7 @@ import Spark.stores 1.0
 import Spark.sys 1.0
 import Qt.labs.settings 1.0
 import QtQuick.Dialogs 1.2
-import "./Spark/views"
+import "./Spark/views/mainpanel"
 
 ApplicationWindow {
     id: mainWindow

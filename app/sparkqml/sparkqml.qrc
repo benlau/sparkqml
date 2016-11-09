@@ -13,25 +13,26 @@
         <file>Spark/storeworkers/MainStoreWorker.qml</file>
         <file>Spark/storeworkers/qmldir</file>
         <file>Spark/storeworkers/StoreWorker.qml</file>
-        <file>Spark/views/Viewer.qml</file>
-        <file>Spark/views/ViewerForm.ui.qml</file>
-        <file>Spark/views/StatesPanel.qml</file>
-        <file>Spark/views/StatesPanelForm.ui.qml</file>
-        <file>Spark/views/MainPanel.qml</file>
-        <file>Spark/views/MainPanelForm.ui.qml</file>
-        <file>Spark/views/StateItem.qml</file>
-        <file>Spark/views/StateItemForm.ui.qml</file>
         <file>Spark/storeworkers/lodash.min.js</file>
-        <file>Spark/views/ToolBar.qml</file>
-        <file>Spark/views/ToolBarForm.ui.qml</file>
         <file>mockup/main.qml</file>
         <file>mockup/mockup.qmlproject</file>
-        <file>Spark/views/ToolBarButton.qml</file>
-        <file>Spark/views/ToolBarButtonForm.ui.qml</file>
-        <file>Spark/views/NavigationPanel.qml</file>
-        <file>Spark/views/NavigationPanelForm.ui.qml</file>
-        <file>Spark/views/NavigationItem.qml</file>
-        <file>Spark/views/ErrorPanel.qml</file>
-        <file>Spark/views/ErrorPanelForm.ui.qml</file>
+        <file>Spark/views/mainpanel/ErrorPanel.qml</file>
+        <file>Spark/views/mainpanel/ErrorPanelForm.ui.qml</file>
+        <file>Spark/views/mainpanel/MainPanel.qml</file>
+        <file>Spark/views/mainpanel/MainPanelForm.ui.qml</file>
+        <file>Spark/views/mainpanel/NavigationItem.qml</file>
+        <file>Spark/views/mainpanel/NavigationPanel.qml</file>
+        <file>Spark/views/mainpanel/NavigationPanelForm.ui.qml</file>
+        <file>Spark/views/mainpanel/StateItem.qml</file>
+        <file>Spark/views/mainpanel/StateItemForm.ui.qml</file>
+        <file>Spark/views/mainpanel/StatesPanel.qml</file>
+        <file>Spark/views/mainpanel/StatesPanelForm.ui.qml</file>
+        <file>Spark/views/mainpanel/ToolBar.qml</file>
+        <file>Spark/views/mainpanel/ToolBarButton.qml</file>
+        <file>Spark/views/mainpanel/ToolBarButtonForm.ui.qml</file>
+        <file>Spark/views/mainpanel/ToolBarForm.ui.qml</file>
+        <file>Spark/views/mainpanel/Viewer.qml</file>
+        <file>Spark/views/mainpanel/ViewerForm.ui.qml</file>
+        <file>Spark/main.qml</file>
     </qresource>
 </RCC>
