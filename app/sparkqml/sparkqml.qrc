@@ -15,7 +15,6 @@
         <file>Spark/storeworkers/StoreWorker.qml</file>
         <file>Spark/storeworkers/lodash.min.js</file>
         <file>mockup/main.qml</file>
-        <file>mockup/mockup.qmlproject</file>
         <file>Spark/views/mainpanel/ErrorPanel.qml</file>
         <file>Spark/views/mainpanel/ErrorPanelForm.ui.qml</file>
         <file>Spark/views/mainpanel/MainPanel.qml</file>
@@ -34,5 +33,9 @@
         <file>Spark/views/mainpanel/Viewer.qml</file>
         <file>Spark/views/mainpanel/ViewerForm.ui.qml</file>
         <file>Spark/main.qml</file>
+        <file>mockup/sparkmockup.qmlproject</file>
+        <file>Spark/views/browserpanel/Card.qml</file>
+        <file>Spark/views/browserpanel/MaterialShadow.qml</file>
+        <file>Spark/views/browserpanel/Shadow.qml</file>
     </qresource>
 </RCC>
