@@ -119,6 +119,7 @@ StoreWorker {
                 return;
             }
             loader.source = "";
+            MainStore.errorString = "";
             Engine.clearComponentCache();
             AppActions.load(MainStore.source);
         }
