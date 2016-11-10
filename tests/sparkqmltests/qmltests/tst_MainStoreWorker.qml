@@ -2,6 +2,8 @@ import QtQuick 2.0
 import QtTest 1.0
 import Spark.storeworkers 1.0
 import Spark.stores 1.0
+import Spark.sys 1.0
+import Shell 1.0
 
 Item {
 
@@ -12,8 +14,7 @@ Item {
             id: worker
         }
 
-        function initTestCase() {
-            console.log("initTestCase");
+        function init() {
             MainStore.source = "";
             MainStore.states = [];
             MainStore.title = "";
@@ -29,6 +30,14 @@ Item {
             // Before it is done, it should clear the errorString
             compare(MainStore.errorString === "", true);
             wait(1000);
+        }
+
+        function test_MainStore_folder() {
+            var source = Qt.resolvedUrl("../sample/Rect.qml");
+            var folder = Shell.dirname(Url.path(source));
+            worker.dispatched("load", {source: source});
+            compare(MainStore.source, source);
+            compare(MainStore.folder, folder);
         }
     }
 }

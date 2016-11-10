@@ -60,6 +60,13 @@ StoreWorker {
     }
 
     function load(source) {
+        var path = Url.path(source);
+        MainStore.source = source;
+        MainStore.folder = Shell.dirname(path);
+        MainStore.fileName = Shell.basename(path);
+        MainStore.selectedState = "";
+        MainStore.title = MainStore.fileName ;
+
         scanImportPathList(source, function(){
             setSource(source);
         });
@@ -91,15 +98,11 @@ StoreWorker {
         });
         states.unshift({ displayName: "<base state>" , name: ""});
         MainStore.states = states;
-        MainStore.selectedState = "";
-        MainStore.fileName = Shell.basename(Url.path(source));
-        MainStore.title = MainStore.fileName ;
     }
 
     Filter {
         type: ActionTypes.load
         onDispatched: {
-            MainStore.source = message.source;
             load(message.source)
         }
     }
