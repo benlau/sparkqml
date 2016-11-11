@@ -10,7 +10,6 @@ Item {
     height: 480
     property alias maskMouseArea: maskMouseArea
     property bool showErrorPanel: false
-    property alias mainViewer: mainViewer
 
     SplitView {
         anchors.fill: parent
@@ -29,8 +28,7 @@ Item {
 
                 }
 
-                Viewer {
-                    id: mainViewer
+                MainComponentViewer {
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                 }

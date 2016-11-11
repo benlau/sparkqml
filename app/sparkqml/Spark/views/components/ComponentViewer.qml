@@ -1,15 +1,22 @@
 import QtQuick 2.0
 import Spark.constants 1.0
 import Spark.sys 1.0
+import Shell 1.0
+import QuickPromise 1.0
+import Future 1.0
 
 Item {
     id: component
 
-    property string errorMessage: ""
+    property string errorString: ""
 
-    property var componentStates: new Array
+    property string selectedState: ""
+
+    property var availableStates: new Array
 
     property bool autoScanImportPathList: true
+
+    property alias item: loader.item
 
     signal loaded()
     signal error()
@@ -38,14 +45,25 @@ Item {
     }
 
     function load(source) {
+        loader.source = "";
         Engine.clearComponentCache();
-        loader.source = source;
+        Engine.errorString = "";
+        if (autoScanImportPathList) {
+            var path = Shell.dirname(Url.path(source));
+            var future = Engine.scanImportPathList(path);
+            Future.onFinished(future, function() {
+                loader.source = source;
+            });
+        } else {
+            Q.setTimeout(function() {
+                loader.source = source;
+            },0);
+        }
     }
 
     function reload() {
         var source = loader.source;
-        errorMessage = "";
-        loader.source = "";
+        errorString = "";
         load(source);
     }
 
@@ -55,15 +73,26 @@ Item {
 
         onStatusChanged:  {
             if (status === Loader.Error) {
-                componentStates = [];
-                errorMessage = Engine.errorString;
-                component.loaded();
+                availableStates = [];
+                errorString = Engine.errorString;
+                component.error();
             } else if (status === Loader.Ready) {
                 loader.item.anchors.centerIn = loader;
-                componentStates = loader.item.states;
-                component.error();
+                var tmp = [];
+                for (var i in loader.item.states) {
+                    tmp.push(loader.item.states[i].name);
+                }
+                availableStates = tmp;
+                scaleToBest();
+                component.loaded();
             }
         }
+    }
+
+    Binding {
+        target: loader.item
+        property: "state"
+        value: selectedState
     }
 
 }

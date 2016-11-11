@@ -38,5 +38,7 @@
         <file>Spark/views/components/qmldir</file>
         <file>sparkmockupproject/main.qml</file>
         <file>sparkmockupproject/sparkmockup.qmlproject</file>
+        <file>Spark/views/mainpanel/MainComponentViewer.qml</file>
+        <file>Spark/views/mainpanel/MainComponentViewerForm.ui.qml</file>
     </qresource>
 </RCC>

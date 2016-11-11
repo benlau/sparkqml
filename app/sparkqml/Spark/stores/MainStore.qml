@@ -5,9 +5,6 @@ QtObject {
 
     property string source;
 
-    // The folder path of source
-    property string folder;
-
     /// The file name of loaded source
     property string fileName: ""
 

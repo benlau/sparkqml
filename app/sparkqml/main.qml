@@ -29,8 +29,6 @@ ApplicationWindow {
 
     QtObject {
         id: mainContext
-
-        property var mainViewer: mainPanel.mainViewer
     }
 
     FileDialog {

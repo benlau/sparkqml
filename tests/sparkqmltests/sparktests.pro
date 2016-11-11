@@ -20,7 +20,8 @@ DISTFILES +=     qpm.json \
     sample/SyntaxError.qml \
     qmltests/tst_MainStoreWorker.qml \
     sample/Rect.qml \
-    mockup/mockup_ComponentViewer.qml
+    mockup/mockup_ComponentViewer.qml \
+    qmltests/tst_ComponentViewer.qml
 
 HEADERS +=     tests.h
 

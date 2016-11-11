@@ -13,7 +13,11 @@ ActionCreator {
 
     signal load(string source)
 
+    // Set the current state
     signal setState(string state)
+
+    // Set the available states of current viewing component
+    signal setAvailableStates(var states)
 
     signal reload()
 
@@ -27,8 +31,12 @@ ActionCreator {
 
     signal copyToClipboard()
 
+    signal copyToFile(string target)
+
     signal askToSaveFile()
 
     signal closeErrorPanel()
+
+    signal setErrorString(string errorString)
 
 }

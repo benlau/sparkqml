@@ -26,4 +26,10 @@ KeyTable {
     property string askToSaveFile
 
     property string closeErrorPanel    
+
+    property string setAvailableStates
+
+    property string copyToFile
+
+    property string setErrorString
 }
