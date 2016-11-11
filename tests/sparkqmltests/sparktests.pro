@@ -19,7 +19,10 @@ DISTFILES +=     qpm.json \
     DummyItem1.qml \
     sample/SyntaxError.qml \
     qmltests/tst_MainStoreWorker.qml \
-    sample/Rect.qml
+    sample/Rect.qml \
+    mockup/mockup_ComponentViewer.qml
 
 HEADERS +=     tests.h
+
+write_file(qmlimport.path, QML_IMPORT_PATH)
 
