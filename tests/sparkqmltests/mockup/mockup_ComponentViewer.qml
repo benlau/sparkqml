@@ -1,5 +1,6 @@
+// Spark's mockup can not use package name due to the conflict with current build binary
 import QtQuick 2.0
-import Spark.views.components 1.0
+import "../../../app/sparkqml/Spark/views/components"
 
 Rectangle {
     width: 480

@@ -44,7 +44,7 @@ QFuture<bool> MockupActor::createProject() const
         }
 
         QtShell::mkdir("-p",m_context->folder);
-        return QtShell::cp("-va", ":/mockup/*",m_context->folder);
+        return QtShell::cp("-va", ":/sparkmockupproject/*",m_context->folder);
     };
 
     return QtConcurrent::run(worker);

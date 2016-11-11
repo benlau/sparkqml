@@ -76,7 +76,7 @@ void AppView::onDispatched(QString type, QJSValue message)
 {
     Q_UNUSED(message);
     if (type == "openMockupProject") {
-        QDesktopServices::openUrl(QUrl::fromLocalFile(m_mockupFolder + "/mockup.qmlproject"));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(m_mockupFolder + "/sparkmockup.qmlproject"));
     }
 }
 

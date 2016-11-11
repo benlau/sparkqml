@@ -24,5 +24,4 @@ DISTFILES +=     qpm.json \
 
 HEADERS +=     tests.h
 
-write_file(qmlimport.path, QML_IMPORT_PATH)
 
