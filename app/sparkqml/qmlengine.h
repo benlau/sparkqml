@@ -47,7 +47,7 @@ public slots:
 
     void clearComponentCache();
 
-    QFuture<bool> scanImportPathList(const QString& qmlFile);
+    QFuture<bool> scanImportPathList(const QString& folder);
 
 private slots:
     void onWarnings(const QList<QQmlError> &warnings);

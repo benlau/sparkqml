@@ -77,17 +77,16 @@ void QmlEngine::clearComponentCache()
     m_engine->clearComponentCache();
 }
 
-QFuture<bool> QmlEngine::scanImportPathList(const QString &qmlFile)
+QFuture<bool> QmlEngine::scanImportPathList(const QString &folder)
 {
     QPointer<QmlEngine> thiz = this;
     QString defaultImportPathFile = m_defaultImportPathFile;
 
-    auto worker = [qmlFile, thiz, defaultImportPathFile]() -> bool {
-        QString path = QtShell::dirname(QUrl(qmlFile).path());
+    auto worker = [folder, thiz, defaultImportPathFile]() -> bool {
 
         // Avoid to call a static member function due
         // to a bug in GCC 4.7 used in travis
-        QString file = _searchImportPathFile(path);
+        QString file = _searchImportPathFile(folder);
         bool res = false;
 
         QStringList importPathList;

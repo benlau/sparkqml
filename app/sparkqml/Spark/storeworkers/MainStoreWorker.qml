@@ -67,7 +67,7 @@ StoreWorker {
         MainStore.selectedState = "";
         MainStore.title = MainStore.fileName ;
 
-        scanImportPathList(source, function(){
+        scanImportPathList(path, function(){
             setSource(source);
         });
     }

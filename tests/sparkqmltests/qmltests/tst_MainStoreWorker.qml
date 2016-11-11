@@ -24,7 +24,7 @@ Item {
         function test_reload_withError() {
             worker.dispatched("load",{ source: Qt.resolvedUrl("../sample/SyntaxError.qml")});
             wait(1000); // It will search for qmlimport.path. It should extract the code into a new component
-            compare(MainStore.errorString !=="",true);
+            compare(MainStore.errorString !=="", true);
             worker.dispatched("reload", {});
 
             // Before it is done, it should clear the errorString
