@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import QuickFlux 1.0
-import "../storeworkers"
+import "../workers"
 
 Item {
     id: adapter

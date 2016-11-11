@@ -10,10 +10,6 @@
         <file>Spark/constants/qmldir</file>
         <file>Spark/adapters/StoreAdapter.qml</file>
         <file>Spark/adapters/qmldir</file>
-        <file>Spark/storeworkers/MainStoreWorker.qml</file>
-        <file>Spark/storeworkers/qmldir</file>
-        <file>Spark/storeworkers/StoreWorker.qml</file>
-        <file>Spark/storeworkers/lodash.min.js</file>
         <file>Spark/views/mainpanel/ErrorPanel.qml</file>
         <file>Spark/views/mainpanel/ErrorPanelForm.ui.qml</file>
         <file>Spark/views/mainpanel/MainPanel.qml</file>
@@ -40,5 +36,9 @@
         <file>sparkmockupproject/sparkmockup.qmlproject</file>
         <file>Spark/views/mainpanel/MainComponentViewer.qml</file>
         <file>Spark/views/mainpanel/MainComponentViewerForm.ui.qml</file>
+        <file>Spark/workers/lodash.min.js</file>
+        <file>Spark/workers/MainStoreWorker.qml</file>
+        <file>Spark/workers/qmldir</file>
+        <file>Spark/workers/StoreWorker.qml</file>
     </qresource>
 </RCC>
