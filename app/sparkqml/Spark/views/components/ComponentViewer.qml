@@ -1,10 +1,18 @@
 import QtQuick 2.0
 import Spark.constants 1.0
+import Spark.sys 1.0
 
 Item {
     id: component
 
-    property string source: ""
+    property string errorMessage: ""
+
+    property var componentStates: new Array
+
+    property bool autoScanImportPathList: true
+
+    signal loaded()
+    signal error()
 
     width: 400
     height: 400
@@ -29,10 +37,33 @@ Item {
         loader.item.scale = 1;
     }
 
+    function load(source) {
+        Engine.clearComponentCache();
+        loader.source = source;
+    }
+
+    function reload() {
+        var source = loader.source;
+        errorMessage = "";
+        loader.source = "";
+        load(source);
+    }
+
     Loader {
         id: loader
         anchors.centerIn: parent
-        source: component.source
+
+        onStatusChanged:  {
+            if (status === Loader.Error) {
+                componentStates = [];
+                errorMessage = Engine.errorString;
+                component.loaded();
+            } else if (status === Loader.Ready) {
+                loader.item.anchors.centerIn = loader;
+                componentStates = loader.item.states;
+                component.error();
+            }
+        }
     }
 
 }

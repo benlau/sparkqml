@@ -28,6 +28,24 @@ Tests::Tests(QObject *parent) : QObject(parent)
 
 }
 
+void Tests::mockupLoadingTests()
+{
+    QStringList files = QtShell::find(QString(SRCDIR) + "mockup", QStringList() << "*.qml");
+
+    QQmlApplicationEngine engine;
+    engine.addImportPath("qrc:///");
+    foreach (QString file , files) {
+        QQmlComponent comp(&engine);
+        comp.loadUrl(QUrl::fromLocalFile(file));
+
+        if (comp.isError()) {
+            qDebug() << QString("%1 : Load Failed. Reason :  %2").arg(file).arg(comp.errorString());
+        }
+        QVERIFY(!comp.isError());
+        qDebug() << QString("%1 : Passed").arg(file);
+    }
+}
+
 void Tests::MockupActor_createProject()
 {
     QString folder = QtShell::pwd() + "/mockup";

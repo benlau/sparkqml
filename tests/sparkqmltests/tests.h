@@ -8,6 +8,8 @@ public:
     explicit Tests(QObject *parent = 0);
 
 private slots:
+    void mockupLoadingTests();
+
     void MockupActor_createProject();
 
     void QmlEngine_scanImagePath();

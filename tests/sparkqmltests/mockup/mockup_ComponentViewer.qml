@@ -10,10 +10,16 @@ Rectangle {
     ComponentViewer {
         id: viewer
         anchors.fill: parent
-        source: Qt.resolvedUrl("../sample/Rect.qml")
     }
 
     states: [
+        State {
+            name: "load"
+            StateChangeScript {
+                script: viewer.load(Qt.resolvedUrl("../sample/Rect.qml"));
+            }
+        },
+
         State {
             name: "scaleToFit"
 
@@ -28,7 +34,15 @@ Rectangle {
                 script: viewer.resizeToFit()
             }
 
+        },
+        State {
+            name: "reload"
+
+            StateChangeScript {
+                script: viewer.reload()
+            }
         }
+
     ]
 
 }
