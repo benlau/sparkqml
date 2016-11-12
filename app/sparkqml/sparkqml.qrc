@@ -40,5 +40,9 @@
         <file>Spark/workers/MainStoreWorker.qml</file>
         <file>Spark/workers/qmldir</file>
         <file>Spark/workers/StoreWorker.qml</file>
+        <file>Spark/views/browserpanel/BrowserActionBar.qml</file>
+        <file>Spark/views/browserpanel/BrowserActionBarForm.ui.qml</file>
+        <file>Spark/views/browserpanel/BrowserPanel.qml</file>
+        <file>Spark/views/browserpanel/BrowserPanelForm.ui.qml</file>
     </qresource>
 </RCC>
