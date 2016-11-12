@@ -129,4 +129,12 @@ StoreWorker {
             MainStore.errorString = message.errorString
         }
     }
+
+    Filter {
+        type: ActionTypes.reload
+        onDispatched: {
+            MainStore.errorString = "";
+            MainStore.reloadTrigger();
+        }
+    }
 }

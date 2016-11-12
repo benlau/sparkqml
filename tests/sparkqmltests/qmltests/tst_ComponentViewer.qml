@@ -11,8 +11,10 @@ Item {
     TestCase {
         name: "ComponentViewer"
 
-        ComponentViewer {
-            id: viewer;
+        Component {
+            id: viewerCreator
+            ComponentViewer {
+            }
         }
 
         function waitUntilTimeout(callback, timeout) {
@@ -29,6 +31,7 @@ Item {
         }
 
         function test_reload_withError() {
+            var viewer = viewerCreator.createObject();
             viewer.load(Qt.resolvedUrl("../sample/SyntaxError.qml"));
             compare(viewer.errorString, "");
 
@@ -43,6 +46,7 @@ Item {
             compare(waitUntilTimeout(function() {
                return viewer.errorString == ""
             }), true);
+            viewer.destroy();
         }
 
     }

@@ -21,6 +21,10 @@ Item {
             MainStore.errorString = "";
         }
 
-
+        function test_reload_withError() {
+            MainStore.errorString = "Error";
+            worker.dispatched("reload", {});
+            compare(MainStore.errorString, "");
+        }
     }
 }

@@ -16,4 +16,7 @@ QtObject {
     property string selectedState: "";
 
     property string title : "Untitled";
+
+    /* UI Action */
+    signal reloadTrigger
 }

@@ -28,16 +28,13 @@ MainComponentViewerForm {
         onSourceChanged: {
             viewer.load(MainStore.source);
         }
+
+        onReloadTrigger: {
+            viewer.reload();
+        }
     }
 
     AppListener {
-        Filter {
-            type: ActionTypes.reload
-            onDispatched: {
-                viewer.reload();
-            }
-        }
-
         Filter {
             type: ActionTypes.scaleToFit
             onDispatched: {
