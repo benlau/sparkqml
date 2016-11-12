@@ -1,25 +1,15 @@
 import QtQuick 2.4
 import QtQuick.Controls 2.0
 import FontAwesome 1.0
+import "../components"
 
-MouseArea {
+Button { // Custom Button
     id: component
     width: 32
     height: 24
     hoverEnabled: true
 
     property alias icon:  textItem.text
-    property bool hovered: false
-    property string toolTip: ""
-
-    ToolTip.delay: 1000
-
-    ToolTip.timeout: 5000
-
-    ToolTip.visible: hovered && toolTip !== ""
-
-    ToolTip.text: toolTip
-
 
     Text {
         id: textItem
@@ -43,6 +33,7 @@ MouseArea {
             }
         }
     ]
+
     Rectangle {
         id: mask
         width: 640
