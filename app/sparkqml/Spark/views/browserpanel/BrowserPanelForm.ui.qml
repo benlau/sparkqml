@@ -6,6 +6,8 @@ Item {
     width: 400
     height: 400
 
+    property alias model: componentGridView.model
+
     ColumnLayout {
         id: columnLayout1
         spacing: 0
@@ -18,11 +20,16 @@ Item {
         }
 
         Rectangle {
-            id: componentGrid
             color: "#eaeaea"
             Layout.fillWidth: true
             Layout.fillHeight: true
 
+            ComponentGridView {
+                id: componentGridView
+
+                anchors.fill: parent
+                anchors.margins: 10
+            }
         }
 
         Rectangle {

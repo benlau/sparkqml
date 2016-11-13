@@ -21,7 +21,8 @@ DISTFILES +=     qpm.json \
     qmltests/tst_MainStoreWorker.qml \
     sample/Rect.qml \
     mockup/mockup_ComponentViewer.qml \
-    qmltests/tst_ComponentViewer.qml
+    qmltests/tst_ComponentViewer.qml \
+    mockup/mockup_BrowserPanel.qml
 
 HEADERS +=     tests.h
 
