@@ -15,5 +15,6 @@ private slots:
     void QmlEngine_scanImagePath();
     void QmlEngine_scanImagePath_withDefaultFile();
 
+    void QmlFileListModel_test();
 };
 

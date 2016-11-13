@@ -3,6 +3,7 @@
 #include <QTest>
 #include <Automator>
 #include <QFutureWatcher>
+#include <qmlfilelistmodel.h>
 #include "qmlengine.h"
 #include "mockupactor.h"
 #include "tests.h"
@@ -124,4 +125,22 @@ void Tests::QmlEngine_scanImagePath_withDefaultFile()
 
     QStringList engineImportPathList = engine.importPathList();
     QVERIFY(engineImportPathList.last() == "qrc:///");
+}
+
+void Tests::QmlFileListModel_test()
+{
+    QmlFileListModel model;
+    QString folder = QtShell::pwd() + "/QmlFileListModel_test";
+    QtShell::mkdir("-p", folder);
+
+    QtShell::touch(folder + "/Sample1.qml");
+    QtShell::touch(folder + "/Sample2.qml");
+    QtShell::touch(folder + "/Sample2Form.ui.qml");
+    QtShell::touch(folder + "/README.md");
+
+    QVERIFY(model.count() == 0);
+    model.setFolder(folder);
+    QVERIFY(Automator::waitUntilSignal(&model,SIGNAL(contentReady())));
+    QCOMPARE(model.count(), 2);
+
 }

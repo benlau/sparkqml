@@ -9,7 +9,8 @@ SOURCES += $$PWD/appview.cpp \
     $$PWD/qmltypes.cpp \
     $$PWD/clipboard.cpp \
     $$PWD/url.cpp \
-    $$PWD/fileinfo.cpp
+    $$PWD/fileinfo.cpp \
+    $$PWD/qmlfilelistmodel.cpp
 
 RESOURCES += \    
     $$PWD/sparkqml.qrc
@@ -26,4 +27,5 @@ HEADERS +=     $$PWD/appview.h \
     $$PWD/qmlengine.h \
     $$PWD/clipboard.h \
     $$PWD/url.h \
-    $$PWD/fileinfo.h
+    $$PWD/fileinfo.h \
+    $$PWD/qmlfilelistmodel.h
