@@ -8,7 +8,7 @@ StateItemForm {
 
     mouseArea {
         onClicked: {
-            AppActions.setState(name);
+            AppActions.setSelectedState(name);
         }
     }
 

@@ -45,5 +45,7 @@
         <file>Spark/views/browserpanel/BrowserPanel.qml</file>
         <file>Spark/views/browserpanel/BrowserPanelForm.ui.qml</file>
         <file>Spark/views/components/Button.qml</file>
+        <file>Spark/views/browserpanel/ActionButton.qml</file>
+        <file>Spark/views/browserpanel/ActionButtonForm.ui.qml</file>
     </qresource>
 </RCC>

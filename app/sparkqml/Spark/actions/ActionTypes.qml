@@ -9,7 +9,7 @@ KeyTable {
 
     property string load
 
-    property string setState
+    property string setSelectedState
 
     property string reload
 

@@ -14,7 +14,7 @@ ActionCreator {
     signal load(string source)
 
     // Set the current state
-    signal setState(string state)
+    signal setSelectedState(string state)
 
     // Set the available states of current viewing component
     signal setAvailableStates(var states)

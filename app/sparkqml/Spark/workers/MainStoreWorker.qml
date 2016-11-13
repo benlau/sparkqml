@@ -70,7 +70,7 @@ StoreWorker {
     }
 
     Filter {
-        type: ActionTypes.setState
+        type: ActionTypes.setSelectedState
         onDispatched: {
             MainStore.selectedState = message.state;
         }
