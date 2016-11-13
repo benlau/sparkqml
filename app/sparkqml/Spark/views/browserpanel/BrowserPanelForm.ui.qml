@@ -21,6 +21,7 @@ Item {
 
         Rectangle {
             color: "#eaeaea"
+            clip: true
             Layout.fillWidth: true
             Layout.fillHeight: true
 

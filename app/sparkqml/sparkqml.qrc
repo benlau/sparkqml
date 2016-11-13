@@ -28,7 +28,6 @@
         <file>Spark/views/mainpanel/Viewer.qml</file>
         <file>Spark/views/mainpanel/ViewerForm.ui.qml</file>
         <file>Spark/views/browserpanel/Card.qml</file>
-        <file>Spark/views/browserpanel/MaterialShadow.qml</file>
         <file>Spark/views/browserpanel/Shadow.qml</file>
         <file>Spark/views/components/ComponentViewer.qml</file>
         <file>Spark/views/components/qmldir</file>

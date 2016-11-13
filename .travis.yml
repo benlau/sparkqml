@@ -1,4 +1,5 @@
 language : cpp
+dist: trusty
 env:
   - DISPLAY=:99.0
 compiler:
