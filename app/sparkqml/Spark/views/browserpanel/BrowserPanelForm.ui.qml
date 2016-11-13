@@ -34,16 +34,6 @@ Item {
         }
 
         Rectangle {
-            id: divider
-            width: 200
-            height: 200
-            color: "#bfbfbf"
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            Layout.maximumHeight: 1
-        }
-
-        Rectangle {
             id: browserFooterBar
             width: 200
             height: 42
@@ -52,6 +42,12 @@ Item {
             Layout.maximumHeight: 42
             Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
             Layout.fillWidth: true
+
+            Shadow {
+                anchors.fill: parent
+                z: -1
+                inverted: true
+            }
         }
 
     }

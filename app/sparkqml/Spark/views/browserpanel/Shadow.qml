@@ -5,6 +5,8 @@ import QtGraphicalEffects 1.0
 Item {
     id : shadow
 
+    property bool inverted: false
+
     Rectangle {
         id: dark
         anchors.fill: parent
@@ -15,7 +17,7 @@ Item {
     DropShadow {
         source: dark
         anchors.fill: parent
-        verticalOffset: 1
+        verticalOffset: inverted ? -1 : 1
         opacity: 0.2
         spread: 0.5
     }
