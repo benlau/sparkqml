@@ -8,22 +8,25 @@ Item {
 
     ListModel {
         id: gridModel
-
-        ListElement {
-            qml: "Component.qml"
-            ui: "ComponentForm.ui.qml"
-        }
-
-        ListElement {
-            qml: "Component.qml"
-            ui: "ComponentForm.ui.qml"
-        }
-
     }
 
     BrowserPanel {
         anchors.fill: parent
         model: gridModel
+    }
+
+    Component.onCompleted: {
+        gridModel.append({
+             source: Qt.resolvedUrl("../sample/Rect.qml"),
+             qml: "Component.qml",
+             ui: "ComponentForm.ui.qml"
+        });
+
+        gridModel.append({
+             source: Qt.resolvedUrl("../sample/Rect.qml"),
+             qml: "Component.qml",
+             ui: "ComponentForm.ui.qml"
+        });
     }
 
 }

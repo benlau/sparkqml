@@ -8,6 +8,8 @@ import Future 1.0
 Item {
     id: component
 
+    property string source: "";
+
     property string errorString: ""
 
     property string selectedState: ""
@@ -65,6 +67,12 @@ Item {
         var source = loader.source;
         errorString = "";
         load(source);
+    }
+
+    onSourceChanged: {
+        if (source !== "") {
+            load(source);
+        }
     }
 
     Loader {

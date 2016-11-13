@@ -1,9 +1,12 @@
 import QtQuick 2.4
 import QtQuick.Layouts 1.3
+import "../components"
 
 Item {
     width: 180
     height: 180
+
+    property alias source: viewer.source
 
     ColumnLayout {
         spacing: 0
@@ -12,6 +15,11 @@ Item {
         Card {
             width: 180
             height: 140
+
+            ComponentViewer {
+                id: viewer
+                anchors.fill: parent
+            }
         }
 
         Text {
