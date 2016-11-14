@@ -17,7 +17,7 @@ Item {
 
             PropertyChanges {
                 target: viewStack
-                pages: [
+                views: [
                     {
                         name: "browserPanel"
                     }

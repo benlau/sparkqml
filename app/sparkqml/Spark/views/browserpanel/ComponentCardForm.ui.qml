@@ -11,8 +11,8 @@ Rectangle {
 
     property string source: ""
     property alias preview: viewer.source
-    property string qml: "Component.qml"
-    property string ui: "ComponentForm.ui.qml"
+    property string qml: ""
+    property string ui: ""
 
     ColumnLayout {
         spacing: 8
@@ -42,6 +42,8 @@ Rectangle {
             id: text1
             color: "#de000000"
             text: component.qml
+            Layout.maximumHeight: text === "" ? 0 : 14
+            Layout.minimumHeight: text === "" ? 0 : 14
             verticalAlignment: Text.AlignVCenter
             Layout.fillWidth: true
             Layout.fillHeight: true
@@ -54,12 +56,21 @@ Rectangle {
             id: text2
             color: "#de000000"
             text: component.ui
+            Layout.minimumHeight: 14
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
             Layout.fillHeight: true
             Layout.fillWidth: true
             font.pixelSize: 14
             elide: Text.ElideMiddle
+        }
+
+        Item {
+            id: spacer
+            width: 200
+            height: 200
+            Layout.fillWidth: true
+            Layout.fillHeight: true
         }
     }
 

@@ -20,6 +20,15 @@ Card {
             icon: FontAwesome.close
         }
 
+        Text {
+            id: titleItem
+            text: qsTr("Browse Folder")
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignLeft
+            Layout.fillHeight: true
+            font.pixelSize: 14
+        }
+
         Item {
             id: spacer
             width: 200
@@ -42,6 +51,7 @@ Card {
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
             icon: FontAwesome.minus
         }
+
 
     }
 }

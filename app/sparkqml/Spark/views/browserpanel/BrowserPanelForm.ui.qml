@@ -33,22 +33,5 @@ Item {
             }
         }
 
-        Rectangle {
-            id: browserFooterBar
-            width: 200
-            height: 42
-            color: "#e8e9e8"
-            Layout.fillHeight: true
-            Layout.maximumHeight: 42
-            Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
-            Layout.fillWidth: true
-
-            Shadow {
-                anchors.fill: parent
-                z: -1
-                inverted: true
-            }
-        }
-
     }
 }
