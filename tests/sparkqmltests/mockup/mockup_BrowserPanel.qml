@@ -16,17 +16,14 @@ Item {
     }
 
     Component.onCompleted: {
-        gridModel.append({
-             source: Qt.resolvedUrl("../sample/Rect.qml"),
-             qml: "Component.qml",
-             ui: "ComponentForm.ui.qml"
-        });
-
-        gridModel.append({
-             source: Qt.resolvedUrl("../sample/Rect.qml"),
-             qml: "Component.qml",
-             ui: "ComponentForm.ui.qml"
-        });
+        for (var i = 0 ; i < 10;i++) {
+            gridModel.append({
+                 source: Qt.resolvedUrl("../sample/Rect.qml"),
+                 preview: Qt.resolvedUrl("../sample/Rect.qml"),
+                 qml: "Component.qml",
+                 ui: "ComponentForm.ui.qml"
+            });
+        }
     }
 
 }

@@ -22,7 +22,7 @@ Card {
 
         Text {
             id: titleItem
-            text: qsTr("Browse Folder")
+            text: qsTr("Component Browser")
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignLeft
             Layout.fillHeight: true
