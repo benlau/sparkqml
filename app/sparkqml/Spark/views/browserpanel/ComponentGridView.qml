@@ -13,10 +13,16 @@ Item {
         cellWidth: 200
         cellHeight: 200
 
-        delegate: ComponentCard {
-            source: model.preview
-            ui: model.ui
-            qml: model.qml
+        delegate: Item {
+            width: gridView.cellWidth
+            height: gridView.cellHeight
+            ComponentCard {
+                source: model.source
+                preview: model.preview
+                ui: model.ui
+                qml: model.qml
+                anchors.centerIn: parent
+            }
         }
     }
 

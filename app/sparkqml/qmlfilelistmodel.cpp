@@ -135,6 +135,13 @@ void QmlFileListModel::feed()
                 file.preview = QUrl::fromLocalFile(file.qml).toString();
             }
 
+            if (!file.qml.isEmpty()) {
+                // file.source prefer to load QML file (e.g preview transition effect)
+                file.source = QUrl::fromLocalFile(file.qml).toString();
+            } else {
+                file.source = QUrl::fromLocalFile(file.ui).toString();
+            }
+
             file.ui = QtShell::basename(file.ui);
             file.qml = QtShell::basename(file.qml);
             return file;
@@ -151,6 +158,7 @@ void QmlFileListModel::feed()
 
             QVariantList curr = map<QVariant>(res, [](const File& item ) {
                 QVariantMap map;
+                map["source"] = item.source;
                 map["preview"] = item.preview;
                 map["ui"] = item.ui;
                 map["qml"] = item.qml;

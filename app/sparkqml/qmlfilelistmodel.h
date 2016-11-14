@@ -25,7 +25,11 @@ private:
 
     class File {
     public:
+        /// Preview file URL
         QString preview;
+
+        /// The source file URL to be loaded
+        QString source;
         QString qml;
         QString ui;
     };
