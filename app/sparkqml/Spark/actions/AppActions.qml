@@ -39,4 +39,7 @@ ActionCreator {
 
     signal setErrorString(string errorString)
 
+    signal browse()
+
+    signal pop()
 }

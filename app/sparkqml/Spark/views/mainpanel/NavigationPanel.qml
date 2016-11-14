@@ -3,6 +3,10 @@ import Spark.actions 1.0
 
 NavigationPanelForm {
 
+    browse.onClicked: {
+        AppActions.browse();
+    }
+
     openMockup.onClicked: {
         AppActions.openMockupProject();
     }

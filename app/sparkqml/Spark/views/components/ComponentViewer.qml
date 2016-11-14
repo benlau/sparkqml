@@ -20,6 +20,8 @@ Item {
 
     property alias item: loader.item
 
+    property alias asynchronous : loader.asynchronous
+
     signal loaded()
     signal error()
 
@@ -54,10 +56,17 @@ Item {
             var path = Shell.dirname(Url.path(source));
             var future = Engine.scanImportPathList(path);
             Future.onFinished(future, function() {
+                if (loader === null) {
+                    return;
+                }
                 loader.source = source;
             });
         } else {
             Q.setTimeout(function() {
+                if (loader === null) {
+                    return;
+                }
+
                 loader.source = source;
             },0);
         }

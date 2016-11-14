@@ -8,6 +8,7 @@ Card {
     width: 400
     height: 36
     color: "#f9f9f9"
+    property alias closeButton: closeButton
 
     RowLayout {
         id: rowLayout1
@@ -15,6 +16,7 @@ Card {
         anchors.fill: parent
 
         ActionButton {
+            id: closeButton
             icon: FontAwesome.close
         }
 

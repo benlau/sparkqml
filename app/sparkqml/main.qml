@@ -10,6 +10,7 @@ import Spark.sys 1.0
 import Qt.labs.settings 1.0
 import QtQuick.Dialogs 1.2
 import "./Spark/views/mainpanel"
+import "./Spark/views"
 
 ApplicationWindow {
     id: mainWindow
@@ -27,10 +28,6 @@ ApplicationWindow {
         property string saveFolder: ""
     }
 
-    QtObject {
-        id: mainContext
-    }
-
     FileDialog {
         id: mainFileDialog
     }
@@ -45,8 +42,7 @@ ApplicationWindow {
         }
     }
 
-    MainPanel {
-        id: mainPanel
+    ViewStack {
         anchors.fill: parent
     }
 

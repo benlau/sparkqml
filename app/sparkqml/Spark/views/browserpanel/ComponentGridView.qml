@@ -14,7 +14,9 @@ Item {
         cellHeight: 200
 
         delegate: ComponentCard {
-            source: model.source
+            source: model.preview
+            ui: model.ui
+            qml: model.qml
         }
     }
 

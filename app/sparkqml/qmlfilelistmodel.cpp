@@ -128,12 +128,15 @@ void QmlFileListModel::feed()
                 }
             }
 
-            if (!file.qml.isEmpty()) {
-                file.preview = file.qml;
+            if (!file.ui.isEmpty()) {
+                // Prefer to show UI Form rather than qml file.
+                file.preview = QUrl::fromLocalFile(file.ui).toString();
             } else {
-                file.preview = file.ui;
+                file.preview = QUrl::fromLocalFile(file.qml).toString();
             }
 
+            file.ui = QtShell::basename(file.ui);
+            file.qml = QtShell::basename(file.qml);
             return file;
         });
 

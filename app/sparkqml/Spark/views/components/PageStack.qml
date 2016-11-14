@@ -3,9 +3,9 @@ import QtQuick.Controls 2.0
 
 Item {
 
-    property var pages: new Array
+    property var views: new Array
 
-    property var prevPages: new Array
+    property var prevViews: new Array
 
     property var model: ({})
 
@@ -32,8 +32,8 @@ Item {
         }
     }
 
-    onPagesChanged: {
-        update(prevPages, pages);
-        prevPages = pages;
+    onViewsChanged: {
+        update(prevViews, views);
+        prevViews = views;
     }
 }

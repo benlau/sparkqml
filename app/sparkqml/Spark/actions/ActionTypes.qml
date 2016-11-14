@@ -32,4 +32,8 @@ KeyTable {
     property string copyToFile
 
     property string setErrorString
+
+    property string browse
+
+    property string pop
 }

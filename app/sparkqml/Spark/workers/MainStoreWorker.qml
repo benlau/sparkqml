@@ -138,4 +138,24 @@ StoreWorker {
             MainStore.reloadTrigger();
         }
     }
+
+    Filter {
+        type: ActionTypes.browse
+        onDispatched: {
+            mainDrawer.close();
+            MainStore.browsingFolder = MainStore.folder;
+            MainStore.views = [
+                {
+                    name: "browserPanel"
+                }
+            ]
+        }
+    }
+
+    Filter {
+        type: ActionTypes.pop
+        onDispatched: {
+            MainStore.views = [];
+        }
+    }
 }

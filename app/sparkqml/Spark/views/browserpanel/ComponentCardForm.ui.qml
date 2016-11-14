@@ -3,13 +3,16 @@ import QtQuick.Layouts 1.3
 import "../components"
 
 Item {
+    id: component
     width: 180
     height: 180
 
     property alias source: viewer.source
+    property string qml: "Component.qml"
+    property string ui: "ComponentForm.ui.qml"
 
     ColumnLayout {
-        spacing: 0
+        spacing: 8
         anchors.fill: parent
 
         Card {
@@ -19,13 +22,15 @@ Item {
             ComponentViewer {
                 id: viewer
                 anchors.fill: parent
+                asynchronous: true
+                autoScanImportPathList: false
             }
         }
 
         Text {
             id: text1
             color: "#de000000"
-            text: qsTr("Component.qml")
+            text: component.qml
             verticalAlignment: Text.AlignVCenter
             Layout.fillWidth: true
             Layout.fillHeight: true
@@ -37,7 +42,7 @@ Item {
         Text {
             id: text2
             color: "#de000000"
-            text: qsTr("ComponentForm.ui.qml")
+            text: component.ui
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
             Layout.fillHeight: true
@@ -45,6 +50,7 @@ Item {
             font.pixelSize: 14
             elide: Text.ElideMiddle
         }
+
 
 
     }

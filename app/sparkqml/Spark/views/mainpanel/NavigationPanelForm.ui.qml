@@ -9,11 +9,19 @@ Rectangle {
     height: 400
 
     color: "#e7e7e7"
+    property alias browse: browse
     property alias openMockup: openMockup
     property alias exitButton: exitButton
 
     ColumnLayout {
         anchors.fill: parent
+
+        NavigationItem {
+            id: browse
+            icon: FontAwesome.folderOpenO
+            text: "Browse Folder"
+            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+        }
 
         NavigationItem {
             id: openMockup
@@ -22,9 +30,18 @@ Rectangle {
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
         }
 
+        Item {
+            id: item1
+            width: 200
+            height: 200
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+        }
+
         NavigationItem {
             id: exitButton
             Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
         }
+
     }
 }

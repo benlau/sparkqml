@@ -19,6 +19,10 @@ QtObject {
 
     property string title : "Untitled";
 
+    property var views: new Array
+
+    property string browsingFolder: ""
+
     /* UI Action */
     signal reloadTrigger
 }
