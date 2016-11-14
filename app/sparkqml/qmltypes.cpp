@@ -4,6 +4,7 @@
 #include "clipboard.h"
 #include "url.h"
 #include "fileinfo.h"
+#include "qmlfilelistmodel.h"
 
 template <typename T>
 static QObject* provider(QQmlEngine *engine, QJSEngine *scriptEngine) {
@@ -30,6 +31,7 @@ static void registerTypes() {
     qRegisterMetaType<QList<QQmlError> >();
 
     qmlRegisterType<FileWatcher>("Spark.sys", 1, 0, "FileWatcher");
+    qmlRegisterType<QmlFileListModel>("Spark.sys", 1, 0, "QmlFileListModel");
 
     qmlRegisterSingletonType<QmlEngine>("Spark.sys", 1, 0, "Engine", engineProvider);
     qmlRegisterSingletonType<Clipboard>("Spark.sys", 1, 0, "Clipboard", provider<Clipboard>);

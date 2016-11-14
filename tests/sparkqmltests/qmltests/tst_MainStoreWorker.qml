@@ -26,5 +26,12 @@ Item {
             worker.dispatched("reload", {});
             compare(MainStore.errorString, "");
         }
+
+        function test_load() {
+            var src = Qt.resolvedUrl("../sample/Rect.qml");
+            worker.dispatched("load", {source: src})
+            compare(MainStore.source, src);
+            compare(MainStore.folder, Shell.dirname(Url.path(src)));
+        }
     }
 }

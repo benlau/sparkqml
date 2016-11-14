@@ -44,6 +44,7 @@ StoreWorker {
         var path = Url.path(source);
         MainStore.source = source;
         MainStore.fileName = Shell.basename(path);
+        MainStore.folder = Shell.dirname(path);
         MainStore.selectedState = "";
         MainStore.title = MainStore.fileName ;
     }
@@ -90,7 +91,7 @@ StoreWorker {
         }
     }
 
-    // @TODO - Extract
+    // @TODO - Extract to another worker
     Filter {
         type: ActionTypes.askToSaveFile
         onDispatched: {

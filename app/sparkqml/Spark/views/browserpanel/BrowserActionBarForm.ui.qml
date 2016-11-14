@@ -28,6 +28,7 @@ Card {
 
         ActionButton {
             id: actionButton1
+            visible: false
             Layout.fillHeight: false
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
             icon: FontAwesome.plus
@@ -35,6 +36,7 @@ Card {
 
         ActionButton {
             id: actionButton2
+            visible: false
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
             icon: FontAwesome.minus
         }
