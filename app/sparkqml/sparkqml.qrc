@@ -49,5 +49,7 @@
         <file>Spark/views/browserpanel/ComponentCard.qml</file>
         <file>Spark/views/browserpanel/ComponentCardForm.ui.qml</file>
         <file>Spark/views/browserpanel/ComponentGridView.qml</file>
+        <file>Spark/views/components/PageStack.qml</file>
+        <file>Spark/views/ViewStack.qml</file>
     </qresource>
 </RCC>

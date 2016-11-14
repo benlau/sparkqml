@@ -4,6 +4,5 @@ import Spark.sys 1.0
 
 BrowserPanelForm {
     model: QmlFileListModel {
-
     }
 }

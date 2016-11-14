@@ -6,8 +6,8 @@ import "."
 
 Item {
     id: item1
-    width: 640
-    height: 480
+    implicitWidth: 640
+    implicitHeight: 480
     property alias maskMouseArea: maskMouseArea
     property bool showErrorPanel: false
 

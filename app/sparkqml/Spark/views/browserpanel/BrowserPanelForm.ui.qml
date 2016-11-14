@@ -3,8 +3,8 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 
 Item {
-    width: 400
-    height: 400
+    implicitWidth: 640
+    implicitHeight: 480
 
     property alias model: componentGridView.model
 
