@@ -51,5 +51,8 @@
         <file>Spark/views/browserpanel/ComponentGridView.qml</file>
         <file>Spark/views/components/PageStack.qml</file>
         <file>Spark/views/ViewStack.qml</file>
+        <file>Spark/js/redux/qmldir</file>
+        <file>Spark/js/redux/reduxwrapper.js</file>
+        <file>Spark/js/redux/redux.min.js</file>
     </qresource>
 </RCC>

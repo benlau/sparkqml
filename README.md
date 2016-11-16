@@ -1,12 +1,8 @@
 # SparkQML
 
 SparkQML is a utility that loads and displays QML document like the qmlscene from Qt SDK. 
-However, it could also show all the available states of a component and change to specific state with transition effect.
-It is useful to preview the animation of a state and transition effect between states.
-
-Remarks:  The project is still in an early stage. 
-The current version is proof-of-concept prototype. 
-If you find any problem, please free free to submit an issue.
+Moreover, it could show all the available states of a component and change to preview the transition effect.
+It is useful to demonstrate and verify the visual effect of a component. 
 
 ![Component Viewer](https://raw.githubusercontent.com/benlau/junkcode/master/docs/SparkQML.gif)
 
