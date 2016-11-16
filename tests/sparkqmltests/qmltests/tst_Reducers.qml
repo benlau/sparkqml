@@ -21,7 +21,7 @@ Item {
             compare(state.actions.length, 1)
             store.dispatch({type: "dummy"});
             compare(state.actions.length, 2);
-            compare(state.actions[1].type, "dummy");
+            compare(state.actions[1], "dummy");
         }
 
     }
