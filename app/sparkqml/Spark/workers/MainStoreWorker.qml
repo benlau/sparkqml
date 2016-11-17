@@ -78,6 +78,35 @@ StoreWorker {
     }
 
     Filter {
+        type: ActionTypes.moveSelectedState
+        onDispatched: {
+            var index = -1;
+            for (var i = 0 ; i < MainStore.states.length;i++) {
+                var state = MainStore.states[i];
+                if (state.name === MainStore.selectedState) {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (message.direction === "up") {
+                index--;
+            } else {
+                index++;
+            }
+
+            if (index < 0) {
+                index = 0;
+            }
+            if (index >= MainStore.states.length) {
+                index = MainStore.states.length - 1;
+            }
+
+            MainStore.selectedState = MainStore.states[index].name;
+        }
+    }
+
+    Filter {
         type: ActionTypes.openDrawer
         onDispatched: {
             mainDrawer.open();

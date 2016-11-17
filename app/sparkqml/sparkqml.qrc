@@ -54,5 +54,6 @@
         <file>Spark/js/redux/redux.min.js</file>
         <file>Spark/js/qtredux/qmldir</file>
         <file>Spark/js/qtredux/qtredux.js</file>
+        <file>Spark/views/mainpanel/StateListView.qml</file>
     </qresource>
 </RCC>

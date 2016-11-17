@@ -16,6 +16,8 @@ ActionCreator {
     // Set the current state
     signal setSelectedState(string state)
 
+    signal moveSelectedState(string direction)
+
     // Set the available states of current viewing component
     signal setAvailableStates(var states)
 

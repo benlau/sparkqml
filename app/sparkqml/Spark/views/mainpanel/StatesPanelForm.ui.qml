@@ -45,7 +45,7 @@ Rectangle {
             Layout.fillHeight: true
             Layout.fillWidth: true
 
-            ListView {
+            StateListView {
                 id: listView
                 anchors.topMargin: 0
                 spacing: 0

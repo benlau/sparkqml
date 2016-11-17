@@ -4,7 +4,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls 2.0
 import "."
 
-Item {
+FocusScope {
     id: item1
     implicitWidth: 640
     implicitHeight: 480

@@ -42,20 +42,24 @@ ApplicationWindow {
         }
     }
 
-    ViewStack {
+    FocusScope {
         anchors.fill: parent
-    }
-
-    Drawer {
-        id: mainDrawer
-        dim: true
-        dragMargin: 0
-        width: 160
-        height: mainWindow.height
-
-        NavigationPanel {
+        ViewStack {
             anchors.fill: parent
         }
+
+        Drawer {
+            id: mainDrawer
+            dim: true
+            dragMargin: 0
+            width: 160
+            height: mainWindow.height
+
+            NavigationPanel {
+                anchors.fill: parent
+            }
+        }
     }
+
 
 }

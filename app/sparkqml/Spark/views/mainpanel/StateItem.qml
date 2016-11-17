@@ -3,12 +3,14 @@ import Spark.actions 1.0
 import Spark.stores 1.0
 
 StateItemForm {
+    id: component
 
     property string name: "";
 
     mouseArea {
         onClicked: {
             AppActions.setSelectedState(name);
+            component.forceActiveFocus();
         }
     }
 

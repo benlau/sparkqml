@@ -11,6 +11,8 @@ KeyTable {
 
     property string setSelectedState
 
+    property string moveSelectedState
+
     property string reload
 
     property string openDrawer
