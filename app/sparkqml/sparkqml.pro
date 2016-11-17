@@ -18,5 +18,7 @@ include(vendor/vendor.pri)
 DISTFILES +=     qpm.json \
     ../../README.md
 
+ICON = sparkqml.icns
+
 # For Qt Creator <= 4.1
 QML_IMPORT_PATH += $$ROOTDIR/mockup/designer
