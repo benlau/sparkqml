@@ -9,7 +9,7 @@ before_install:
 #    - sudo apt-get update -qq
 #    - sudo apt-get install --force-yes -qq  qpm
     - export GOPATH=`pwd`/bin
-    - export PATH=`pwd/bin:$PATH
+    - export PATH=`pwd`/bin:$PATH
     - go get qpm.io/qpm
     - sh -e /etc/init.d/xvfb start
 script:
