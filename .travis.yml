@@ -8,9 +8,10 @@ before_install:
 #    - sudo add-apt-repository --yes "deb http://download.opensuse.org/repositories/home:/benlau/xUbuntu_15.10 ./"
 #    - sudo apt-get update -qq
 #    - sudo apt-get install --force-yes -qq  qpm
-    - export GOPATH=`pwd`/bin
-    - export PATH=`pwd`/bin:$PATH
+    - export GOPATH=`pwd`/gosrc
+    - export PATH=`pwd`/gosrc/bin:$PATH
     - go get qpm.io/qpm
+    - find $GOPATH
     - sh -e /etc/init.d/xvfb start
 script:
     - git clone https://github.com/benlau/qtci.git

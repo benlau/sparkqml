@@ -52,5 +52,7 @@
         <file>Spark/js/redux/qmldir</file>
         <file>Spark/js/redux/reduxwrapper.js</file>
         <file>Spark/js/redux/redux.min.js</file>
+        <file>Spark/js/qtredux/qmldir</file>
+        <file>Spark/js/qtredux/qtredux.js</file>
     </qresource>
 </RCC>
