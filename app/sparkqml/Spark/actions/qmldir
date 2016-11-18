@@ -1,2 +1,3 @@
 singleton ActionTypes 1.0 ActionTypes.qml
 singleton AppActions 1.0 AppActions.qml
+ReduxActionCreator 1.0 ReduxActionCreator.qml

@@ -55,5 +55,9 @@
         <file>Spark/js/qtredux/qmldir</file>
         <file>Spark/js/qtredux/qtredux.js</file>
         <file>Spark/views/mainpanel/StateListView.qml</file>
+        <file>Spark/actions/ReduxActionCreator.qml</file>
+        <file>Spark/js/immutabilityhelper/qmldir</file>
+        <file>Spark/js/immutabilityhelper/immutabilityhelperwrapper.js</file>
+        <file>Spark/js/immutabilityhelper/immutabilityhelper.min.js</file>
     </qresource>
 </RCC>

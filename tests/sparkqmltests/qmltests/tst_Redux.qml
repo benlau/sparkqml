@@ -3,11 +3,13 @@ import QtTest 1.0
 import Shell 1.0
 import Spark.js.redux 1.0
 import Spark.js.qtredux 1.0
+import Spark.js.immutabilityhelper 1.0
+import Spark.actions 1.0
 
 Item {
 
     TestCase {
-        name: "Reducers"
+        name: "Redux"
 
         function test_store_create() {
             var store = Redux.createStore(function(state, action) {
@@ -52,6 +54,32 @@ Item {
 
             compare(QtRedux.shallowDiff([],[]), []);
             compare(QtRedux.shallowDiff([3,4],[1,2]), [1,2]);
+        }
+
+        function test_ImmutabilityHelper() {
+            var state1 = ["x"];
+            var state2 = ImmutabilityHelper.update(state1, {$push: ["y"]}); // ['x', 'y']
+            compare(state2, ["x", "y"])
+        }
+
+        ReduxActionCreator {
+            id: actions
+        }
+
+        function test_ActionCreator() {
+            var store = Redux.createStore(function(state, action) {
+                if (state === undefined) {
+                    return { actions: [ action.type] };
+                }
+                state.actions.push(action.type);
+                return state;
+            });
+
+            actions.dispatch = store.dispatch;
+            actions.startApp();
+            var state = store.getState();
+            compare(state.actions.length, 2);
+            compare(state.actions[1], "startApp");
         }
 
     }
