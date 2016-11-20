@@ -59,5 +59,7 @@
         <file>Spark/js/immutabilityhelper/qmldir</file>
         <file>Spark/js/immutabilityhelper/immutabilityhelperwrapper.js</file>
         <file>Spark/js/immutabilityhelper/immutabilityhelper.min.js</file>
+        <file>Spark/reducers/app.js</file>
+        <file>Spark/reducers/qmldir</file>
     </qresource>
 </RCC>
