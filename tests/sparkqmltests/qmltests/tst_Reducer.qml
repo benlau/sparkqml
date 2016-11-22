@@ -29,5 +29,18 @@ Item {
             compare(state !== newState, true);
             compare(newState.mainWindowVisible, true);
         }
+
+        function test_load() {
+            var store = Redux.createStore(App.reducer);
+            actions.dispatch = store.dispatch;
+
+            actions.load("file:///folder/App.qml");
+            var state = store.getState();
+            compare(state.source, "file:///folder/App.qml");
+            compare(state.fileName, "App.qml");
+            compare(state.folder, "/folder");
+            compare(state.mainWindowTitle, "App.qml");
+            compare(state.selectedState, "");
+        }
     }
 }

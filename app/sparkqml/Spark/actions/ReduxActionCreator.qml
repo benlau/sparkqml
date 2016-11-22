@@ -7,7 +7,14 @@ QtObject {
     function startApp() {
         dispatch({
             type: "startApp"
-        })
+        });
+    }
+
+    function load(source) {
+        dispatch({
+            type: "load",
+            source: source
+        });
     }
 
 }
