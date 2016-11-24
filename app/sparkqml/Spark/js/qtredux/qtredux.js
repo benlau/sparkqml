@@ -1,4 +1,5 @@
 .pragma library
+Qt.include("./signalproxymiddleware.js")
 
 function shallowDiff(v1, v2) {
     if (v1 === v2) {

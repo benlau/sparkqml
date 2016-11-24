@@ -82,5 +82,72 @@ Item {
             compare(state.actions[1], "startApp");
         }
 
+        function test_Middleware() {
+            var reducer = function(state, action) {
+                if (state === undefined) {
+                    return {value: 0}
+                }
+                if (action.hasOwnProperty("value")) {
+                    return {
+                        value: action.value + state.value
+                    }
+                }
+                return state;
+            }
+            var middleware = function(store) {
+                return function(next) {
+                    return function(action) {
+                        if (action.hasOwnProperty("value")) {
+                            action.value++;
+                        }
+                        next(action);
+                    }
+                }
+            }
+
+            var store = Redux.createStore(reducer, Redux.applyMiddleware(middleware));
+
+            compare(store.getState().value, 0);
+            store.dispatch({type:"dummy", value:1});
+            compare(store.getState().value, 2);
+
+        }
+
+        Item {
+            id: signalProxy
+
+            signal signal1
+            property int signal1Count: 0
+
+            signal signal2(int v1, string v2)
+            property int signal2Count: 0
+
+            onSignal1: {
+                signal1Count++;
+            }
+
+            onSignal2: {
+                signal2Count++;
+            }
+        }
+
+        function test_SignalProxyMiddleware() {
+            var reducer = function() {};
+            var store = Redux.createStore(reducer,
+                                          Redux.applyMiddleware(QtRedux.createSignalProxyMiddleware(signalProxy)));
+
+            store.dispatch({type: "signal1"});
+            compare(signalProxy.signal1Count, 1);
+
+            try { // Uncaught exception: Insufficient arguments
+                store.dispatch({type: "signal2"});
+            } catch (e) {
+            }
+
+            compare(signalProxy.signal2Count, 0);
+
+            store.dispatch({type: "signal2", arguments: [1,"2"] });
+            compare(signalProxy.signal2Count, 1);
+        }
     }
 }

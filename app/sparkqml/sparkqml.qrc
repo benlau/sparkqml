@@ -61,5 +61,6 @@
         <file>Spark/js/immutabilityhelper/immutabilityhelper.min.js</file>
         <file>Spark/reducers/app.js</file>
         <file>Spark/reducers/qmldir</file>
+        <file>Spark/js/qtredux/signalproxymiddleware.js</file>
     </qresource>
 </RCC>
