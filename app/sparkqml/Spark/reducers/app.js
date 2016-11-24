@@ -42,6 +42,13 @@ function reducer(state, actions) {
         };
         state = update(state, ops);
         break;
+
+    case "setSelectedState":
+        ops = {
+            selectedState: {$set: actions.state}
+        }
+        state = update(state, ops);
+        break;
     }
 
     return state;

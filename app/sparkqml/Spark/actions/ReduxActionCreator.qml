@@ -17,4 +17,11 @@ QtObject {
         });
     }
 
+    function setSelectedState(state) {
+        dispatch({
+            type: "setSelectedState",
+            state: state
+        });
+    }
+
 }

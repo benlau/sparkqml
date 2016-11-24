@@ -62,5 +62,6 @@
         <file>Spark/reducers/app.js</file>
         <file>Spark/reducers/qmldir</file>
         <file>Spark/js/qtredux/signalproxymiddleware.js</file>
+        <file>Spark/reducers/StoreProvider.qml</file>
     </qresource>
 </RCC>
