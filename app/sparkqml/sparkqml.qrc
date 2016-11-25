@@ -63,5 +63,8 @@
         <file>Spark/reducers/qmldir</file>
         <file>Spark/js/qtredux/signalproxymiddleware.js</file>
         <file>Spark/reducers/StoreProvider.qml</file>
+        <file>Spark/js/lodash/qmldir</file>
+        <file>Spark/js/lodash/lodash.js</file>
+        <file>Spark/js/lodash/lodashwrapper.js</file>
     </qresource>
 </RCC>

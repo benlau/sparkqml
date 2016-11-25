@@ -5,6 +5,7 @@ import Spark.js.redux 1.0
 import Spark.js.qtredux 1.0
 import Spark.js.immutabilityhelper 1.0
 import Spark.actions 1.0
+import Spark.js.lodash 4.17
 
 Item {
 
@@ -149,5 +150,12 @@ Item {
             store.dispatch({type: "signal2", arguments: [1,"2"] });
             compare(signalProxy.signal2Count, 1);
         }
+
+        function test_lodash() {
+            var obj = Lodash.assign({}, {value: 1});
+            compare(obj.value, 1);
+
+        }
+
     }
 }
