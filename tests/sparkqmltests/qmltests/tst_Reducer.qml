@@ -42,5 +42,27 @@ Item {
             compare(state.mainWindowTitle, "App.qml");
             compare(state.selectedState, "");
         }
+
+        function test_moveSelectedState() {
+            var store = Redux.createStore(App.reducer);
+            actions.dispatch = store.dispatch;
+            var state = store.getState();
+
+            compare(state.selectedState, "");
+
+            actions.moveSelectedState("up");
+            actions.moveSelectedState("down");
+
+            state.availableStates = [ {name: ""},
+                                      {name: "S1"},
+                                      {name: "S2"},
+                                      {name: "S3"}];
+
+            actions.moveSelectedState("down");
+
+            state = store.getState();
+            compare(state.selectedState, "S1");
+
+        }
     }
 }

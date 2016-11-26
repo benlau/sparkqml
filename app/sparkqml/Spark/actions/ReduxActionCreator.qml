@@ -24,4 +24,11 @@ QtObject {
         });
     }
 
+    function moveSelectedState(direction) {
+        dispatch({
+            type: "moveSelectedState",
+            direction: direction
+        });
+    }
+
 }

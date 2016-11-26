@@ -1,5 +1,5 @@
 .pragma library
-Qt.include("lodash.js")
+Qt.include("./lodash.js")
 var templateSettings = _.templateSettings;
 var after = _.after;
 var ary = _.ary;

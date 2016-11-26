@@ -2,6 +2,7 @@
 .import "../js/immutabilityhelper/immutabilityhelperwrapper.js" as ImmutabilityHelper
 .import Shell 1.0 as ShellWrapper
 .import Spark.sys 1.0 as SparkSys
+.import "../js/lodash/lodashwrapper.js" as Lodash
 
 var update = ImmutabilityHelper;
 var Shell = ShellWrapper.Shell;
@@ -13,7 +14,8 @@ var initState = {
     source: "",
     fileName: "",
     folder: "",
-    selectedState: ""
+    selectedState: "",
+    availableStates: []
 }
 
 function reducer(state, actions) {
@@ -48,6 +50,32 @@ function reducer(state, actions) {
             selectedState: {$set: actions.state}
         }
         state = update(state, ops);
+        break;
+
+    case "moveSelectedState":
+        if (state.availableStates.length === 0) {
+            return state;
+        }
+
+        var index = Lodash.findIndex(state.availableStates, function(item) { return item.name === state.selectedState});
+        if (index < 0) {
+            index = 0;
+        } else if (actions.direction === "up") {
+            index--;
+        } else {
+            index++;
+        }
+
+        if (index < 0) {
+            index = 0;
+        } else if (index >= state.availableStates.length) {
+            index = state.availableStates.length - 1;
+        }
+
+        var selectedState = state.availableStates[index].name;
+        if (state.selectedState !== selectedState) {
+            state = Lodash.assign({}, state, {selectedState: selectedState});
+        }
         break;
     }
 
