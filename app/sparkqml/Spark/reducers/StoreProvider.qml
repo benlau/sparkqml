@@ -25,4 +25,18 @@ QtObject {
     signal quitApp
 
     signal reload
+
+    signal openDrawer
+
+    signal scaleToFit
+
+    signal resizeToFit
+
+    signal openMockupProject
+
+    signal copyToClipboard
+
+    signal copyToFile(string file)
+
+    signal askToSaveFile
 }

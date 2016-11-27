@@ -15,17 +15,46 @@ var initState = {
     fileName: "",
     folder: "",
     selectedState: "",
+    errorString: "",
     availableStates: []
 }
 
-function reducer(state, actions) {
+function moveSelectedState(state, action) {
+    if (state.availableStates.length === 0) {
+        return state;
+    }
+
+    var index = Lodash.findIndex(state.availableStates, function(item) { return item.name === state.selectedState});
+    if (index < 0) {
+        index = 0;
+    } else if (action.direction === "up") {
+        index--;
+    } else {
+        index++;
+    }
+
+    if (index < 0) {
+        index = 0;
+    } else if (index >= state.availableStates.length) {
+        index = state.availableStates.length - 1;
+    }
+
+    var selectedState = state.availableStates[index].name;
+    if (state.selectedState !== selectedState) {
+        state = Lodash.assign({}, state, {selectedState: selectedState});
+    }
+
+    return state;
+}
+
+function reducer(state, action) {
     if (state === undefined) {
         return initState;
     }
 
     var ops = {};
 
-    switch (actions.type) {
+    switch (action.type) {
     case "startApp":
         ops = {
             "mainWindowVisible": { $set: true}
@@ -35,9 +64,9 @@ function reducer(state, actions) {
         break;
 
     case "load":
-        var path = Url.path(actions.source);
+        var path = Url.path(action.source);
         ops = {
-            source: {$set: actions.source},
+            source: {$set: action.source},
             fileName: {$set: Shell.basename(path)},
             folder: {$set: Shell.dirname(path)},
             mainWindowTitle: {$set: Shell.basename(path)}
@@ -47,35 +76,31 @@ function reducer(state, actions) {
 
     case "setSelectedState":
         ops = {
-            selectedState: {$set: actions.state}
+            selectedState: {$set: action.state}
         }
         state = update(state, ops);
         break;
 
     case "moveSelectedState":
-        if (state.availableStates.length === 0) {
-            return state;
-        }
+        state = moveSelectedState(state, action);
+        break;
 
-        var index = Lodash.findIndex(state.availableStates, function(item) { return item.name === state.selectedState});
-        if (index < 0) {
-            index = 0;
-        } else if (actions.direction === "up") {
-            index--;
-        } else {
-            index++;
-        }
+    case "setAvailableState":
+        var states = Lodash.map(action.states, function(name) {
+            return {
+                name: name,
+                displayName: name
+            }
+        });
+        states.unshift({ displayName: "<base state>" , name: ""});
+        state = Lodash.assign({}, state, {availableStates: states});
+        break;
 
-        if (index < 0) {
-            index = 0;
-        } else if (index >= state.availableStates.length) {
-            index = state.availableStates.length - 1;
-        }
-
-        var selectedState = state.availableStates[index].name;
-        if (state.selectedState !== selectedState) {
-            state = Lodash.assign({}, state, {selectedState: selectedState});
-        }
+    case "closeErrorPanel":
+        state = Lodash.assign({}, state, {errorString: ""});
+        break;
+    case"setErrorString":
+        state = Lodash.assign({}, state, {errorString: action.errorString});
         break;
     }
 
