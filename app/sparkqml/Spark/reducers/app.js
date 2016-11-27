@@ -16,6 +16,8 @@ var initState = {
     folder: "",
     selectedState: "",
     errorString: "",
+    browsingFolder: "",
+    views: [],
     availableStates: []
 }
 
@@ -99,8 +101,24 @@ function reducer(state, action) {
     case "closeErrorPanel":
         state = Lodash.assign({}, state, {errorString: ""});
         break;
+
     case"setErrorString":
         state = Lodash.assign({}, state, {errorString: action.errorString});
+        break;
+
+    case "browse":
+        state = Lodash.assign({}, state,
+                              {
+                                  browsingFolder: state.folder,
+                                  views: [ {name: "browserPanel"} ]
+                              });
+        break;
+
+    case "pop":
+        state = Lodash.assign({}, state,
+                              {
+                                  views: []
+                              });
         break;
     }
 

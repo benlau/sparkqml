@@ -56,6 +56,12 @@ QtObject {
         });
     }
 
+    function closeDrawer() {
+        dispatch({
+            type: "closeDrawer"
+        })
+    }
+
     function scaleToFit() {
         dispatch({
             type: "scaleToFit"
@@ -106,5 +112,17 @@ QtObject {
         });
     }
 
+    function browse() {
+        closeDrawer();
+        dispatch({
+            type: "browse"
+        });
+    }
+
+    function pop() {
+        dispatch({
+            type: "pop"
+        });
+    }
 
 }
