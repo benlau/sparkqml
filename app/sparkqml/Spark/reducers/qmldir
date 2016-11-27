@@ -1,2 +1,3 @@
 App 1.0 app.js
 StoreProvider 1.0 DataProvider.qml
+CopyToFileMiddleware 1.0 copytofilemiddleware.js
