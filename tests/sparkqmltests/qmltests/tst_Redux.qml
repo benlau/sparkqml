@@ -173,6 +173,8 @@ Item {
         }
 
         function test_assign() {
+            mockProvider.value1 = 0;
+
             QtRedux.assign(mockProvider, undefined);
             compare(mockProvider.value1, 0);
 
