@@ -67,5 +67,6 @@
         <file>Spark/js/lodash/lodash.js</file>
         <file>Spark/js/lodash/lodashwrapper.js</file>
         <file>Spark/reducers/copytofilemiddleware.js</file>
+        <file>Spark/js/qtredux/syncmiddleware.js</file>
     </qresource>
 </RCC>

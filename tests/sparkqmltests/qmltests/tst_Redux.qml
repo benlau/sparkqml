@@ -196,5 +196,36 @@ Item {
             compare(mockProvider.value5, ["abc", "def"]);
         }
 
+
+        function test_SyncMiddleware() {
+            var reducer = function(state, action) {
+                if (state === undefined) {
+                    return{
+                        value1 :0
+                    }
+                }
+
+                if (action.type === "inc") {
+                    state = Lodash.assign({}, state, {value1: state.value1+1});
+                }
+
+                return state;
+            };
+
+            mockProvider.value1 = 0;
+
+            var store = Redux.createStore(reducer,
+                                          Redux.applyMiddleware(QtRedux.createSyncMiddleware(mockProvider)));
+
+            store.dispatch({type: "inc"});
+            compare(store.getState().value1, 1);
+            compare(mockProvider.value1, 1);
+
+            store.dispatch({type: "inc"});
+            compare(store.getState().value1, 2);
+            compare(mockProvider.value1, 2);
+        }
+
+
     }
 }

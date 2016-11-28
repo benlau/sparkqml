@@ -1,5 +1,6 @@
 .pragma library
 Qt.include("./signalproxymiddleware.js")
+Qt.include("./syncmiddleware.js")
 
 function shallowDiff(v1, v2) {
     if (v1 === v2) {
@@ -42,4 +43,6 @@ function assign(dest, src) {
             dest[i] = src[i];
         }
     }
+
+    return dest;
 }
