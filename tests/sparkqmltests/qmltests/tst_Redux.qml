@@ -154,7 +154,46 @@ Item {
         function test_lodash() {
             var obj = Lodash.assign({}, {value: 1});
             compare(obj.value, 1);
+        }
 
+        Item {
+            id: mockProvider
+            property int value1: 0
+            property real value2: 0.0
+            property string value3: ""
+
+            property alias value4 : subItem
+
+            Item {
+                id: subItem
+                property int value1
+            }
+
+            property var value5
+        }
+
+        function test_assign() {
+            QtRedux.assign(mockProvider, undefined);
+            compare(mockProvider.value1, 0);
+
+            QtRedux.assign(mockProvider, {});
+            compare(mockProvider.value1, 0);
+
+            QtRedux.assign(mockProvider, {
+                               value0: 123,
+                               value1: 1,
+                               value2: 2.0,
+                               value3: "3",
+                               value4: {
+                                   value1: 5
+                               },
+                               value5: ["abc", "def"]
+                           });
+            compare(mockProvider.value1, 1);
+            compare(mockProvider.value2, 2.0);
+            compare(mockProvider.value3, "3");
+            compare(mockProvider.value4.value1, 5);
+            compare(mockProvider.value5, ["abc", "def"]);
         }
 
     }

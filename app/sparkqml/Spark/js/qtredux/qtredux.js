@@ -22,3 +22,24 @@ function shallowDiff(v1, v2) {
         return v2;
     }
 }
+
+function assign(dest, src) {
+    if (dest === undefined ||
+        src === undefined) {
+        return dest;
+    }
+
+    for (var i in src) {
+        if (!dest.hasOwnProperty(i)) {
+            continue;
+        }
+
+        if (Array.isArray(src[i])) {
+            dest[i] = src[i];
+        } else if (typeof src[i] === "object"){
+            assign(dest[i], src[i])
+        } else {
+            dest[i] = src[i];
+        }
+    }
+}
