@@ -31,6 +31,9 @@ Item {
             property var nameFilters
             property string folder
 
+            signal accepted
+            signal rejected
+
             function open() {
             }
         }
