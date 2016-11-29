@@ -1,5 +1,5 @@
 import QtQuick 2.7
-import Spark.stores 1.0
+
 import "./components"
 import "./browserpanel"
 import "./mainpanel"
@@ -8,7 +8,7 @@ PageStack {
     id: component
     clip: true
 
-    views: MainStore.views
+    views: provider.views
 
     pushEnter: Transition {
         PropertyAction {

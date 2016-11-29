@@ -2,7 +2,7 @@ import QtQuick 2.0
 import QuickFlux 1.0
 import Spark.constants 1.0
 import Spark.actions 1.0
-import Spark.stores 1.0
+
 import QuickPromise 1.0
 import Future 1.0
 import Shell 1.0
@@ -129,7 +129,7 @@ StoreWorker {
             promise.reject(mainFileDialog.onRejected);
             promise.then(function() {
                 var path = Url.path(mainFileDialog.fileUrl.toString());
-                AppActions.copyToFile(path);
+                actions.copyToFile(path);
             });
 
             var folder = mainSettings.saveFolder;

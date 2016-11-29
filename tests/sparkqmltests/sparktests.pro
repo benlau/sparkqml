@@ -18,7 +18,6 @@ include($$ROOTDIR/app/sparkqml/sparkqml.pri)
 DISTFILES +=     qpm.json \     
     DummyItem1.qml \
     sample/SyntaxError.qml \
-    qmltests/tst_MainStoreWorker.qml \
     sample/Rect.qml \
     mockup/mockup_ComponentViewer.qml \
     qmltests/tst_ComponentViewer.qml \

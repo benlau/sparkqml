@@ -4,14 +4,14 @@ import Spark.actions 1.0
 NavigationPanelForm {
 
     browse.onClicked: {
-        AppActions.browse();
+        actions.browse();
     }
 
     openMockup.onClicked: {
-        AppActions.openMockupProject();
+        actions.openMockupProject();
     }
 
     exitButton.onClicked: {
-        AppActions.quitApp();
+        actions.quitApp();
     }
 }

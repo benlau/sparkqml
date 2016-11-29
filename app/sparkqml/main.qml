@@ -5,8 +5,10 @@ import QtQuick.Controls 2.0
 import Spark.constants 1.0
 import Spark.adapters 1.0
 import Spark.actions 1.0
-import Spark.stores 1.0
 import Spark.sys 1.0
+import Spark.reducers 1.0
+import Spark.js.redux 1.0
+import Spark.js.qtredux 1.0
 import Qt.labs.settings 1.0
 import QtQuick.Dialogs 1.2
 import "./Spark/views/mainpanel"
@@ -14,10 +16,12 @@ import "./Spark/views"
 
 ApplicationWindow {
     id: mainWindow
-    visible: false
+    visible: provider.mainWindowVisible
     width: 640
     height: 480
-    title: MainStore.title
+    title: provider.mainWindowTitle
+
+    property var store
 
     Settings {
         id: mainSettings
@@ -28,17 +32,24 @@ ApplicationWindow {
         property string saveFolder: ""
     }
 
+    ReduxActionCreator {
+        id: actions
+        objectName: "actions"
+    }
+
+    StoreProvider {
+        id: provider
+        objectName: "provider"
+    }
+
     FileDialog {
         id: mainFileDialog
     }
 
-    StoreAdapter {
-    }
-
     FileWatcher {
-        source: MainStore.source
+        source: provider.source
         onChanged: {
-            AppActions.reload();
+            actions.reload();
         }
     }
 
@@ -58,8 +69,29 @@ ApplicationWindow {
             NavigationPanel {
                 anchors.fill: parent
             }
+
+            Connections {
+                target: provider
+                onCloseDrawer: {
+                    mainDrawer.close();
+                }
+
+                onOpenDrawer: {
+                    mainDrawer.open();
+                }
+            }
         }
     }
 
+    Component.onCompleted: {
+        var middlewares = Redux.applyMiddleware(
+                        CopyToFileMiddleware.create(mainFileDialog, mainSettings),
+                        QuitMiddleware.create(),
+                        QtRedux.createSignalProxyMiddleware(provider),
+                        QtRedux.createSyncMiddleware(provider)
+                    );
+        mainWindow.store = Redux.createStore(App.reducer, middlewares);
+        actions.dispatch = store.dispatch
+    }
 
 }

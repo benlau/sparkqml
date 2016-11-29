@@ -10,13 +10,15 @@ QtObject {
     property string fileName: ""
 
     /// Available states of the loaded component
-    property var states: new Array;
+    property var availableStates: new Array;
 
     property string errorString: ""
 
     property string selectedState: "";
 
-    property string title : "Untitled";
+    property string mainWindowTitle : "SparkQML";
+
+    property bool mainWindowVisible : false;
 
     property var views: new Array
 
@@ -27,6 +29,8 @@ QtObject {
     signal reload
 
     signal openDrawer
+
+    signal closeDrawer
 
     signal scaleToFit
 

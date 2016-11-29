@@ -10,7 +10,7 @@ var Url = SparkSys.Url;
 
 var initState = {
     mainWindowVisible: false,
-    mainWindowTitle: "Spark",
+    mainWindowTitle: "SparkQML",
     source: "",
     fileName: "",
     folder: "",
@@ -87,7 +87,7 @@ function reducer(state, action) {
         state = moveSelectedState(state, action);
         break;
 
-    case "setAvailableState":
+    case "setAvailableStates":
         var states = Lodash.map(action.states, function(name) {
             return {
                 name: name,

@@ -4,11 +4,11 @@ import Spark.actions 1.0
 ListView {
 
     Keys.onUpPressed: {
-        AppActions.moveSelectedState("up");
+        actions.moveSelectedState("up");
     }
 
     Keys.onDownPressed:  {
-        AppActions.moveSelectedState("down");
+        actions.moveSelectedState("down");
     }
 
 }

@@ -4,26 +4,26 @@ import Spark.actions 1.0
 
 ToolBarForm {
     resizeButton.onClicked: {
-        AppActions.resizeToFit();
+        actions.resizeToFit();
     }
 
     saveButton.onClicked: {
-        AppActions.askToSaveFile();
+        actions.askToSaveFile();
     }
 
     clipboardButton.onClicked: {
-        AppActions.copyToClipboard();
+        actions.copyToClipboard();
     }
 
     scaleToFitButton {
-        onClicked: AppActions.scaleToFit();
+        onClicked: actions.scaleToFit();
     }
 
     reloadButton {
-        onClicked: AppActions.reload();
+        onClicked: actions.reload();
     }
 
     barButton {
-        onClicked: AppActions.openDrawer();
+        onClicked: actions.openDrawer();
     }
 }

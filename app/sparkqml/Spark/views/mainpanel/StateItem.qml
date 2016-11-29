@@ -1,6 +1,6 @@
 import QtQuick 2.4
 import Spark.actions 1.0
-import Spark.stores 1.0
+
 
 StateItemForm {
     id: component
@@ -9,11 +9,11 @@ StateItemForm {
 
     mouseArea {
         onClicked: {
-            AppActions.setSelectedState(name);
+            actions.setSelectedState(name);
             component.forceActiveFocus();
         }
     }
 
-    selected: MainStore.selectedState == name;
+    selected: provider.selectedState === name;
 
 }

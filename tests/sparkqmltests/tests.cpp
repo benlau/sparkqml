@@ -33,11 +33,18 @@ void Tests::mockupLoadingTests()
 {
     QStringList files = QtShell::find(QString(SRCDIR) + "mockup", QStringList() << "*.qml");
 
+    files << "qrc:/main.qml";
+
     QQmlApplicationEngine engine;
     engine.addImportPath("qrc:///");
     foreach (QString file , files) {
         QQmlComponent comp(&engine);
-        comp.loadUrl(QUrl::fromLocalFile(file));
+
+        if (file.indexOf("qrc") == 0) {
+            comp.loadUrl(QUrl(file));
+        } else {
+            comp.loadUrl(QUrl::fromLocalFile(file));
+        }
 
         if (comp.isError()) {
             qDebug() << QString("%1 : Load Failed. Reason :  %2").arg(file).arg(comp.errorString());

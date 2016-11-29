@@ -1,6 +1,6 @@
 import QtQuick 2.4
 import "../components"
-import Spark.stores 1.0
+
 import Spark.actions 1.0
 import QuickFlux 1.0
 import Spark.sys 1.0
@@ -11,63 +11,46 @@ MainComponentViewerForm {
         id: viewer;
         anchors.fill: parent
 
-        selectedState: MainStore.selectedState
+        selectedState: provider.selectedState
 
         onLoaded: {
-            AppActions.setAvailableStates(viewer.availableStates);
+            actions.setAvailableStates(viewer.availableStates);
         }
 
         onError: {
-            AppActions.setErrorString(viewer.errorString);
+            actions.setErrorString(viewer.errorString);
         }
     }
 
     Connections {
-        target: MainStore
+        target: provider
 
         onSourceChanged: {
-            viewer.load(MainStore.source);
+            viewer.load(provider.source);
         }
 
-        onReloadTrigger: {
+        onReload: {
             viewer.reload();
         }
+
+        onScaleToFit: {
+            viewer.scaleToFit();
+        }
+
+        onResizeToFit: {
+            viewer.resizeToFit();
+        }
+
+        onCopyToClipboard: {
+            viewer.item.grabToImage(function(result) {
+                Clipboard.setImage(result.image);
+            });
+        }
+
+        onCopyToFile: {
+            viewer.item.grabToImage(function(result) {
+                result.saveToFile(file);
+            });
+        }
     }
-
-    AppListener {
-        Filter {
-            type: ActionTypes.scaleToFit
-            onDispatched: {
-                viewer.scaleToFit();
-            }
-        }
-
-        Filter {
-            type: ActionTypes.resizeToFit
-            onDispatched: {
-                viewer.resizeToFit();
-            }
-        }
-
-        Filter {
-            type: ActionTypes.copyToClipboard
-            onDispatched: {
-                viewer.item.grabToImage(function(result) {
-                    Clipboard.setImage(result.image);
-                });
-            }
-        }
-
-        Filter {
-            type: ActionTypes.copyToFile
-            onDispatched: {
-                viewer.item.grabToImage(function(result) {
-                    result.saveToFile(message.target);
-                });
-            }
-        }
-
-    }
-
-
 }

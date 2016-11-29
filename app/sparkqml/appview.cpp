@@ -36,11 +36,12 @@ void AppView::start()
     qmlEngine->setDefaultImportPathFile(m_defaultImportPathFile);
     qmlEngine->setProImportPathList(QStringList() << m_mockupFolder);
 
-    QFAppDispatcher* dispatcher = QFAppDispatcher::instance(&m_engine);
-    connect(dispatcher,SIGNAL(dispatched(QString,QJSValue)),
-            this,SLOT(onDispatched(QString,QJSValue)));
+    QObject* contentItem = m_engine.rootObjects().first()->property("contentItem").value<QObject*>();
+    Q_ASSERT(contentItem);
+    QObject* actions = contentItem->findChild<QObject*>("actions");
+    Q_ASSERT(actions);
 
-    dispatcher->dispatch("startApp");
+    QMetaObject::invokeMethod(actions,"startApp");
 
     if (!m_source.isEmpty()) {
         loadSource();
@@ -59,12 +60,10 @@ void AppView::setSource(const QString &source)
 
 void AppView::loadSource()
 {    
-    QFAppDispatcher* dispatcher = QFAppDispatcher::instance(&m_engine);
+    QObject* contentItem = m_engine.rootObjects().first()->property("contentItem").value<QObject*>();
+    QObject* actions = contentItem->findChild<QObject*>("actions");
 
-    QVariantMap message;
-    message["source"] = m_source;
-
-    dispatcher->dispatch("load", message);
+    QMetaObject::invokeMethod(actions,"load",Q_ARG(QVariant, m_source));
 }
 
 QQmlApplicationEngine *AppView::engine()
