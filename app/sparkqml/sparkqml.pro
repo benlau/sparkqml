@@ -7,6 +7,7 @@ QT += quick qml multimedia
 
 include(sparkqml.pri)
 
+TARGET = SparkQML
 SOURCES += main.cpp
 
 ROOTDIR = $$PWD/../..

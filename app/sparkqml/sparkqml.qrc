@@ -31,10 +31,6 @@
         <file>sparkmockupproject/sparkmockup.qmlproject</file>
         <file>Spark/views/mainpanel/MainComponentViewer.qml</file>
         <file>Spark/views/mainpanel/MainComponentViewerForm.ui.qml</file>
-        <file>Spark/workers/lodash.min.js</file>
-        <file>Spark/workers/MainStoreWorker.qml</file>
-        <file>Spark/workers/qmldir</file>
-        <file>Spark/workers/StoreWorker.qml</file>
         <file>Spark/views/browserpanel/BrowserActionBar.qml</file>
         <file>Spark/views/browserpanel/BrowserActionBarForm.ui.qml</file>
         <file>Spark/views/browserpanel/BrowserPanel.qml</file>
