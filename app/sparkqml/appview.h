@@ -32,7 +32,7 @@ signals:
 public slots:
 
 private slots:
-    void onDispatched(QString type, QJSValue message);
+    void openMockupProject();
 
 private:
     void loadSource();

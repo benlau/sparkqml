@@ -38,6 +38,12 @@ void AppView::start()
 
     QObject* contentItem = m_engine.rootObjects().first()->property("contentItem").value<QObject*>();
     Q_ASSERT(contentItem);
+
+    QObject* provider = contentItem->findChild<QObject*>("provider");
+    Q_ASSERT(provider);
+
+    connect(provider, SIGNAL(openMockupProject()), this, SLOT(openMockupProject()));
+
     QObject* actions = contentItem->findChild<QObject*>("actions");
     Q_ASSERT(actions);
 
@@ -71,12 +77,9 @@ QQmlApplicationEngine *AppView::engine()
     return &m_engine;
 }
 
-void AppView::onDispatched(QString type, QJSValue message)
+void AppView::openMockupProject()
 {
-    Q_UNUSED(message);
-    if (type == "openMockupProject") {
-        QDesktopServices::openUrl(QUrl::fromLocalFile(m_mockupFolder + "/sparkmockup.qmlproject"));
-    }
+    QDesktopServices::openUrl(QUrl::fromLocalFile(m_mockupFolder + "/sparkmockup.qmlproject"));
 }
 
 QString AppView::defaultImportPathFile() const

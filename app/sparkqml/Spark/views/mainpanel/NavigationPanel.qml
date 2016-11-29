@@ -8,6 +8,7 @@ NavigationPanelForm {
     }
 
     openMockup.onClicked: {
+        actions.closeDrawer();
         actions.openMockupProject();
     }
 
