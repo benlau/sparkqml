@@ -125,4 +125,10 @@ QtObject {
         });
     }
 
+    function forceActiveFocusOnStateListView() {
+        dispatch({
+            type: "forceActiveFocusOnStateListView"
+        });
+    }
+
 }

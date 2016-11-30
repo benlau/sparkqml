@@ -26,6 +26,8 @@ QtObject {
 
     signal quitApp
 
+    signal load
+
     signal reload
 
     signal openDrawer
@@ -43,4 +45,6 @@ QtObject {
     signal copyToFile(string file)
 
     signal askToSaveFile
+
+    signal forceActiveFocusOnStateListView
 }

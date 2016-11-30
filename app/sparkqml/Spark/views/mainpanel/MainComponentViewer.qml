@@ -14,6 +14,7 @@ MainComponentViewerForm {
         selectedState: provider.selectedState
 
         onLoaded: {
+            actions.forceActiveFocusOnStateListView();
             actions.setAvailableStates(viewer.availableStates);
         }
 
@@ -25,7 +26,9 @@ MainComponentViewerForm {
     Connections {
         target: provider
 
-        onSourceChanged: {
+        ignoreUnknownSignals: true
+
+        onLoad: {
             viewer.load(provider.source);
         }
 
