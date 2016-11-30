@@ -36,9 +36,7 @@ function assign(dest, src) {
             continue;
         }
 
-        if (Array.isArray(src[i])) {
-            dest[i] = src[i];
-        } else if (typeof src[i] === "object"){
+        if (typeof src[i] === "object" && !Array.isArray(src[i])){
             assign(dest[i], src[i])
         } else {
             dest[i] = src[i];
