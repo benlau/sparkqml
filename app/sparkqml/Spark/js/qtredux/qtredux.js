@@ -7,10 +7,10 @@ function shallowDiff(v1, v2) {
         return undefined;
     }
 
-    if (Array.isArray(v2)) {
-        // It won't compare each element in an array
-        return v2;
-    } else if (typeof v1 === "object" && typeof v2 === "object") {
+    if (typeof v1 === "object" &&
+        typeof v2 === "object" &&
+        !Array.isArray(v2)) { // Don't compare array element.
+
         var res = {};
         for (var k in v2) {
             var d = shallowDiff(v1[k], v2[k]);
@@ -18,6 +18,7 @@ function shallowDiff(v1, v2) {
                 res[k] = d;
             }
         }
+
         return res;
     } else {
         return v2;
