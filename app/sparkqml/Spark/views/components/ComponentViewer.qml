@@ -84,6 +84,15 @@ Item {
         }
     }
 
+    // "actions" and "provider" are dummy item. Avoid the viewing component access those components
+    Item {
+        id: actions
+    }
+
+    Item {
+        id: provider
+    }
+
     Loader {
         id: loader
         anchors.centerIn: parent
