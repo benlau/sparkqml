@@ -12,9 +12,6 @@
         <file>Spark/views/mainpanel/ErrorPanelForm.ui.qml</file>
         <file>Spark/views/mainpanel/MainPanel.qml</file>
         <file>Spark/views/mainpanel/MainPanelForm.ui.qml</file>
-        <file>Spark/views/mainpanel/NavigationItem.qml</file>
-        <file>Spark/views/mainpanel/NavigationPanel.qml</file>
-        <file>Spark/views/mainpanel/NavigationPanelForm.ui.qml</file>
         <file>Spark/views/mainpanel/StateItem.qml</file>
         <file>Spark/views/mainpanel/StateItemForm.ui.qml</file>
         <file>Spark/views/mainpanel/StatesPanel.qml</file>
@@ -63,5 +60,8 @@
         <file>Spark/reducers/copytofilemiddleware.js</file>
         <file>Spark/js/qtredux/syncmiddleware.js</file>
         <file>Spark/reducers/quitmiddleware.js</file>
+        <file>Spark/views/navigationpanel/NavigationItem.qml</file>
+        <file>Spark/views/navigationpanel/NavigationPanel.qml</file>
+        <file>Spark/views/navigationpanel/NavigationPanelForm.ui.qml</file>
     </qresource>
 </RCC>

@@ -12,6 +12,7 @@ import Qt.labs.settings 1.0
 import QtQuick.Dialogs 1.2
 import "./Spark/views/mainpanel"
 import "./Spark/views"
+import "./Spark/views/navigationpanel"
 
 ApplicationWindow {
     id: mainWindow
