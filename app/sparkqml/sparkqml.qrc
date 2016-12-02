@@ -63,5 +63,6 @@
         <file>Spark/views/navigationpanel/NavigationItem.qml</file>
         <file>Spark/views/navigationpanel/NavigationPanel.qml</file>
         <file>Spark/views/navigationpanel/NavigationPanelForm.ui.qml</file>
+        <file>Spark/views/navigationpanel/NavigationDrawer.qml</file>
     </qresource>
 </RCC>

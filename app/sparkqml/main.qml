@@ -59,27 +59,9 @@ ApplicationWindow {
             anchors.fill: parent
         }
 
-        Drawer {
-            id: mainDrawer
-            dim: true
-            dragMargin: 0
-            width: 160
+        NavigationDrawer {
+            id: drawer
             height: mainWindow.height
-
-            NavigationPanel {
-                anchors.fill: parent
-            }
-
-            Connections {
-                target: provider
-                onCloseDrawer: {
-                    mainDrawer.close();
-                }
-
-                onOpenDrawer: {
-                    mainDrawer.open();
-                }
-            }
         }
     }
 
