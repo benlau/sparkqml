@@ -26,7 +26,8 @@ DISTFILES +=     qpm.json \
     mockup/mockup_ComponetCard.qml \
     qmltests/tst_Redux.qml \
     qmltests/tst_Reducer.qml \
-    qmltests/tst_Middleware.qml
+    qmltests/tst_Middleware.qml \
+    mockup/mockup_RecentFileList.qml
 
 HEADERS +=     tests.h
 

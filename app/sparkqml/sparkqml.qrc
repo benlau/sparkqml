@@ -64,5 +64,7 @@
         <file>Spark/views/navigationpanel/NavigationPanel.qml</file>
         <file>Spark/views/navigationpanel/NavigationPanelForm.ui.qml</file>
         <file>Spark/views/navigationpanel/NavigationDrawer.qml</file>
+        <file>Spark/views/navigationpanel/RecentFileListForm.ui.qml</file>
+        <file>Spark/views/navigationpanel/RecentFileList.qml</file>
     </qresource>
 </RCC>
