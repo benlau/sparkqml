@@ -68,7 +68,7 @@ ApplicationWindow {
     Component.onCompleted: {
         var middlewares = Redux.applyMiddleware(
                         CopyToFileMiddleware.create(mainFileDialog, mainSettings),
-                        QuitMiddleware.create(),
+                        SystemMiddleware.create(provider),
                         QtRedux.createSignalProxyMiddleware(provider),
                         QtRedux.createSyncMiddleware(provider)
                     );

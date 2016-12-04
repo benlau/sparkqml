@@ -59,12 +59,12 @@
         <file>Spark/js/lodash/lodashwrapper.js</file>
         <file>Spark/reducers/copytofilemiddleware.js</file>
         <file>Spark/js/qtredux/syncmiddleware.js</file>
-        <file>Spark/reducers/quitmiddleware.js</file>
         <file>Spark/views/navigationpanel/NavigationItem.qml</file>
         <file>Spark/views/navigationpanel/NavigationPanel.qml</file>
         <file>Spark/views/navigationpanel/NavigationPanelForm.ui.qml</file>
         <file>Spark/views/navigationpanel/NavigationDrawer.qml</file>
         <file>Spark/views/navigationpanel/RecentFileListForm.ui.qml</file>
         <file>Spark/views/navigationpanel/RecentFileList.qml</file>
+        <file>Spark/reducers/systemmiddleware.js</file>
     </qresource>
 </RCC>

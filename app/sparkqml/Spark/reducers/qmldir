@@ -1,4 +1,4 @@
 App 1.0 app.js
 StoreProvider 1.0 StoreProvider.qml
 CopyToFileMiddleware 1.0 copytofilemiddleware.js
-QuitMiddleware 1.0 quitmiddleware.js
+SystemMiddleware 1.0 systemmiddleware.js
