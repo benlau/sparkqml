@@ -32,15 +32,19 @@ Item {
 
         function test_load() {
             var store = Redux.createStore(App.reducer);
+            var state = store.getState();
             actions.dispatch = store.dispatch;
 
+            state.errorString = "Error";
+
             actions.load("file:///folder/App.qml");
-            var state = store.getState();
+            state = store.getState();
             compare(state.source, "file:///folder/App.qml");
             compare(state.fileName, "App.qml");
             compare(state.folder, "/folder");
             compare(state.mainWindowTitle, "App.qml");
             compare(state.selectedState, "");
+            compare(state.errorString, "");
         }
 
         function test_moveSelectedState() {

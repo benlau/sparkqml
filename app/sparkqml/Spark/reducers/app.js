@@ -71,7 +71,8 @@ function reducer(state, action) {
             source: {$set: action.source},
             fileName: {$set: Shell.basename(path)},
             folder: {$set: Shell.dirname(path)},
-            mainWindowTitle: {$set: Shell.basename(path)}
+            mainWindowTitle: {$set: Shell.basename(path)},
+            errorString: {$set: ""}
         };
         state = update(state, ops);
         break;
