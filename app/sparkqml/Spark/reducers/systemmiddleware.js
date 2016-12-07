@@ -15,9 +15,11 @@ function create(provider) {
                 }
 
                 switch (action.type) {
+
                 case "quitApp":
                     Qt.quit();
                     break;
+
                 case "startApp":
                     var state = store.getState();
                     QRedux.assign(provider, state);

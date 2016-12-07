@@ -21,8 +21,16 @@ Item {
         }
     }
 
+    function defaultReducer(state) {
+        if (state === undefined) {
+            return {};
+        }
+        return state;
+    }
+
     TestCase {
         name: "Middleware"
+
 
         Item {
             id: mockDialog
@@ -41,6 +49,7 @@ Item {
         Item {
             id: mockSettings
             property string saveFolder: "";
+            property var recentFiles: []
         }
 
         function test_CopyToFileMiddleware() {
@@ -62,6 +71,22 @@ Item {
             store.dispatch({type: "askToSaveFile"});
             compare(log.length, 1);
             compare(mockDialog.folder, "file://Main(Test).png");
+        }
+
+        function test_settingsmiddleware() {
+            var log = [];
+
+            var middlewares = [
+                SettingsMiddleware.create(mockSettings),
+                logger(log)
+            ];
+            var store = Redux.createStore(App.reducer, Redux.applyMiddleware.apply(this, middlewares));
+            compare(store.getState().recentFiles, []);
+
+            store.dispatch({type: "startApp"})
+            compare(log.length, 2);
+            compare(log[0], "setRecentFiles");
+            compare(log[1], "startApp");
         }
     }
 }

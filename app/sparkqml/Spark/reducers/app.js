@@ -18,7 +18,8 @@ var initState = {
     errorString: "",
     browsingFolder: "",
     views: [],
-    availableStates: []
+    availableStates: [],
+    recentFiles: []
 }
 
 function moveSelectedState(state, action) {
