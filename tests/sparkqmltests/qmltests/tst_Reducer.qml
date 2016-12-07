@@ -68,5 +68,24 @@ Item {
             compare(state.selectedState, "S1");
 
         }
+
+        function test_addRecentFiles() {
+            var store = Redux.createStore(App.reducer);
+            actions.dispatch = store.dispatch;
+
+            for (var i = 0 ;i < 10;i++) {
+                actions.addRecentFile(i.toString());
+            }
+
+            compare(store.getState().recentFiles, ["9","8","7","6","5","4","3","2","1","0"]);
+            actions.addRecentFile("11");
+            compare(store.getState().recentFiles, ["11","9","8","7","6","5","4","3","2","1"]);
+
+            actions.addRecentFile("3");
+            compare(store.getState().recentFiles, ["3","11","9","8","7","6","5","4","2","1"]);
+
+
+
+        }
     }
 }

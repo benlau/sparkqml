@@ -30,6 +30,7 @@ ApplicationWindow {
         property alias width: mainWindow.width
         property alias height: mainWindow.height
         property string saveFolder: ""
+        property var recentFiles: new Array
     }
 
     ReduxActionCreator {

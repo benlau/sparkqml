@@ -50,6 +50,24 @@ function moveSelectedState(state, action) {
     return state;
 }
 
+function addRecentFile(state, action) {
+    var recentFiles = state.recentFiles;
+
+    var idx = Lodash.indexOf(recentFiles,action.file);
+
+    if (idx >= 0) {
+        recentFiles.splice(idx,1);
+    }
+
+    recentFiles.unshift(action.file);
+
+    recentFiles.splice(10,recentFiles.length - 10);
+
+    state = Lodash.assign({}, state, {recentFiles: recentFiles});
+
+    return state;
+}
+
 function reducer(state, action) {
     if (state === undefined) {
         return initState;
@@ -121,6 +139,14 @@ function reducer(state, action) {
                               {
                                   views: []
                               });
+        break;
+
+    case "setRecentFiles":
+        state = Lodash.assign({}, state, { recentFiles: action.files});
+        break;
+
+    case "addRecentFile":
+        state = addRecentFile(state, action);
         break;
     }
 

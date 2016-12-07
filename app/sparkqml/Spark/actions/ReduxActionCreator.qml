@@ -131,4 +131,10 @@ QtObject {
         });
     }
 
+    function addRecentFile(file) {
+        dispatch({
+            type: "addRecentFile",
+            file: file
+        });
+    }
 }
