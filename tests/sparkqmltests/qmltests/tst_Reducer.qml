@@ -6,7 +6,6 @@ import Spark.js.qtredux 1.0
 import Spark.js.immutabilityhelper 1.0
 import Spark.actions 1.0
 import Spark.reducers 1.0
-import Spark.actions 1.0
 
 Item {
 
