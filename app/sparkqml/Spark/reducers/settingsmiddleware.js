@@ -15,7 +15,8 @@ function create(settings) {
                         files: settings.recentFiles
                     });
 
-                } else if (action.type === "addRecentFile") {
+                } else if (action.type === "addRecentFile" ||
+                           action.type === "load") {
                     next(action);
                     settings.recentFiles = store.getState().recentFiles;
                     return;

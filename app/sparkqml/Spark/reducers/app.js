@@ -51,7 +51,7 @@ function moveSelectedState(state, action) {
 }
 
 function addRecentFile(state, action) {
-    var recentFiles = state.recentFiles;
+    var recentFiles = state.recentFiles.slice(0);
 
     var idx = Lodash.findIndex(recentFiles, function(item) {
         return item.file === action.file;
@@ -102,6 +102,7 @@ function reducer(state, action) {
             errorString: {$set: ""}
         };
         state = update(state, ops);
+        state = addRecentFile(state, {file: action.source});
         break;
 
     case "setSelectedState":
