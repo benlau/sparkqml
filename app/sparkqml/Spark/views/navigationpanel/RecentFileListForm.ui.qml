@@ -33,7 +33,7 @@ Column {
 
         delegate: NavigationItem {
             icon: FontAwesome.fileO
-            text: model.file
+            text: modelData.file
             visible: (index+2) * 28 <= component.height
             enabled: visible
         }

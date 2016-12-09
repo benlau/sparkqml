@@ -23,19 +23,17 @@ Rectangle {
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
         }
 
+        RecentFileList {
+            id: recentFileList
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+        }
+
         NavigationItem {
             id: openMockup
             icon: FontAwesome.folderOpenO
             text: "Mockup Project"
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-        }
-
-        Item {
-            id: item1
-            width: 200
-            height: 200
-            Layout.fillHeight: true
-            Layout.fillWidth: true
         }
 
         NavigationItem {

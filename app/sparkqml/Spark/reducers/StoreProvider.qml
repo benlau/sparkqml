@@ -24,6 +24,8 @@ QtObject {
 
     property string browsingFolder: ""
 
+    property var recentFiles: new Array
+
     signal quitApp
 
     signal load
