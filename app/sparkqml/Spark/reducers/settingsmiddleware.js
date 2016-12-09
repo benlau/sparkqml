@@ -9,16 +9,22 @@ function create(settings) {
             return function (action) {
 
                 if (action.type === "startApp") {
+                    var recentFiles = []
+
+                    try {
+                        recentFiles = JSON.parse(settings.recentFiles);
+                    } catch(e) {
+                    }
 
                     next({
                         type: "setRecentFiles",
-                        files: settings.recentFiles
+                        files: recentFiles
                     });
 
                 } else if (action.type === "addRecentFile" ||
                            action.type === "load") {
                     next(action);
-                    settings.recentFiles = store.getState().recentFiles;
+                    settings.recentFiles = JSON.stringify(store.getState().recentFiles);
                     return;
                 }
 
