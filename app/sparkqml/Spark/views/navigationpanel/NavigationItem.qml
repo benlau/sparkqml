@@ -3,12 +3,8 @@ import QtQuick.Controls 2.0
 import FontAwesome 1.0
 
 MouseArea {
-    id: exitButton
+    id: component
     height: 28
-    anchors.right: parent.right
-    anchors.rightMargin: 0
-    anchors.left: parent.left
-    anchors.leftMargin: 0
 
     property alias icon: text1.text
 
@@ -27,23 +23,23 @@ MouseArea {
     
     Text {
         id: text2
-        x: 36
-        y: 182
         height: 24
-        text: qsTr("Exit")
+        text: qsTr("")
         anchors.left: parent.left
         anchors.leftMargin: 28
+        anchors.right: parent.right
+        anchors.rightMargin: 8
         anchors.verticalCenter: parent.verticalCenter
-        horizontalAlignment: Text.AlignHCenter
+        horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignVCenter
-        wrapMode: Text.WordWrap
         font.pixelSize: 14
+        elide: Text.ElideMiddle
     }
     
     Rectangle {
         anchors.fill: parent
         color: "#3FFFFFFF"
-        visible: exitButton.pressed
+        visible: component.pressed
     }
     
 }

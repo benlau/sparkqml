@@ -13,7 +13,8 @@ Rectangle {
         id: provider
 
         recentFiles: ([
-            {file: "Test1.qml"}
+            {basename: "Test1.qml"},
+            {basename: "SuperLongFileName.qml"}
         ])
     }
 

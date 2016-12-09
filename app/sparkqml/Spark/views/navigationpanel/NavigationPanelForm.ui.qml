@@ -19,8 +19,9 @@ Rectangle {
         NavigationItem {
             id: browse
             icon: FontAwesome.folderOpenO
-            text: "Browse Folder"
+            text: qsTr("Browse Folder")
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+            Layout.fillWidth: true
         }
 
         RecentFileList {
@@ -32,13 +33,16 @@ Rectangle {
         NavigationItem {
             id: openMockup
             icon: FontAwesome.folderOpenO
-            text: "Mockup Project"
+            text: qsTr("Mockup Project")
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+            Layout.fillWidth: true
         }
 
         NavigationItem {
             id: exitButton
+            text: qsTr("Exit")
             Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
+            Layout.fillWidth: true
         }
 
     }

@@ -53,13 +53,21 @@ function moveSelectedState(state, action) {
 function addRecentFile(state, action) {
     var recentFiles = state.recentFiles;
 
-    var idx = Lodash.indexOf(recentFiles,action.file);
+    var idx = Lodash.findIndex(recentFiles, function(item) {
+        return item.file === action.file;
+    });
 
     if (idx >= 0) {
+        // remove then move to top
         recentFiles.splice(idx,1);
     }
 
-    recentFiles.unshift(action.file);
+    var item = {
+        file: action.file,
+        basename: Shell.basename(action.file)
+    }
+
+    recentFiles.unshift(item);
 
     recentFiles.splice(10,recentFiles.length - 10);
 
