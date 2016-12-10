@@ -67,5 +67,7 @@
         <file>Spark/reducers/settingsmiddleware.js</file>
         <file>Spark/actions/actiontypes.js</file>
         <file>Spark/views/navigationpanel/RecentFileItem.qml</file>
+        <file>Spark/js/taskqueue.js</file>
+        <file>Spark/js/qmldir</file>
     </qresource>
 </RCC>
