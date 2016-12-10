@@ -31,10 +31,10 @@ Column {
     Repeater {
         id: repeater
 
-        delegate: NavigationItem {
-            icon: FontAwesome.fileO
+        delegate: RecentFileItem {
             width: component.width
-            text: modelData.basename
+            basename: modelData.basename
+            file: modelData.file
             visible: (index+2) * 28 <= component.height
             enabled: visible
         }

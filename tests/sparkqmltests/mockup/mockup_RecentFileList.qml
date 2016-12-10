@@ -9,24 +9,22 @@ Rectangle {
 
     color: "#e7e7e7"
 
-    ListModel {
-        id: model1
-        ListElement {
-            file: "Test1.qml"
+    property var model1: [
+        {
+            file: "Test1.qml",
+            basename: "Test1.qml"
+        },
+        {
+            file: "Test2.qml",
+            basename: "Test2.qml"
+        },
+        {
+            file: "Test3.qml",
+            basename: "Test3.qml"
         }
+    ]
 
-        ListElement {
-            file: "Test2.qml"
-        }
-
-        ListElement {
-            file: "Test3.qml"
-        }
-    }
-
-    ListModel {
-        id: model2
-    }
+    property var model2: []
 
     RecentFileList {
         id: recentFileList
