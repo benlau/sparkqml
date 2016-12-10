@@ -33,7 +33,7 @@ MouseArea {
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignVCenter
         font.pixelSize: 14
-        elide: Text.ElideMiddle
+        elide: Text.ElideLeft
     }
     
     Rectangle {

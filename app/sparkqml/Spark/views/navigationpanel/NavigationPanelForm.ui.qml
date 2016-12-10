@@ -5,7 +5,7 @@ import QtQuick.Layouts 1.3
 
 Rectangle {
     id: rectangle1
-    width: 160
+    width: 200
     height: 400
 
     color: "#e7e7e7"

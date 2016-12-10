@@ -64,7 +64,7 @@ function addRecentFile(state, action) {
 
     var item = {
         file: action.file,
-        basename: Shell.basename(action.file)
+        displayName: Shell.basename(action.file).replace(/\.qml$/,"")
     }
 
     recentFiles.unshift(item);

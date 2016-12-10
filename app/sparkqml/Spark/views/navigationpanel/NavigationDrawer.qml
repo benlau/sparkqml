@@ -5,7 +5,7 @@ Drawer {
     id: drawer
     dim: true
     dragMargin: 0
-    width: 160
+    width: 200
 
     NavigationPanel {
         anchors.fill: parent

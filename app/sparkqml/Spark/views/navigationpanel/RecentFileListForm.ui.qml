@@ -33,7 +33,7 @@ Column {
 
         delegate: RecentFileItem {
             width: component.width
-            basename: modelData.basename
+            displayName: modelData.displayName
             file: modelData.file
             visible: (index+2) * 28 <= component.height
             enabled: visible

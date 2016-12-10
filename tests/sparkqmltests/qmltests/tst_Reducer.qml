@@ -76,7 +76,7 @@ Item {
                 return input.map(function(item) {
                     return {
                         file: item,
-                        basename: item
+                        displayName: item
                     }
                 });
             }
