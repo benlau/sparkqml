@@ -67,7 +67,17 @@ ApplicationWindow {
     }
 
     Component.onCompleted: {
+        function logger(store) {
+            return function (next) {
+                return function(action) {
+                    console.log(action.type);
+                    next(action);
+                }
+            }
+        }
+
         var middlewares = Redux.applyMiddleware(
+//                        logger,
                         CopyToFileMiddleware.create(mainFileDialog, mainSettings),
                         SystemMiddleware.create(provider),
                         SettingsMiddleware.create(mainSettings),

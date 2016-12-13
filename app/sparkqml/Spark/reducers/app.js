@@ -3,6 +3,7 @@
 .import Shell 1.0 as ShellWrapper
 .import Spark.sys 1.0 as SparkSys
 .import "../js/lodash/lodashwrapper.js" as Lodash
+.import "../actions/actiontypes.js" as ActionTypes
 
 var update = ImmutabilityHelper;
 var Shell = ShellWrapper.Shell;
@@ -156,6 +157,10 @@ function reducer(state, action) {
 
     case "addRecentFile":
         state = addRecentFile(state, action);
+        break;
+
+    case ActionTypes.reload:
+        state = Lodash.assign({}, state, { errorString: ""});
         break;
     }
 
