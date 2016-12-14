@@ -69,5 +69,7 @@
         <file>Spark/views/navigationpanel/RecentFileItem.qml</file>
         <file>Spark/js/taskqueue.js</file>
         <file>Spark/js/qmldir</file>
+        <file>Spark/views/browserpanel/PathViewer.qml</file>
+        <file>Spark/views/browserpanel/PathButton.qml</file>
     </qresource>
 </RCC>
