@@ -6,7 +6,7 @@ import "../../../app/sparkqml/Spark/reducers"
 
 Rectangle {
     id: window
-    width: 480
+    width: 360
     height: 640
     color: "gray"
 
@@ -24,9 +24,20 @@ Rectangle {
 
         PathViewer {
             width: window.width
-            path: ["home", "sparkqml" ,"tests"]
+            path: ["home", "sparkqml" ,"src"]
         }
 
+        PathViewer {
+            // It could show as most 3 at a time
+            width: window.width
+            path: ["home", "sparkqml" ,"tests", "sparktests"]
+        }
+
+        PathViewer {
+            // It could show as most 3 at a time
+            width: window.width
+            path: ["home", "sparkqml" ,"tests", "sparktests - super long file name."]
+        }
 
     }
 

@@ -71,5 +71,6 @@
         <file>Spark/js/qmldir</file>
         <file>Spark/views/browserpanel/PathViewer.qml</file>
         <file>Spark/views/browserpanel/PathButton.qml</file>
+        <file>Spark/views/browserpanel/PathItem.qml</file>
     </qresource>
 </RCC>

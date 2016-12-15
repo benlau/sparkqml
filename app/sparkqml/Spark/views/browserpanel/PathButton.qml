@@ -1,11 +1,11 @@
-import QtQuick 2.0
+import QtQuick 2.4
 import FontAwesome 1.0
 import "../components"
 
 Button {
     id: component
     height: 24
-    implicitWidth: row.width + 16
+    implicitWidth: textMetrics.width + 24
 
     property alias text: textItem.text
 
@@ -18,27 +18,22 @@ Button {
         visible: component.pressed
     }
 
-    Row {
-        id: row
-        anchors.horizontalCenter: parent.horizontalCenter
-        spacing: 8
+    Text {
+        id: textItem
+        height: 24
+        font.pixelSize: 14
+        verticalAlignment: Text.AlignVCenter
+        anchors.centerIn: parent
+        width: parent.width - 16
+        elide: Text.ElideRight
+    }
 
-        Text {
-            id: textItem
-            height: 24
-            font.pixelSize: 14
-            verticalAlignment: Text.AlignVCenter
-        }
 
-        Text {
-            font.family: FontAwesome.fontFamily
-            text: last ? "" : FontAwesome.chevronRight
-            verticalAlignment: Text.AlignVCenter
-            font.pixelSize: 14
-            height: 24
-
-        }
-
+    TextMetrics {
+        id: textMetrics
+        font.pixelSize: textItem.font.pixelSize
+        font.family: textItem.font.family
+        text: textItem.text
     }
 
 
