@@ -33,7 +33,7 @@ ApplicationWindow {
         property string recentFiles: ""
     }
 
-    ReduxActionCreator {
+    ActionCreator {
         id: actions
         objectName: "actions"
     }

@@ -12,7 +12,7 @@ Item {
     TestCase {
         name: "Reducer"
 
-        ReduxActionCreator {
+        ActionCreator {
             id: actions;
         }
 

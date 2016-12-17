@@ -63,7 +63,7 @@ Item {
             compare(state2, ["x", "y"])
         }
 
-        ReduxActionCreator {
+        ActionCreator {
             id: actions
         }
 
