@@ -6,11 +6,10 @@ import Spark.adapters 1.0
 import Spark.actions 1.0
 import Spark.sys 1.0
 import Spark.reducers 1.0
-import Spark.js.redux 1.0
-import Spark.js.qtredux 1.0
 import Qt.labs.settings 1.0
 import QtQuick.Dialogs 1.2
 import Spark.store 1.0
+import QRedux 1.0
 import "./Spark/views/mainpanel"
 import "./Spark/views"
 import "./Spark/views/navigationpanel"
@@ -77,13 +76,13 @@ ApplicationWindow {
             }
         }
 
-        var middlewares = Redux.applyMiddleware(
+        var middlewares = QRedux.applyMiddleware(
 //                        logger,
                         CopyToFileMiddleware.create(mainFileDialog, mainSettings),
                         SystemMiddleware.create(provider),
                         SettingsMiddleware.create(mainSettings),
-                        QtRedux.createSignalProxyMiddleware(provider),
-                        QtRedux.createSyncMiddleware(provider)
+                        QRedux.signalProxyMiddleware(provider),
+                        QRedux.syncMiddleware(provider)
                     );
         mainWindow.store = Redux.createStore(App.reducer, middlewares);
         actions.dispatch = store.dispatch

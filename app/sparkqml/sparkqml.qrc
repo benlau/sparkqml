@@ -38,21 +38,14 @@
         <file>Spark/views/browserpanel/ComponentGridView.qml</file>
         <file>Spark/views/components/PageStack.qml</file>
         <file>Spark/views/ViewStack.qml</file>
-        <file>Spark/js/redux/qmldir</file>
-        <file>Spark/js/redux/reduxwrapper.js</file>
-        <file>Spark/js/redux/redux.min.js</file>
-        <file>Spark/js/qtredux/qmldir</file>
-        <file>Spark/js/qtredux/qtredux.js</file>
         <file>Spark/views/mainpanel/StateListView.qml</file>
         <file>Spark/actions/ActionCreator.qml</file>
         <file>Spark/reducers/app.js</file>
         <file>Spark/reducers/qmldir</file>
-        <file>Spark/js/qtredux/signalproxymiddleware.js</file>
         <file>Spark/js/lodash/qmldir</file>
         <file>Spark/js/lodash/lodash.js</file>
         <file>Spark/js/lodash/lodashwrapper.js</file>
         <file>Spark/reducers/copytofilemiddleware.js</file>
-        <file>Spark/js/qtredux/syncmiddleware.js</file>
         <file>Spark/views/navigationpanel/NavigationItem.qml</file>
         <file>Spark/views/navigationpanel/NavigationPanel.qml</file>
         <file>Spark/views/navigationpanel/NavigationPanelForm.ui.qml</file>

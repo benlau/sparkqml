@@ -1,5 +1,5 @@
 .pragma library
-.import "../js/qtredux/qtredux.js" as QRedux
+.import "qrc:///QRedux/qredux.js" as QRedux
 
 function create(provider) {
 
@@ -22,7 +22,7 @@ function create(provider) {
 
                 case "startApp":
                     var state = store.getState();
-                    QRedux.assign(provider, state);
+                    QRedux.patch(provider, state);
                     break;
                 }
             }
