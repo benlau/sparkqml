@@ -4,8 +4,8 @@ import Shell 1.0
 import Spark.actions 1.0
 import Spark.js.redux 1.0
 import Spark.js.qtredux 1.0
-import Spark.js.immutabilityhelper 1.0
 import Spark.js.lodash 4.17
+import QRedux 1.0
 
 Item {
 
@@ -55,12 +55,6 @@ Item {
 
             compare(QtRedux.shallowDiff([],[]), []);
             compare(QtRedux.shallowDiff([3,4],[1,2]), [1,2]);
-        }
-
-        function test_ImmutabilityHelper() {
-            var state1 = ["x"];
-            var state2 = ImmutabilityHelper.update(state1, {$push: ["y"]}); // ['x', 'y']
-            compare(state2, ["x", "y"])
         }
 
         ActionCreator {

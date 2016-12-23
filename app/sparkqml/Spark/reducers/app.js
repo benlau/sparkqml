@@ -1,11 +1,11 @@
 .pragma library
-.import "../js/immutabilityhelper/immutabilityhelperwrapper.js" as ImmutabilityHelper
 .import Shell 1.0 as ShellWrapper
 .import Spark.sys 1.0 as SparkSys
 .import "../js/lodash/lodashwrapper.js" as Lodash
 .import "../actions/actiontypes.js" as ActionTypes
+.import "qrc:/QRedux/qredux.js" as QRedux
 
-var update = ImmutabilityHelper;
+var update = QRedux.update;
 var Shell = ShellWrapper.Shell;
 var Url = SparkSys.Url;
 
