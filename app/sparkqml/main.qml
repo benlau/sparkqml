@@ -10,6 +10,7 @@ import Spark.js.redux 1.0
 import Spark.js.qtredux 1.0
 import Qt.labs.settings 1.0
 import QtQuick.Dialogs 1.2
+import Spark.store 1.0
 import "./Spark/views/mainpanel"
 import "./Spark/views"
 import "./Spark/views/navigationpanel"

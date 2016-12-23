@@ -3,6 +3,7 @@ import QtQuick 2.0
 import "../../../app/sparkqml/Spark/views/browserpanel"
 import "../../../app/sparkqml/Spark/views/navigationpanel"
 import "../../../app/sparkqml/Spark/reducers"
+import "../../../app/sparkqml/Spark/store"
 
 Rectangle {
     width: 480

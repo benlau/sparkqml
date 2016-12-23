@@ -51,7 +51,6 @@
         <file>Spark/reducers/app.js</file>
         <file>Spark/reducers/qmldir</file>
         <file>Spark/js/qtredux/signalproxymiddleware.js</file>
-        <file>Spark/reducers/StoreProvider.qml</file>
         <file>Spark/js/lodash/qmldir</file>
         <file>Spark/js/lodash/lodash.js</file>
         <file>Spark/js/lodash/lodashwrapper.js</file>
@@ -72,5 +71,7 @@
         <file>Spark/views/browserpanel/PathViewer.qml</file>
         <file>Spark/views/browserpanel/PathButton.qml</file>
         <file>Spark/views/browserpanel/PathItem.qml</file>
+        <file>Spark/store/StoreProvider.qml</file>
+        <file>Spark/store/qmldir</file>
     </qresource>
 </RCC>
