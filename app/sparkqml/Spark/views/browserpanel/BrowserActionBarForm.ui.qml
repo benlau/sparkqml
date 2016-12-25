@@ -8,6 +8,7 @@ Card {
     width: 400
     height: 36
     color: "#f9f9f9"
+    property alias pathViewer: pathViewer
     property alias closeButton: closeButton
 
     RowLayout {
@@ -20,19 +21,8 @@ Card {
             icon: FontAwesome.close
         }
 
-        Text {
-            id: titleItem
-            text: qsTr("Component Browser")
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignLeft
-            Layout.fillHeight: true
-            font.pixelSize: 14
-        }
-
-        Item {
-            id: spacer
-            width: 200
-            height: 200
+        PathViewer {
+            id: pathViewer
             Layout.fillWidth: true
             Layout.fillHeight: true
         }

@@ -14,6 +14,13 @@ Rectangle {
     Column {
 
         PathViewer {
+        }
+
+        PathViewer {
+            path: ["", "", ""]
+        }
+
+        PathViewer {
             width: window.width
         }
 

@@ -1,5 +1,6 @@
 import QtQuick 2.4
 import FontAwesome 1.0
+import Spark.constants 1.0
 import "../components"
 
 Button {
@@ -26,8 +27,8 @@ Button {
         anchors.centerIn: parent
         width: parent.width - 16
         elide: Text.ElideRight
+        color: Constants.black87
     }
-
 
     TextMetrics {
         id: textMetrics
