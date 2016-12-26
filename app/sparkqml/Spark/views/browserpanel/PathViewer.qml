@@ -25,6 +25,11 @@ Item {
                 Layout.alignment: Qt.AlignLeft
                 Layout.fillWidth: true
                 Layout.maximumWidth: item.implicitWidth
+                onClicked: {
+                    var list = component.path.slice(0, index + 1);
+                    var newFolder = list.join("/");
+                    actions.setBrowsingFolder(newFolder);
+                }
             }
         }
 

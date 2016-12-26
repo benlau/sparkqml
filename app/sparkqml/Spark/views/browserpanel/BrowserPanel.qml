@@ -20,4 +20,12 @@ BrowserPanelForm {
     Component.onCompleted: {
         browse(provider.browsingFolder);
     }
+
+    Connections {
+        target: provider
+        ignoreUnknownSignals: true
+        onBrowsingFolderChanged: {
+            browse(provider.browsingFolder);
+        }
+    }
 }

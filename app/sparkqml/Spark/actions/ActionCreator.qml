@@ -119,6 +119,16 @@ QtObject {
         });
     }
 
+    function setBrowsingFolder(folder) {
+        var action = {
+            type: "setBrowsingFolder",
+            folder: folder
+        };
+
+        dispatch(action);
+    }
+
+
     function pop() {
         dispatch({
             type: "pop"

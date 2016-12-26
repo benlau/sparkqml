@@ -14,8 +14,8 @@ Button {
 
     Rectangle {
         anchors.fill: parent
-        opacity: 0.3
-        color: "white"
+        opacity: 0.1
+        color: "black"
         visible: component.pressed
     }
 

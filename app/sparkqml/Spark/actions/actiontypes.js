@@ -34,5 +34,7 @@ var setErrorString = "setErrorString";
 
 var browse = "browser";
 
+var setBrowsingFolder = "setBrowsingFolder";
+
 var pop = "pop";
 

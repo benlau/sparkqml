@@ -144,6 +144,10 @@ function reducer(state, action) {
                               });
         break;
 
+    case ActionTypes.setBrowsingFolder:
+        state = Lodash.assign({}, state, {browsingFolder: action.folder});
+        break;
+
     case "pop":
         state = Lodash.assign({}, state,
                               {
