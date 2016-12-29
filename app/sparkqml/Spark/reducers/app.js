@@ -20,7 +20,11 @@ var initState = {
     browsingFolder: "",
     views: [],
     availableStates: [],
-    recentFiles: []
+    recentFiles: [],
+    navigationPanel: {
+        // A cached version of recentFiles. Avoid to change while in navigation panel
+        displayRecentFiles: []
+    }
 }
 
 function moveSelectedState(state, action) {
@@ -77,10 +81,32 @@ function addRecentFile(state, action) {
     return state;
 }
 
+function openDrawer(state, action) {
+
+    var ops = {
+        navigationPanel: {
+            displayRecentFiles: {$set: state.recentFiles}
+        }
+    }
+
+    state = QRedux.update(state, ops);
+
+    return state;
+}
+
+var mappingTable = {
+    "openDrawer": openDrawer
+}
+
+var mapReducers = QRedux.mapReducers(mappingTable);
+
 function reducer(state, action) {
     if (state === undefined) {
         return initState;
     }
+
+    //@TODO - Migrate to use mapReducers
+    state = mapReducers(state, action);
 
     var ops = {};
 

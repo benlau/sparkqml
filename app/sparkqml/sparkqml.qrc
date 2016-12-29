@@ -63,5 +63,6 @@
         <file>Spark/views/browserpanel/PathItem.qml</file>
         <file>Spark/store/StoreProvider.qml</file>
         <file>Spark/store/qmldir</file>
+        <file>Spark/store/Object.qml</file>
     </qresource>
 </RCC>

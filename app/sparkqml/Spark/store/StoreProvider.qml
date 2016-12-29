@@ -1,6 +1,6 @@
 import QtQuick 2.0
 
-QtObject {
+Object {
 
     property string source: "";
 
@@ -26,6 +26,13 @@ QtObject {
 
     property var recentFiles: new Array
 
+    property alias navigationPanel: navigationPanel
+
+    Object {
+        id: navigationPanel
+        property var displayRecentFiles: new Array;
+    }
+
     signal quitApp
 
     signal load
@@ -49,4 +56,5 @@ QtObject {
     signal askToSaveFile
 
     signal forceActiveFocusOnStateListView
+
 }

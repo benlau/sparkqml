@@ -90,5 +90,23 @@ Item {
             actions.addRecentFile("3");
             compare(store.getState().recentFiles, convert(["3","11","9","8","7","6","5","4","2","1"]));
         }
+
+        function test_openDrawer() {
+            var store = Redux.createStore(App.reducer);
+            actions.dispatch = store.dispatch;
+
+            var state = store.getState();
+            state.recentFiles = [{ file: "t1.qml", displayName: "t1.qml" }];
+
+            actions.openDrawer();
+            state = store.getState();
+            compare(state.recentFiles, state.navigationPanel.displayRecentFiles);
+
+            actions.addRecentFile("t2.qml");
+            state = store.getState();
+            compare(state.recentFiles.length, 2);
+            compare(state.navigationPanel.displayRecentFiles.length, 1);
+
+        }
     }
 }
