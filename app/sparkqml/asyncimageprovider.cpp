@@ -1,4 +1,5 @@
 #include <QTimer>
+#include <QtCore>
 #include <asyncfuture.h>
 #include <QUrlQuery>
 #include <QtConcurrent>
@@ -33,7 +34,7 @@ QQuickImageResponse *AsyncImageProvider::requestImageResponse(const QString &id,
     Q_UNUSED(requestedSize);
     QUrl url(id);
     QUrlQuery query(url);
-    QString path = url.path();
+    QString path = QString("/") + url.path();
 
     int delay = 0;
 
@@ -41,7 +42,9 @@ QQuickImageResponse *AsyncImageProvider::requestImageResponse(const QString &id,
 
     auto readImage = [=]() {
         QImage image;
-        image.load(path);
+        if (!image.load(path)) {
+            qWarning() << "Failed to open file";
+        }
         response->setResult(image);
     };
 
