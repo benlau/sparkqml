@@ -6,6 +6,7 @@
 #include <QtShell>
 #include <QDesktopServices>
 #include "qmlengine.h"
+#include "asyncimageprovider.h"
 #include "appview.h"
 
 AppView::AppView(QObject *parent) : QObject(parent)
@@ -21,6 +22,7 @@ void AppView::start()
     m_mockupActor.createProject();
 
     m_engine.addImportPath("qrc:///");
+    m_engine.addImageProvider("sparkqml", new AsyncImageProvider());
 
     if (!m_defaultImportPathFile.isEmpty() &&
         QFile::exists(m_defaultImportPathFile)) {
