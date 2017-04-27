@@ -7,11 +7,11 @@ SOURCES += $$PWD/appview.cpp \
     $$PWD/qmlshell.cpp \
     $$PWD/qmlengine.cpp \
     $$PWD/qmltypes.cpp \
-    $$PWD/clipboard.cpp \
     $$PWD/url.cpp \
     $$PWD/fileinfo.cpp \
     $$PWD/qmlfilelistmodel.cpp \
-    $$PWD/asyncimageprovider.cpp
+    $$PWD/asyncimageprovider.cpp \
+    $$PWD/clipboardwrapper.cpp
 
 RESOURCES += \    
     $$PWD/sparkqml.qrc
@@ -26,8 +26,8 @@ HEADERS +=     $$PWD/appview.h \
     $$PWD/mockupactor.h \
     $$PWD/qmlshell.h \
     $$PWD/qmlengine.h \
-    $$PWD/clipboard.h \
     $$PWD/url.h \
     $$PWD/fileinfo.h \
     $$PWD/qmlfilelistmodel.h \
-    $$PWD/asyncimageprovider.h
+    $$PWD/asyncimageprovider.h \
+    $$PWD/clipboardwrapper.h

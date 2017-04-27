@@ -7,10 +7,11 @@
     "com.github.benlau.qtshell@0.3.2",
     "com.github.benlau.quickpromise@1.0.3",
     "com.github.benlau.quickcross@1.0.2.20",
-    "quick.future.pri@1.0.0.0",
+    "quick.future.pri@1.0.3",
     "com.github.benlau.qsyncable@1.0.2.5",
     "com.github.benlau.qredux@0.0.1",
-    "async.future.pri@0.3.3"
+    "async.future.pri@0.3.3",
+    "com.github.benlau.fluid@0.10.0.1"
   ],
   "license": "NONE",
   "pri_filename": "",

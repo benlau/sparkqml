@@ -1,7 +1,7 @@
 #include <QtQml>
 #include "qmlengine.h"
 #include "filewatcher.h"
-#include "clipboard.h"
+#include "clipboardwrapper.h"
 #include "url.h"
 #include "fileinfo.h"
 #include "qmlfilelistmodel.h"
@@ -34,7 +34,7 @@ static void registerTypes() {
     qmlRegisterType<QmlFileListModel>("Spark.sys", 1, 0, "QmlFileListModel");
 
     qmlRegisterSingletonType<QmlEngine>("Spark.sys", 1, 0, "Engine", engineProvider);
-    qmlRegisterSingletonType<Clipboard>("Spark.sys", 1, 0, "Clipboard", provider<Clipboard>);
+    qmlRegisterSingletonType<ClipboardWrapper>("Spark.sys", 1, 0, "Clipboard", provider<ClipboardWrapper>);
     qmlRegisterSingletonType<Url>("Spark.sys", 1, 0, "Url", provider<Url>);
     qmlRegisterSingletonType<FileInfo>("Spark.sys", 1, 0, "FileInfo", provider<FileInfo>);
 
