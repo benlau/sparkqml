@@ -16,7 +16,6 @@
         <file>Spark/views/mainpanel/StatesPanelForm.ui.qml</file>
         <file>Spark/views/mainpanel/ToolBar.qml</file>
         <file>Spark/views/mainpanel/ToolBarButton.qml</file>
-        <file>Spark/views/mainpanel/ToolBarButtonForm.ui.qml</file>
         <file>Spark/views/mainpanel/ToolBarForm.ui.qml</file>
         <file>Spark/views/browserpanel/Card.qml</file>
         <file>Spark/views/browserpanel/Shadow.qml</file>
