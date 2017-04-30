@@ -13,8 +13,8 @@ before_install:
 script:
     - git clone https://github.com/benlau/qtci.git
     - source qtci/path.env
-    - qt-5.7
-    - source qt-5.7.env
+    - qt-5.8
+    - source qt-5.8.env
     - mkdir build
     - cd build
     - run-unittests ../tests/sparkqmltests/sparktests.pro
