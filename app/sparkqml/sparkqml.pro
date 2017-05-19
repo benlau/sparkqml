@@ -15,6 +15,7 @@ ROOTDIR = $$PWD/../..
 # Default rules for deployment.
 include(deployment.pri)
 include(vendor/vendor.pri)
+include($$ROOTDIR/lib/quikit/quikit.pri)
 
 DISTFILES +=     qpm.json \
     ../../README.md

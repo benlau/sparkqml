@@ -13,6 +13,7 @@ ROOTDIR = $$PWD/../../
 
 include(vendor/vendor.pri)
 include($$ROOTDIR/app/sparkqml/sparkqml.pri)
+include($$ROOTDIR/lib/quikit/quikit.pri)
 
 
 DISTFILES +=     qpm.json \     

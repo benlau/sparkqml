@@ -9,7 +9,6 @@ SOURCES += $$PWD/appview.cpp \
     $$PWD/qmltypes.cpp \
     $$PWD/url.cpp \
     $$PWD/fileinfo.cpp \
-    $$PWD/qmlfilelistmodel.cpp \
     $$PWD/asyncimageprovider.cpp \
     $$PWD/clipboardwrapper.cpp
 
@@ -17,6 +16,7 @@ RESOURCES += \
     $$PWD/sparkqml.qrc
 
 INCLUDEPATH += $$PWD
+DEPENDPATH += $$PWD
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH += $$PWD
@@ -28,6 +28,5 @@ HEADERS +=     $$PWD/appview.h \
     $$PWD/qmlengine.h \
     $$PWD/url.h \
     $$PWD/fileinfo.h \
-    $$PWD/qmlfilelistmodel.h \
     $$PWD/asyncimageprovider.h \
     $$PWD/clipboardwrapper.h
