@@ -3,6 +3,7 @@
 #include <QtShell>
 #include <QCMainThreadRunner>
 #include <QSDiffRunner>
+#include <asyncfuture.h>
 #include "qmlfilelistmodel.h"
 
 template <typename T, typename Functor>
@@ -43,34 +44,12 @@ QList<T> uniq(const QList<T>& input, F f) {
     return res;
 }
 
-
-bool waitForFinished(QThreadPool &pool, int timeout)
-{
-    QEventLoop loop;
-    QTime time;
-    time.start();
-    bool ret = true;
-
-    while (!pool.waitForDone(10)) {
-        loop.processEvents();
-        if (timeout > 0 && time.elapsed() > timeout) {
-            qWarning() << " QDash::waitForFinished(QThreadPool &pool): timeout error";
-            ret = false;
-            break;
-        }
-    }
-
-    return ret;
-}
-
 QmlFileListModel::QmlFileListModel(QObject *parent) : QSListModel(parent)
 {
-    thread.setMaxThreadCount(2);
 }
 
 QmlFileListModel::~QmlFileListModel()
 {
-    waitForFinished(thread, 5000);
 }
 
 QString QmlFileListModel::folder() const
@@ -151,28 +130,31 @@ void QmlFileListModel::feed()
             return item.preview;
         });
 
-        MAIN_THREAD {
-            if (thiz.isNull() || thiz->folder() != folder) {
-                return;
-            }
-
-            QVariantList curr = map<QVariant>(res, [](const File& item ) {
-                QVariantMap map;
-                map["source"] = item.source;
-                map["preview"] = item.preview;
-                map["ui"] = item.ui;
-                map["qml"] = item.qml;
-                return (QVariant) map;
-            });
-
-            QSDiffRunner runner;
-            runner.setKeyField("preview");
-            QSPatchSet patch = runner.compare(thiz->storage(), curr);
-            runner.patch(thiz.data(), patch);
-
-            emit thiz->contentReady();
-        };
+        return res;
     };
 
-    QtConcurrent::run(worker);
+    auto cleanup = [=](QList<File> res) {
+        if (thiz->folder() != folder ) {
+            return;
+        }
+
+        QVariantList curr = map<QVariant>(res, [](const File& item ) {
+            QVariantMap map;
+            map["source"] = item.source;
+            map["preview"] = item.preview;
+            map["ui"] = item.ui;
+            map["qml"] = item.qml;
+            return (QVariant) map;
+        });
+
+        QSDiffRunner runner;
+        runner.setKeyField("preview");
+        QSPatchSet patch = runner.compare(thiz->storage(), curr);
+        runner.patch(thiz.data(), patch);
+
+        emit contentReady();
+    };
+
+    auto f = QtConcurrent::run(worker);
+    AsyncFuture::observe(f).context(this, cleanup);
 }

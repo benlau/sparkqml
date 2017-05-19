@@ -10,7 +10,7 @@
     "quick.future.pri@1.0.3",
     "com.github.benlau.qsyncable@1.0.2.5",
     "com.github.benlau.qredux@0.0.1",
-    "async.future.pri@0.3.3",
+    "async.future.pri@0.3.4",
     "com.github.benlau.fluid@0.10.0.1"
   ],
   "license": "NONE",

@@ -30,14 +30,17 @@ private:
 
         /// The source file URL to be loaded
         QString source;
+
+        /// The implementation file
         QString qml;
+
+        /// The UI form file
         QString ui;
     };
 
     void feed();
 
     QString m_folder;
-    QThreadPool thread;
 };
 
 #endif // QMLFILELISTMODEL_H
