@@ -8,6 +8,8 @@
 #include "mockupactor.h"
 #include "tests.h"
 
+using namespace QUIKit;
+
 template <typename T>
 inline T waitForFinished(QFuture<T> future) {
     if (future.isFinished()) {

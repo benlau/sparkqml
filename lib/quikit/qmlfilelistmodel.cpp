@@ -44,6 +44,8 @@ QList<T> uniq(const QList<T>& input, F f) {
     return res;
 }
 
+namespace QUIKit {
+
 QmlFileListModel::QmlFileListModel(QObject *parent) : QSListModel(parent)
 {
 }
@@ -158,3 +160,5 @@ void QmlFileListModel::feed()
     auto f = QtConcurrent::run(worker);
     AsyncFuture::observe(f).context(this, cleanup);
 }
+
+} // End of Namespace

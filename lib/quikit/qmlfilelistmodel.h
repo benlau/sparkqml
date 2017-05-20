@@ -5,6 +5,8 @@
 #include <QSListModel>
 #include <QThreadPool>
 
+namespace QUIKit {
+
 class QmlFileListModel : public QSListModel
 {
     Q_OBJECT
@@ -42,5 +44,7 @@ private:
 
     QString m_folder;
 };
+
+}
 
 #endif // QMLFILELISTMODEL_H
