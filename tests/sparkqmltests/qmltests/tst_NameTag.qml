@@ -20,6 +20,7 @@ TestCase {
     NameTag {
         id: tag2
         grow: true
+        nameTextHeight: 20
 
         Loader {
             id: loader2

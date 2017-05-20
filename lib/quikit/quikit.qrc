@@ -4,5 +4,6 @@
         <file>QUIKit/ScaledLoader.qml</file>
         <file>QUIKit/UIGrid.qml</file>
         <file>QUIKit/NameTag.qml</file>
+        <file>QUIKit/UIFlow.qml</file>
     </qresource>
 </RCC>

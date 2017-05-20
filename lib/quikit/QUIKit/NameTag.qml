@@ -10,10 +10,12 @@ Item {
 
     property bool grow: false
 
+    property int nameTextHeight: 30
+
     function refresh() {
         if (grow) {
             component.width = container.width;
-            component.height = container.height + 20;
+            component.height = container.height + nameTextHeight;
         } else {
             container.width = holder.width;
             container.height = holder.height;
@@ -53,11 +55,10 @@ Item {
             id: text
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.maximumHeight: 20
+            Layout.maximumHeight: nameTextHeight
             color: "#de000000"
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: 14
-            elide: Text.ElideMiddle
             verticalAlignment: Text.AlignVCenter
         }
     }
