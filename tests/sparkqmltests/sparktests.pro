@@ -29,7 +29,10 @@ DISTFILES +=     qpm.json \
     qmltests/tst_Middleware.qml \
     mockup/mockup_RecentFileList.qml \
     mockup/mockup_NavigationPanel.qml \
-    mockup/mockup_PathViewer.qml
+    mockup/mockup_PathViewer.qml \
+    sample/rectanlges/Red100x100.qml \
+    sample/rectanlges/Blue100x50.qml \
+    mockup/mockup_UIGrid.qml
 
 HEADERS +=     tests.h
 

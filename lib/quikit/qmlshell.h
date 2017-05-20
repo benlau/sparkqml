@@ -2,6 +2,8 @@
 
 #include <QObject>
 
+namespace QUIKit {
+
 /// Wrapper of QtShell
 class QmlShell : public QObject
 {
@@ -14,5 +16,7 @@ signals:
 public slots:
     QString basename(const QString& path);
     QString dirname(const QString& path);
+
+};
 
 };

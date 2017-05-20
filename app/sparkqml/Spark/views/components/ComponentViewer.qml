@@ -1,7 +1,7 @@
 import QtQuick 2.0
 import Spark.constants 1.0
 import Spark.sys 1.0
-import Shell 1.0
+import QUIKit 1.0
 import QuickPromise 1.0
 import Future 1.0
 

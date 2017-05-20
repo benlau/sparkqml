@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>QUIKit/qmldir</file>
+        <file>QUIKit/ScaledLoader.qml</file>
+        <file>QUIKit/UIGrid.qml</file>
+    </qresource>
+</RCC>

@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import QtTest 1.0
-import Shell 1.0
+import QUIKit 1.0
 import Spark.actions 1.0
 import Spark.reducers 1.0
 import QRedux 1.0

@@ -35,7 +35,6 @@ static void registerTypes() {
     qmlRegisterSingletonType<ClipboardWrapper>("Spark.sys", 1, 0, "Clipboard", provider<ClipboardWrapper>);
     qmlRegisterSingletonType<Url>("Spark.sys", 1, 0, "Url", provider<Url>);
     qmlRegisterSingletonType<FileInfo>("Spark.sys", 1, 0, "FileInfo", provider<FileInfo>);
-
 }
 
 Q_COREAPP_STARTUP_FUNCTION(registerTypes)

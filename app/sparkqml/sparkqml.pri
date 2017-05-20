@@ -4,7 +4,6 @@ QT += concurrent
 SOURCES += $$PWD/appview.cpp \
     $$PWD/filewatcher.cpp \
     $$PWD/mockupactor.cpp \
-    $$PWD/qmlshell.cpp \
     $$PWD/qmlengine.cpp \
     $$PWD/qmltypes.cpp \
     $$PWD/url.cpp \
@@ -24,7 +23,6 @@ QML_IMPORT_PATH += $$PWD
 HEADERS +=     $$PWD/appview.h \
     $$PWD/filewatcher.h \
     $$PWD/mockupactor.h \
-    $$PWD/qmlshell.h \
     $$PWD/qmlengine.h \
     $$PWD/url.h \
     $$PWD/fileinfo.h \

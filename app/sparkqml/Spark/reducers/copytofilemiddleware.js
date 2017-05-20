@@ -1,9 +1,9 @@
 .pragma library
 .import "qrc:/QuickPromise/promise.js" as Q
-.import Shell 1.0 as ShellPackage
+.import QUIKit 1.0 as QUIKit
 .import Spark.sys 1.0 as SparkSys
 
-var Shell = ShellPackage.Shell;
+var Shell = QUIKit.Shell;
 var Url = SparkSys.Url;
 var FileInfo = SparkSys.FileInfo;
 
