@@ -27,7 +27,6 @@ Item {
     TestCase {
         name: "Middleware"
 
-
         Item {
             id: mockDialog
             property bool selectMultiple

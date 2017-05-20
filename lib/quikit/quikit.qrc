@@ -3,5 +3,6 @@
         <file>QUIKit/qmldir</file>
         <file>QUIKit/ScaledLoader.qml</file>
         <file>QUIKit/UIGrid.qml</file>
+        <file>QUIKit/NameTag.qml</file>
     </qresource>
 </RCC>

@@ -6,12 +6,12 @@ import QUIKit 1.0
 Rectangle {
     id: component
 
-    color: "white"
-
     property alias cellWidth: grid.cellWidth
     property alias cellHeight: grid.cellHeight
 
     property alias folder : listModel.folder
+
+    color: "white"
 
     QmlFileListModel {
         id: listModel
@@ -19,6 +19,7 @@ Rectangle {
 
     GridView {
         id: grid
+        interactive: false
         anchors.fill: parent
         model: listModel
         cellWidth: 200
@@ -28,26 +29,13 @@ Rectangle {
             width: grid.cellWidth
             height: grid.cellHeight
 
-            ColumnLayout  {
+            NameTag {
+                name: model.qml
                 anchors.fill: parent
                 anchors.margins: 4
 
                 ScaledLoader {
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
                     source: model.source
-                }
-
-                Text {
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                    Layout.maximumHeight: 20
-                    text: model.qml
-                    color: "#de000000"
-                    horizontalAlignment: Text.AlignHCenter
-                    font.pixelSize: 14
-                    elide: Text.ElideMiddle
-                    verticalAlignment: Text.AlignVCenter
                 }
             }
         }

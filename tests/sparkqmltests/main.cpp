@@ -4,7 +4,12 @@
 #include <signal.h>
 #include <unistd.h>
 #include <TestRunner>
+#include <QtQuickTest/quicktest.h>
 #include "tests.h"
+
+namespace AutoTestRegister {
+    QUICK_TEST_MAIN(QuickTests)
+}
 
 void handleBacktrace(int sig) {
     void *array[100];

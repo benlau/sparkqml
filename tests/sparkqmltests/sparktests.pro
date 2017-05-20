@@ -15,6 +15,7 @@ include(vendor/vendor.pri)
 include($$ROOTDIR/app/sparkqml/sparkqml.pri)
 include($$ROOTDIR/lib/quikit/quikit.pri)
 
+DEFINES += QUICK_TEST_SOURCE_DIR=\\\"$$PWD\\\"
 
 DISTFILES +=     qpm.json \     
     DummyItem1.qml \
@@ -32,7 +33,8 @@ DISTFILES +=     qpm.json \
     mockup/mockup_PathViewer.qml \
     sample/rectanlges/Red100x100.qml \
     sample/rectanlges/Blue100x50.qml \
-    mockup/mockup_UIGrid.qml
+    mockup/mockup_UIGrid.qml \
+    qmltests/tst_NameTag.qml
 
 HEADERS +=     tests.h
 
