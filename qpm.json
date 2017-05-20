@@ -1,6 +1,6 @@
 {
   "name": "net.efever.quikit",
-  "description": "",
+  "description": "QUIKit - Manage your UI component in development phase",
   "author": {
     "name": "Ben Lau",
     "email": "xbenlau@gmail.com"
@@ -10,7 +10,7 @@
     "url": "git@github.com:benlau/sparkqml.git"
   },
   "version": {
-    "label": "0.0.1",
+    "label": "0.0.2",
     "revision": "",
     "fingerprint": ""
   },
