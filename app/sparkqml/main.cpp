@@ -1,7 +1,9 @@
 #include <QtCore>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QtShell>
 #include "appview.h"
+#include "sparkqmlfunctions.h"
 
 #if defined(Q_OS_MAC) || defined(Q_OS_LINUX)
 #include <execinfo.h>
@@ -33,9 +35,13 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
     app.setApplicationName("sparkqml");
-    Q_UNUSED(app);
 
     QStringList args = app.arguments();
+
+    if (args.size() > 1) {
+        // Setup environment variable before AppView is ready
+        SparkQML::loadSparkQmlEnvFile(QtShell::dirname(args[1]));
+    }
 
     AppView view;
     view.setMockupFolder(QStandardPaths::standardLocations(QStandardPaths::AppDataLocation)[0] + "/mockup");

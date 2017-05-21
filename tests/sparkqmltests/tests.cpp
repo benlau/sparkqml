@@ -7,7 +7,9 @@
 #include "qmlengine.h"
 #include "mockupactor.h"
 #include "tests.h"
+#include "sparkqmlfunctions.h"
 
+using namespace SparkQML;
 using namespace QUIKit;
 
 template <typename T>
@@ -29,6 +31,10 @@ inline T waitForFinished(QFuture<T> future) {
 Tests::Tests(QObject *parent) : QObject(parent)
 {
 
+    auto ref = [=]() {
+        QTest::qExec(this, 0, 0); // Autotest detect available test cases of a QObject by looking for "QTest::qExec" in source code
+    };
+    Q_UNUSED(ref);
 }
 
 void Tests::mockupLoadingTests()
@@ -152,4 +158,15 @@ void Tests::QmlFileListModel_test()
     QVERIFY(Automator::waitUntilSignal(&model,SIGNAL(contentReady())));
     QCOMPARE(model.count(), 2);
 
+}
+
+void Tests::test_parseEnvFile()
+{
+    QString content = "A=123\nB= 456 ";
+
+    QVariantMap env = parseEnvFile(content);
+
+    QCOMPARE(env.size(), 2);
+    QVERIFY(env["A"] == "123");
+    QVERIFY(env["B"] == "456");
 }

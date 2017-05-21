@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QDir>
+#include <QVariantMap>
 
 namespace SparkQML {
 
@@ -17,9 +18,11 @@ namespace SparkQML {
             }
             dir.cdUp();
         }
-
     }
 
+    QVariantMap parseEnvFile(const QString& content);
+
+    void loadSparkQmlEnvFile(const QString &path);
 }
 
 #endif // SPARKQMLFUNCTIONS_H
