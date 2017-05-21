@@ -9,7 +9,8 @@ SOURCES += $$PWD/appview.cpp \
     $$PWD/url.cpp \
     $$PWD/fileinfo.cpp \
     $$PWD/asyncimageprovider.cpp \
-    $$PWD/clipboardwrapper.cpp
+    $$PWD/clipboardwrapper.cpp \
+    $$PWD/sparkqmlfunctions.cpp
 
 RESOURCES += \    
     $$PWD/sparkqml.qrc
@@ -27,4 +28,5 @@ HEADERS +=     $$PWD/appview.h \
     $$PWD/url.h \
     $$PWD/fileinfo.h \
     $$PWD/asyncimageprovider.h \
-    $$PWD/clipboardwrapper.h
+    $$PWD/clipboardwrapper.h \
+    $$PWD/sparkqmlfunctions.h

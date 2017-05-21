@@ -3,24 +3,23 @@
 #include <QtShell>
 #include <QCMainThreadRunner>
 #include "qmlengine.h"
+#include "sparkqmlfunctions.h"
 
 static QString _searchImportPathFile(QString path)
 {
     QString result;
 
-    QDir dir(path);
-
-    while (!dir.isRoot()) {
-        QString file = dir.absolutePath() + "/qmlimport.path";
+    SparkQML::walkToRoot(path, [&](const QString& currentPath) {
+        QString file = QtShell::realpath_strip(currentPath, "qmlimport.path");
 
         QFileInfo info(file);
         if (info.exists()) {
             result = file;
-            break;
+            return false;
         }
 
-        dir.cdUp();
-    }
+        return true;
+    });
 
     return result;
 }

@@ -4,7 +4,7 @@
   "dependencies": [
     "com.github.benlau.quickflux@1.0.5.6",
     "font.awesome.pri@1.0.0",
-    "com.github.benlau.qtshell@0.3.2",
+    "com.github.benlau.qtshell@0.4.2",
     "com.github.benlau.quickpromise@1.0.3",
     "com.github.benlau.quickcross@1.0.2.20",
     "quick.future.pri@1.0.3",
