@@ -25,10 +25,10 @@ Rectangle {
 
             delegate: NameTag {
                 name: model.qml
-                grow: true
+                growToFitContent: true
 
                 ScaledLoader {
-                    autoScaleEnabled: false
+                    autoScaleToFit: false
                     source: model.source
                 }
             }

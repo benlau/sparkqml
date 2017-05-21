@@ -35,7 +35,8 @@ DISTFILES +=     qpm.json \
     sample/rectanlges/Blue100x50.qml \
     mockup/mockup_UIGrid.qml \
     qmltests/tst_NameTag.qml \
-    mockup/mockup_UIFlow.qml
+    mockup/mockup_UIFlow.qml \
+    sample/rectanlges/Green50x20.qml
 
 HEADERS +=     tests.h
 

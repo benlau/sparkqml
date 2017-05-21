@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.4
 import QtQuick.Layouts 1.1
 
 Item {
@@ -8,13 +8,18 @@ Item {
 
     property alias name : text.text
 
-    property bool grow: false
+    /// If it is enabled, NameTag's size will grow to fit content.
+    /// Otherwise it will only use the assigned area
+    property bool growToFitContent: false
 
     property int nameTextHeight: 30
 
+    /// The font of name text
+    property alias font : text.font
+
     function refresh() {
-        if (grow) {
-            component.width = container.width;
+        if (growToFitContent) {
+            component.width = Math.max(container.width, fontMetrics.boundingRect(name).width);
             component.height = container.height + nameTextHeight;
         } else {
             container.width = holder.width;
@@ -26,12 +31,21 @@ Item {
         }
     }
 
+    onNameChanged: {
+        refresh();
+    }
+
     onWidthChanged: {
         refresh();
     }
 
     onHeightChanged: {
         refresh();
+    }
+
+    FontMetrics {
+      id: fontMetrics
+      font : text.font
     }
 
     ColumnLayout  {

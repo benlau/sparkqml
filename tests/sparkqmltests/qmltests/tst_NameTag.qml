@@ -19,7 +19,7 @@ TestCase {
 
     NameTag {
         id: tag2
-        grow: true
+        growToFitContent: true
         nameTextHeight: 20
 
         Loader {
@@ -33,6 +33,9 @@ TestCase {
         compare(tag1.width, 0);
         compare(tag2.width, 100);
         compare(tag2.height, 70);
+
+        tag2.name = "A super long name. A super long name. A super long name.";
+        compare(tag2.width > 100, true);
     }
 
 }

@@ -3,7 +3,7 @@ import QtQuick 2.0
 Item {
     id: component
 
-    property bool autoScaleEnabled: true
+    property bool autoScaleToFit: true
 
     property alias source : loader.source
 
@@ -17,7 +17,7 @@ Item {
     }
 
     function refresh() {
-        if (autoScaleEnabled) {
+        if (autoScaleToFit) {
             scaleToFit();
         } else {
             component.width = loader.item.width;
