@@ -158,6 +158,25 @@ void Tests::QmlFileListModel_test()
     QVERIFY(Automator::waitUntilSignal(&model,SIGNAL(contentReady())));
     QCOMPARE(model.count(), 2);
 
+    // Test filters
+    {
+        model.setFilters(QStringList() << "Sample1*");
+        QVERIFY(Automator::waitUntilSignal(&model,SIGNAL(contentReady())));
+        QCOMPARE(model.count(), 1);
+
+        model.setFilters(QStringList() << "*");
+
+        QVERIFY(Automator::waitUntilSignal(&model,SIGNAL(contentReady())));
+        QCOMPARE(model.count(), 2);
+        QVERIFY(model.get(0)["qml"].toString() == "Sample1.qml");
+
+        model.setFilters(QStringList() << "Sample2" << "Sample1");
+
+        QVERIFY(Automator::waitUntilSignal(&model,SIGNAL(contentReady())));
+        QCOMPARE(model.count(), 2);
+        QVERIFY(model.get(0)["qml"].toString() == "Sample2.qml");
+
+    }
 }
 
 void Tests::test_parseEnvFile()

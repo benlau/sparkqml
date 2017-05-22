@@ -8,6 +8,8 @@ Rectangle {
 
     property alias folder : listModel.folder
 
+    property alias filters: listModel.filters
+
     color: "white"
 
     QmlFileListModel {

@@ -4,6 +4,7 @@
 #include <QCMainThreadRunner>
 #include <QSDiffRunner>
 #include <asyncfuture.h>
+#include <aconcurrent.h>
 #include "qmlfilelistmodel.h"
 
 template <typename T, typename Functor>
@@ -74,13 +75,43 @@ void QmlFileListModel::feed()
 {
     QPointer<QmlFileListModel> thiz = this;
     QString folder = m_folder;
+    QStringList filters = m_filters;
 
-    auto worker = [thiz, folder]() {
+    auto runFilters = [=](QList<QFileInfo> input) {
+        QList<QFileInfo> list;
+
+        if (filters.size() == 0) {
+            return input;
+        }
+
+        for (int i = 0 ; i < filters.size(); i++) {
+            QString filter = filters[i];
+
+            int j = 0;
+            while (j < input.size()) {
+                QFileInfo info = input[j];
+                QString fileName = info.baseName();
+                QRegExp rx(filter, Qt::CaseInsensitive, QRegExp::Wildcard);
+
+                if (fileName.indexOf(rx) >= 0) {
+                    list << info;
+                    input.removeAt(j);
+                } else {
+                    j++;
+                }
+            }
+        }
+
+        return list;
+    };
+
+    auto worker = [thiz, folder, runFilters]() {
         QDir dir(folder);
         QList<QFileInfo> fileInfoList = dir.entryInfoList();
 
         QMap<QString, bool> index;
 
+        /// Search only qml file
         fileInfoList = filter<QFileInfo>(fileInfoList, [&index](const QFileInfo& info) {
             bool res = true;
             index[info.fileName()] = true;
@@ -92,6 +123,9 @@ void QmlFileListModel::feed()
             return res;
         });
 
+        fileInfoList = runFilters(fileInfoList);
+
+        // Convert QList<QFileInfo> to QList<File>
         QList<File> res = map<File>(fileInfoList, [index](const QFileInfo& info) {
             File file;
 
@@ -158,7 +192,22 @@ void QmlFileListModel::feed()
     };
 
     auto f = QtConcurrent::run(worker);
-    AsyncFuture::observe(f).context(this, cleanup);
+
+    AConcurrent::debounce(this,"feed", f, [=]() {
+        cleanup(f.result());
+    });
+}
+
+void QmlFileListModel::setFilters(const QStringList &filters)
+{
+    m_filters = filters;
+    feed();
+    emit filtersChanged();
+}
+
+QStringList QmlFileListModel::filters() const
+{
+    return m_filters;
 }
 
 } // End of Namespace

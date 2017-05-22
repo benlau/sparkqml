@@ -11,6 +11,7 @@ class QmlFileListModel : public QSListModel
 {
     Q_OBJECT
     Q_PROPERTY(QString folder READ folder WRITE setFolder NOTIFY folderChanged)
+    Q_PROPERTY(QStringList filters READ filters WRITE setFilters NOTIFY filtersChanged)
 public:
     explicit QmlFileListModel(QObject *parent = 0);
     ~QmlFileListModel();
@@ -18,8 +19,13 @@ public:
     QString folder() const;
     void setFolder(const QString &folder);
 
+    QStringList filters() const;
+
+    void setFilters(const QStringList &filters);
+
 signals:
     void folderChanged();
+    void filtersChanged();
     void contentReady();
 
 public slots:
@@ -43,6 +49,7 @@ private:
     void feed();
 
     QString m_folder;
+    QStringList m_filters;
 };
 
 }
