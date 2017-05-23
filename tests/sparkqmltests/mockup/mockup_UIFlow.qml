@@ -6,9 +6,13 @@ Item {
     height: 480
     clip: true
 
-    UIFlow {
-        folder: Qt.resolvedUrl("../sample/rectanlges/");
-        anchors.fill: parent
+    ScaledContentFrame {
+        width: 700
+        height: 600
+
+        UIFlow {
+            folder: Qt.resolvedUrl("../sample/rectanlges/");
+        }
     }
 
 }

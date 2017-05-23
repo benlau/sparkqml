@@ -2,3 +2,4 @@ module QUIKit
 UIGrid 1.0 UIGrid.qml
 NameTag 1.0 NameTag.qml
 UIFlow 1.0 UIFlow.qml
+ScaledContentFrame 1.0 ScaledContentFrame.qml

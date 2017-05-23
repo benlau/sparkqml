@@ -5,5 +5,6 @@
         <file>QUIKit/UIGrid.qml</file>
         <file>QUIKit/NameTag.qml</file>
         <file>QUIKit/UIFlow.qml</file>
+        <file>QUIKit/ScaledContentFrame.qml</file>
     </qresource>
 </RCC>
