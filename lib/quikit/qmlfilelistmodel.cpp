@@ -1,7 +1,6 @@
 #include <QPointer>
 #include <QtConcurrent>
 #include <QtShell>
-#include <QCMainThreadRunner>
 #include <QSDiffRunner>
 #include <asyncfuture.h>
 #include <aconcurrent.h>

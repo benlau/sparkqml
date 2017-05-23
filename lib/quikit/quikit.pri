@@ -1,5 +1,6 @@
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
+QT += concurrent
 
 HEADERS += \
     $$PWD/qmlfilelistmodel.h \
@@ -13,3 +14,4 @@ SOURCES += \
 RESOURCES += \
     $$PWD/quikit.qrc
 
+QML_IMPORT_PATH += $$PWD

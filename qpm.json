@@ -16,7 +16,8 @@
   },
   "dependencies": [
     "async.future.pri@0.3.4",
-    "com.github.benlau.qtshell@0.4.2"
+    "com.github.benlau.qtshell@0.4.2",
+    "com.github.benlau.qsyncable@1.0.2.5"
   ],
   "license": "APACHE_2_0",
   "pri_filename": "lib/quikit/quikit.pri",
