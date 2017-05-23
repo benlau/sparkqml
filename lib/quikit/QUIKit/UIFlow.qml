@@ -10,8 +10,7 @@ Rectangle {
 
     property alias filters: listModel.filters
 
-    height: grid.height
-    width: grid.width + grid.leftPadding + grid.rightPadding
+    implicitHeight: grid.height
 
     color: "white"
 
@@ -23,7 +22,7 @@ Rectangle {
         id: grid
         spacing: 10
         padding: 10
-        anchors.centerIn: parent
+        width: parent.width
 
         Repeater {
             model: listModel
