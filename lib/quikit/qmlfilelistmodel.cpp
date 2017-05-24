@@ -110,7 +110,7 @@ void QmlFileListModel::feed()
 
         QMap<QString, bool> index;
 
-        /// Search only qml file
+        /// Search only qml file and build index
         fileInfoList = filter<QFileInfo>(fileInfoList, [&index](const QFileInfo& info) {
             bool res = true;
             index[info.fileName()] = true;

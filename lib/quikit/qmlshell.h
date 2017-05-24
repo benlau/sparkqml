@@ -16,6 +16,9 @@ signals:
 public slots:
     QString basename(const QString& path);
     QString dirname(const QString& path);
+    QStringList find(const QString& path);
+
+    QStringList find(const QString& path, const QStringList& filter);
 
 };
 

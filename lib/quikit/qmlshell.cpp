@@ -19,4 +19,14 @@ QString QmlShell::dirname(const QString &path)
     return QtShell::dirname(path);
 }
 
+QStringList QmlShell::find(const QString &path)
+{
+    return QtShell::find(path);
+}
+
+QStringList QmlShell::find(const QString &path, const QStringList &filter)
+{
+    return QtShell::find(path, filter);
+}
+
 }
