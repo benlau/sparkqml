@@ -46,6 +46,89 @@ QList<T> uniq(const QList<T>& input, F f) {
 
 namespace QUIKit {
 
+static QList<QmlFileListModel::File> pack(const QStringList& input, const QStringList& filters) {
+    QMap<QString, bool> index;
+    QStringList filtered;
+
+    if (filters.size() == 0) {
+
+        filtered = filter(input, [](QString input) {
+            QFileInfo info(input);
+            return info.suffix().toLower() == "qml";
+        });
+
+    } else {
+        QStringList list = input;
+
+        for (int i = 0 ; i < filters.size(); i++) {
+            QString filter = filters[i];
+
+            int j = 0;
+            while (j < list.size()) {
+                QFileInfo info = list[j];
+                QString fileName = info.baseName();
+                QRegExp rx(filter, Qt::CaseInsensitive, QRegExp::Wildcard);
+
+                if (fileName.indexOf(rx) >= 0 && info.suffix().toLower() == "qml") {
+                    filtered << list[j];
+                    list.removeAt(j);
+                } else {
+                    j++;
+                }
+            }
+        }
+    }
+
+    for (int i = 0; i < filtered.size(); i++) {
+        QFileInfo info(filtered[i]);
+        index[info.fileName()] = true;
+    }
+
+    QList<QmlFileListModel::File> res = map<QmlFileListModel::File>(filtered, [index](const QString& input) {
+        QmlFileListModel::File file;
+        QFileInfo info(input);
+
+        if (QRegExp(".*ui.qml").exactMatch(info.fileName())) {
+            file.ui = info.absoluteFilePath();
+            QString qmlFileName = info.baseName().replace(QRegExp("Form$"),"") + ".qml";
+            if (index.contains(qmlFileName)) {
+                file.qml = info.absolutePath() + "/" + qmlFileName;
+            }
+        } else {
+            file.qml = info.absoluteFilePath();
+            QString formFileName = info.baseName() + "Form.ui.qml";
+            if (index.contains(formFileName)) {
+                file.ui = info.absolutePath() + "/" + formFileName;
+            }
+        }
+
+        if (!file.ui.isEmpty()) {
+            // Prefer to show UI Form rather than qml file.
+            file.preview = QUrl::fromLocalFile(file.ui).toString();
+        } else {
+            file.preview = QUrl::fromLocalFile(file.qml).toString();
+        }
+
+        if (!file.qml.isEmpty()) {
+            // file.source prefer to load QML file (e.g preview transition effect)
+            file.source = QUrl::fromLocalFile(file.qml).toString();
+        } else {
+            file.source = QUrl::fromLocalFile(file.ui).toString();
+        }
+
+        file.ui = QtShell::basename(file.ui);
+        file.qml = QtShell::basename(file.qml);
+
+        return file;
+    });
+
+    res = uniq(res, [](const QmlFileListModel::File& item) {
+        return item.preview;
+    });
+
+    return res;
+}
+
 QmlFileListModel::QmlFileListModel(QObject *parent) : QSListModel(parent)
 {
 }
@@ -76,118 +159,17 @@ void QmlFileListModel::feed()
     QString folder = m_folder;
     QStringList filters = m_filters;
 
-    auto runFilters = [=](QList<QFileInfo> input) {
-        QList<QFileInfo> list;
-
-        if (filters.size() == 0) {
-            return input;
-        }
-
-        for (int i = 0 ; i < filters.size(); i++) {
-            QString filter = filters[i];
-
-            int j = 0;
-            while (j < input.size()) {
-                QFileInfo info = input[j];
-                QString fileName = info.baseName();
-                QRegExp rx(filter, Qt::CaseInsensitive, QRegExp::Wildcard);
-
-                if (fileName.indexOf(rx) >= 0) {
-                    list << info;
-                    input.removeAt(j);
-                } else {
-                    j++;
-                }
-            }
-        }
-
-        return list;
-    };
-
-    auto worker = [thiz, folder, runFilters]() {
+    auto worker = [thiz, folder,filters]() {
         QDir dir(folder);
-        QList<QFileInfo> fileInfoList = dir.entryInfoList();
-
-        QMap<QString, bool> index;
-
-        /// Search only qml file and build index
-        fileInfoList = filter<QFileInfo>(fileInfoList, [&index](const QFileInfo& info) {
-            bool res = true;
-            index[info.fileName()] = true;
-            if (info.fileName() == "." ||
-                info.fileName() == ".." ||
-                !QRegExp(".*qml").exactMatch(info.fileName())) {
-                res = false;
-            }
-            return res;
+        QStringList input = map<QString>(dir.entryInfoList(), [](QFileInfo info) {
+            return info.absoluteFilePath();
         });
 
-        fileInfoList = runFilters(fileInfoList);
-
-        // Convert QList<QFileInfo> to QList<File>
-        QList<File> res = map<File>(fileInfoList, [index](const QFileInfo& info) {
-            File file;
-
-            if (QRegExp(".*ui.qml").exactMatch(info.fileName())) {
-                file.ui = info.absoluteFilePath();
-                QString qmlFileName = info.baseName().replace(QRegExp("Form$"),"") + ".qml";
-                if (index.contains(qmlFileName)) {
-                    file.qml = info.absolutePath() + "/" + qmlFileName;
-                }
-            } else {
-                file.qml = info.absoluteFilePath();
-                QString formFileName = info.baseName() + "Form.ui.qml";
-                if (index.contains(formFileName)) {
-                    file.ui = info.absolutePath() + "/" + formFileName;
-                }
-            }
-
-            if (!file.ui.isEmpty()) {
-                // Prefer to show UI Form rather than qml file.
-                file.preview = QUrl::fromLocalFile(file.ui).toString();
-            } else {
-                file.preview = QUrl::fromLocalFile(file.qml).toString();
-            }
-
-            if (!file.qml.isEmpty()) {
-                // file.source prefer to load QML file (e.g preview transition effect)
-                file.source = QUrl::fromLocalFile(file.qml).toString();
-            } else {
-                file.source = QUrl::fromLocalFile(file.ui).toString();
-            }
-
-            file.ui = QtShell::basename(file.ui);
-            file.qml = QtShell::basename(file.qml);
-            return file;
-        });
-
-        res = uniq(res, [](const File& item) {
-            return item.preview;
-        });
-
-        return res;
+        return pack(input , filters);
     };
 
     auto cleanup = [=](QList<File> res) {
-        if (thiz->folder() != folder ) {
-            return;
-        }
-
-        QVariantList curr = map<QVariant>(res, [](const File& item ) {
-            QVariantMap map;
-            map["source"] = item.source;
-            map["preview"] = item.preview;
-            map["ui"] = item.ui;
-            map["qml"] = item.qml;
-            return (QVariant) map;
-        });
-
-        QSDiffRunner runner;
-        runner.setKeyField("preview");
-        QSPatchSet patch = runner.compare(thiz->storage(), curr);
-        runner.patch(thiz.data(), patch);
-
-        emit contentReady();
+        setContent(res);
     };
 
     auto f = QtConcurrent::run(worker);
@@ -197,11 +179,36 @@ void QmlFileListModel::feed()
     });
 }
 
+void QmlFileListModel::setContent(const QList<QmlFileListModel::File> &files)
+{
+    QVariantList curr = map<QVariant>(files, [](const File& item ) {
+        QVariantMap map;
+        map["source"] = item.source;
+        map["preview"] = item.preview;
+        map["ui"] = item.ui;
+        map["qml"] = item.qml;
+        return (QVariant) map;
+    });
+
+    QSDiffRunner runner;
+    runner.setKeyField("preview");
+    QSPatchSet patch = runner.compare(storage(), curr);
+    runner.patch(this, patch);
+
+    emit contentReady();
+}
+
 void QmlFileListModel::setFilters(const QStringList &filters)
 {
     m_filters = filters;
     feed();
     emit filtersChanged();
+}
+
+void QmlFileListModel::process(const QStringList &input)
+{
+    auto files = pack(input, m_filters);
+    setContent(files);
 }
 
 QStringList QmlFileListModel::filters() const

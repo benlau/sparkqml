@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QSListModel>
 #include <QThreadPool>
+#include <QFuture>
 
 namespace QUIKit {
 
@@ -29,8 +30,9 @@ signals:
     void contentReady();
 
 public slots:
-private:
+    void process(const QStringList& input);
 
+public:
     class File {
     public:
         /// Preview file URL
@@ -46,7 +48,9 @@ private:
         QString ui;
     };
 
+private:
     void feed();
+    void setContent(const QList<File>& files);
 
     QString m_folder;
     QStringList m_filters;

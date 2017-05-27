@@ -8,25 +8,11 @@
 #include "mockupactor.h"
 #include "tests.h"
 #include "sparkqmlfunctions.h"
+#include "aconcurrent.h"
 
 using namespace SparkQML;
 using namespace QUIKit;
-
-template <typename T>
-inline T waitForFinished(QFuture<T> future) {
-    if (future.isFinished()) {
-        return future.result();
-    }
-
-    QFutureWatcher<T> watcher;
-    watcher.setFuture(future);
-
-    QEventLoop loop;
-    QObject::connect(&watcher, SIGNAL(finished()), &loop, SLOT(quit()));
-
-    loop.exec();
-    return future.result();
-}
+using namespace AConcurrent;
 
 Tests::Tests(QObject *parent) : QObject(parent)
 {
@@ -101,7 +87,7 @@ void Tests::QmlEngine_scanImagePath()
     importPathFile.close();
 
     QFuture<bool> future = qmlEngine.scanImportPathList("fakeproject/App/test.qml");
-    waitForFinished(future);
+    AConcurrent::await(future);
 
     QVERIFY(future.result());
 
@@ -132,7 +118,7 @@ void Tests::QmlEngine_scanImagePath_withDefaultFile()
 
     qmlEngine.setDefaultImportPathFile(QFileInfo("fakeproject/qmlimport.path").absoluteFilePath());
     QFuture<bool> future = qmlEngine.scanImportPathList("fakeproject/App/test.qml");
-    waitForFinished(future);
+    AConcurrent::await(future);
 
     QVERIFY(!future.result());
 
@@ -142,7 +128,7 @@ void Tests::QmlEngine_scanImagePath_withDefaultFile()
     QVERIFY(engineImportPathList.last() == "qrc:///");
 }
 
-void Tests::QmlFileListModel_test()
+void Tests::test_QmlFileListModel_folder()
 {
     QmlFileListModel model;
     QString folder = QtShell::pwd() + "/QmlFileListModel_test";
@@ -177,6 +163,19 @@ void Tests::QmlFileListModel_test()
         QVERIFY(model.get(0)["qml"].toString() == "Sample2.qml");
 
     }
+}
+
+void Tests::test_QmlFileListModel_process()
+{
+    QmlFileListModel model;
+
+    QStringList input;
+    input << "Sample1.qml" << "Sample2.qml" << "Sample2Form.ui.qml" << "README.md";
+
+    QVERIFY(model.count() == 0);
+    model.process(input);
+
+    QCOMPARE(model.count(), 2);
 }
 
 void Tests::test_parseEnvFile()
