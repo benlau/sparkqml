@@ -6,6 +6,7 @@
 #include <TestRunner>
 #include <QtQuickTest/quicktest.h>
 #include "tests.h"
+#include "hotloadertests.h"
 
 namespace AutoTestRegister {
     QUICK_TEST_MAIN(QuickTests)
@@ -33,6 +34,7 @@ int main(int argc, char *argv[])
     TestRunner runner;
     runner.addImportPath("qrc:///");
     runner.add<Tests>();
+    runner.add<HotLoaderTests>();
     runner.add(QString(SRCDIR) + "/qmltests");
 
     bool error = runner.exec(app.arguments());

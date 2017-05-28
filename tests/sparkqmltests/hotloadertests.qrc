@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>hotloader/1.txt</file>
+    </qresource>
+</RCC>

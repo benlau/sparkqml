@@ -6,7 +6,8 @@ CONFIG   -= app_bundle
 
 TEMPLATE = app
 
-SOURCES +=     main.cpp     tests.cpp
+SOURCES +=     main.cpp     tests.cpp \
+    hotloadertests.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 ROOTDIR = $$PWD/../../
@@ -37,8 +38,13 @@ DISTFILES +=     qpm.json \
     qmltests/tst_NameTag.qml \
     mockup/mockup_UIFlow.qml \
     sample/rectanlges/Green50x20.qml \
-    ../../appveyor.yml
+    ../../appveyor.yml \
+    hotloader/1.txt
 
-HEADERS +=     tests.h
+HEADERS +=     tests.h \
+    hotloadertests.h
+
+RESOURCES += \
+    hotloadertests.qrc
 
 
