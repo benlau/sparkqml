@@ -39,7 +39,8 @@ DISTFILES +=     qpm.json \
     mockup/mockup_UIFlow.qml \
     sample/rectanlges/Green50x20.qml \
     ../../appveyor.yml \
-    hotloader/1.txt
+    hotloader/1.txt \
+    ../../qpm.json
 
 HEADERS +=     tests.h \
     hotloadertests.h

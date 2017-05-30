@@ -46,7 +46,9 @@ QList<T> uniq(const QList<T>& input, F f) {
 
 namespace QUIKit {
 
-static QList<QmlFileListModel::File> pack(const QStringList& input, const QStringList& filters) {
+static QList<QmlFileListModel::File> pack(const QStringList& input,
+                                          const QStringList& filters,
+                                          const QVariantMap& options) {
     QMap<QString, bool> index;
     QStringList filtered;
 
@@ -84,7 +86,8 @@ static QList<QmlFileListModel::File> pack(const QStringList& input, const QStrin
         index[info.fileName()] = true;
     }
 
-    QList<QmlFileListModel::File> res = map<QmlFileListModel::File>(filtered, [index](const QString& input) {
+    QList<QmlFileListModel::File> res = map<QmlFileListModel::File>(filtered,
+                                                                    [index, options](const QString& input) {
         QmlFileListModel::File file;
         QFileInfo info(input);
 
@@ -118,6 +121,10 @@ static QList<QmlFileListModel::File> pack(const QStringList& input, const QStrin
 
         file.ui = QtShell::basename(file.ui);
         file.qml = QtShell::basename(file.qml);
+        file.title = info.baseName();
+        if (options.contains(file.title)) {
+            file.options = options[file.title].toMap();
+        }
 
         return file;
     });
@@ -158,14 +165,15 @@ void QmlFileListModel::feed()
     QPointer<QmlFileListModel> thiz = this;
     QString folder = m_folder;
     QStringList filters = m_filters;
+    QVariantMap options = m_options;
 
-    auto worker = [thiz, folder,filters]() {
+    auto worker = [thiz, folder,filters, options]() {
         QDir dir(folder);
         QStringList input = map<QString>(dir.entryInfoList(), [](QFileInfo info) {
             return info.absoluteFilePath();
         });
 
-        return pack(input , filters);
+        return pack(input , filters, options);
     };
 
     auto cleanup = [=](QList<File> res) {
@@ -187,6 +195,8 @@ void QmlFileListModel::setContent(const QList<QmlFileListModel::File> &files)
         map["preview"] = item.preview;
         map["ui"] = item.ui;
         map["qml"] = item.qml;
+        map["title"] = item.title;
+        map["options"] = item.options;
         return (QVariant) map;
     });
 
@@ -198,6 +208,17 @@ void QmlFileListModel::setContent(const QList<QmlFileListModel::File> &files)
     emit contentReady();
 }
 
+QVariantMap QmlFileListModel::options() const
+{
+    return m_options;
+}
+
+void QmlFileListModel::setOptions(const QVariantMap &options)
+{
+    m_options = options;
+    emit optionsChanged();
+}
+
 void QmlFileListModel::setFilters(const QStringList &filters)
 {
     m_filters = filters;
@@ -207,7 +228,7 @@ void QmlFileListModel::setFilters(const QStringList &filters)
 
 void QmlFileListModel::process(const QStringList &input)
 {
-    auto files = pack(input, m_filters);
+    auto files = pack(input, m_filters, m_options);
     setContent(files);
 }
 

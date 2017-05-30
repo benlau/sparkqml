@@ -19,7 +19,7 @@ private slots:
 
     void test_QmlFileListModel_process();
 
-
+    void test_QmlFileListModel_options();
 
     void test_parseEnvFile();
 };

@@ -178,6 +178,31 @@ void Tests::test_QmlFileListModel_process()
     QCOMPARE(model.count(), 2);
 }
 
+void Tests::test_QmlFileListModel_options()
+{
+    QmlFileListModel model;
+    QVariantMap options;
+    QVariantMap properties;
+
+    properties["width"] = 100;
+    options["Sample2"] = properties;
+
+    QStringList input;
+    input << "Sample1.qml" << "Sample2.qml" << "Sample2Form.ui.qml" << "README.md";
+
+    QVERIFY(model.count() == 0);
+    model.setOptions(options);
+    model.process(input);
+
+    QCOMPARE(model.count(), 2);
+
+    QVariantMap item = model.get(1);
+
+    QCOMPARE(item["qml"].toString(), QString("Sample2.qml"));
+    QCOMPARE(item["options"].toMap()["width"].toInt(), 100);
+
+}
+
 void Tests::test_parseEnvFile()
 {
     QString content = "A=123\nB= 456 ";
