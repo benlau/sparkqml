@@ -5,6 +5,7 @@ import QUIKit 1.0
 import Spark.views.components 1.0
 import "../sample/rectanlges"
 
+Item {
 TestCase {
     name: "QmlFileListModel"
 
@@ -32,7 +33,7 @@ TestCase {
 
         utils.waitUntil(function() {
             return model.count > 0;
-        }, 1000);
+        }, 5000);
 
         compare(model.count, 3);
 
@@ -42,4 +43,5 @@ TestCase {
 
     }
 
+}
 }

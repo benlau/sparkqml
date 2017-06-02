@@ -8,6 +8,8 @@ Item {
 
     property int spacing: 10
 
+    property int padding: 10
+
     function refresh() {
         var items = [];
 
@@ -21,10 +23,10 @@ Item {
         }
 
         items.sort(function(a,b) {
-           return a.width * a.height - b.width * b.height;
+           return a.height - b.height;
         });
 
-        var scanline = 0;
+        var scanline = padding;
         var box = { // The box size of current line
             width: 0,
             height: 0
@@ -33,7 +35,7 @@ Item {
         for (var i = 0 ; i < items.length ; i++) {
             var item = items[i];
 
-            if (box.width + item.width < component.width) {
+            if (box.width + item.width < (component.width - (padding * 2)) ) {
                 item.x = box.width;
                 item.y = scanline;
                 box.width += item.width + spacing;
@@ -41,9 +43,9 @@ Item {
             } else {
                 // Place it on next line
                 var nextScanline = scanline + box.height + spacing;
-                item.x = 0;
+                item.x = padding;
                 item.y = nextScanline;
-                box.width = 0;
+                box.width = padding + item.width + spacing;
                 box.height = item.height;
                 scanline = nextScanline;
             }
