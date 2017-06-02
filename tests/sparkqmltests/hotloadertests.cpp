@@ -38,6 +38,7 @@ void HotLoaderTests::test_HotLoader_run()
 
 void HotLoaderTests::test_HotLoader_mappedUrl()
 {
+    qDebug() << "test_HotLoader_mappedUrl";
     HotLoader loader;
 
     loader.setHotReloadEnabled(false);

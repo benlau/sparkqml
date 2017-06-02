@@ -143,7 +143,8 @@ QFuture<void> HotLoader::compile()
 {
     QFuture<QString> result = QtConcurrent::mapped(m_resourceFiles, compileRcc);
 
-    return observe(result).context(this, [=]() {
+    return observe(result).subscribe([=]() {
+        qDebug() << "Compiled";
         m_compiledResourceFiles = result.results();
 
         foreach (QString rccFile, m_compiledResourceFiles) {

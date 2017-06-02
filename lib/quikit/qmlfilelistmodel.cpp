@@ -169,7 +169,12 @@ void QmlFileListModel::feed()
 
     m_pendingToFeed = true;
 
+    QPointer<QmlFileListModel> thiz = this;
+
     AConcurrent::runOnMainThread([=]() {
+        if (thiz.isNull()) {
+            return;
+        }
         m_pendingToFeed = false;
         realFeed();
     });
