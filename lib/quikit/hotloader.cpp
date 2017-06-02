@@ -2,6 +2,7 @@
 #include <QtShell>
 #include <QResource>
 #include <asyncfuture.h>
+#include <aconcurrent.h>
 #include "hotloader.h"
 
 using namespace AsyncFuture;
@@ -21,22 +22,6 @@ QList<T> blockingMapped(QList<I> input, F f) {
     }
 
     return res;
-}
-
-template <typename T>
-void waitForFinished(QList<QFuture<T> > futures) {
-    for (int i = 0 ; i < futures.size(); i++) {
-        futures[i].waitForFinished();
-    }
-}
-
-template <typename T>
-void waitForFinished(QFuture<T> future) {
-
-    QEventLoop loop;
-    while (!future.isFinished()) {
-        loop.processEvents(QEventLoop::AllEvents, 10);
-    }
 }
 
 static QStringList parseRcc(const QString& rccFile) {
@@ -105,8 +90,12 @@ void HotLoader::addResourceFile(const QString &file)
     QStringList files = parseRcc(file);
 
     foreach (QString f, files) {
-        qDebug() << "Monitor" << f;
-        watcher->addPath(f);
+        if (QFile::exists(f)) {
+            qDebug() << "Monitor" << f;
+            watcher->addPath(f);
+        } else {
+            qWarning() << "File not found:" << f;
+        }
     }
 }
 
@@ -117,7 +106,7 @@ int HotLoader::run(std::function<int (void)> func)
         future = compile();
     }
 
-    waitForFinished(future);
+    AConcurrent::await(future);
 
     int ret = func();
 

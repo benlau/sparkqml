@@ -20,7 +20,7 @@ build_script:
   - dir %GOPATH%\bin
   - cd tests\sparkqmltests
   - qpm install
-  - qmake sparkqmltests.pro
+  - qmake sparktests.pro
   - nmake
   - dir /w
   - dir release /w
