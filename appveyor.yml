@@ -11,17 +11,17 @@ environment:
     qt: msvc2017
 
 build_script:
-- "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\vcvarsall.bat" x86_amd64
-- set GOPATH=c:\gopath
-- set QTDIR=C:\Qt\5.8\msvc2015_64
-- set PATH=%PATH%;%QTDIR%\bin;C:\MinGW\bin;%GOPATH%\bin;
-- go get qpm.io/qpm
-- go install qpm.io/qpm
-- dir %GOPATH%\bin
-- cd tests\sparkqmltests
-- qpm install
-- qmake sparkqmltests.pro
-- nmake
-- dir /w
-- dir release /w
-- release\sparkqmltests
+  - call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86_amd64
+  - set GOPATH=c:\gopath
+  - set QTDIR=C:\Qt\5.8\msvc2015_64
+  - set PATH=%PATH%;%QTDIR%\bin;C:\MinGW\bin;%GOPATH%\bin;
+  - go get qpm.io/qpm
+  - go install qpm.io/qpm
+  - dir %GOPATH%\bin
+  - cd tests\sparkqmltests
+  - qpm install
+  - qmake sparkqmltests.pro
+  - nmake
+  - dir /w
+  - dir release /w
+  - release\sparkqmltests

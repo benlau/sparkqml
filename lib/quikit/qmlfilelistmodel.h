@@ -56,17 +56,20 @@ public:
         QString title;
 
         /// The options to be passed to the QML file for preview.
-        QVariantMap options;
+        QVariantMap properties;
     };
 
 private:
     void feed();
+    void realFeed();
     void setContent(const QList<File>& files);
 
     QString m_folder;
     QStringList m_filters;
 
     QVariantMap m_options;
+
+    bool m_pendingToFeed;
 };
 
 }

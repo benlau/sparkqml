@@ -10,6 +10,8 @@ Rectangle {
 
     property alias filters: listModel.filters
 
+    property alias options: listModel.options
+
     implicitHeight: grid.height
 
     color: "white"
@@ -34,6 +36,7 @@ Rectangle {
                 ScaledLoader {
                     autoScaleToFit: false
                     source: model.source
+                    properties: model.properties
                 }
             }
         }

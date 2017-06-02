@@ -199,7 +199,7 @@ void Tests::test_QmlFileListModel_options()
     QVariantMap item = model.get(1);
 
     QCOMPARE(item["qml"].toString(), QString("Sample2.qml"));
-    QCOMPARE(item["options"].toMap()["width"].toInt(), 100);
+    QCOMPARE(item["properties"].toMap()["width"].toInt(), 100);
 
 }
 

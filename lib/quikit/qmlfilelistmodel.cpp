@@ -123,7 +123,7 @@ static QList<QmlFileListModel::File> pack(const QStringList& input,
         file.qml = QtShell::basename(file.qml);
         file.title = info.baseName();
         if (options.contains(file.title)) {
-            file.options = options[file.title].toMap();
+            file.properties = options[file.title].toMap();
         }
 
         return file;
@@ -138,6 +138,7 @@ static QList<QmlFileListModel::File> pack(const QStringList& input,
 
 QmlFileListModel::QmlFileListModel(QObject *parent) : QSListModel(parent)
 {
+    m_pendingToFeed = false;
 }
 
 QmlFileListModel::~QmlFileListModel()
@@ -162,6 +163,21 @@ void QmlFileListModel::setFolder(const QString &folder)
 
 void QmlFileListModel::feed()
 {
+    if (m_pendingToFeed) {
+        return;
+    }
+
+    m_pendingToFeed = true;
+
+    AConcurrent::runOnMainThread([=]() {
+        m_pendingToFeed = false;
+        realFeed();
+    });
+}
+
+void QmlFileListModel::realFeed()
+{
+
     QPointer<QmlFileListModel> thiz = this;
     QString folder = m_folder;
     QStringList filters = m_filters;
@@ -196,7 +212,7 @@ void QmlFileListModel::setContent(const QList<QmlFileListModel::File> &files)
         map["ui"] = item.ui;
         map["qml"] = item.qml;
         map["title"] = item.title;
-        map["options"] = item.options;
+        map["properties"] = item.properties;
         return (QVariant) map;
     });
 
@@ -217,13 +233,14 @@ void QmlFileListModel::setOptions(const QVariantMap &options)
 {
     m_options = options;
     emit optionsChanged();
+    feed();
 }
 
 void QmlFileListModel::setFilters(const QStringList &filters)
 {
     m_filters = filters;
-    feed();
     emit filtersChanged();
+    feed();
 }
 
 void QmlFileListModel::process(const QStringList &input)

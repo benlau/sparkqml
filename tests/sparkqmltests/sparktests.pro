@@ -40,7 +40,9 @@ DISTFILES +=     qpm.json \
     sample/rectanlges/Green50x20.qml \
     ../../appveyor.yml \
     hotloader/1.txt \
-    ../../qpm.json
+    ../../qpm.json \
+    qmltests/tst_QmlFileListModel.qml \
+    qmltests/TestUtils.qml
 
 HEADERS +=     tests.h \
     hotloadertests.h

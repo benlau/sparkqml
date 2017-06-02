@@ -6,12 +6,19 @@ Item {
     height: 480
     clip: true
 
+
+
     ScaledContentFrame {
-        width: 700
-        height: 600
+        anchors.fill: parent
 
         UIFlow {
+            width: 320
             folder: Qt.resolvedUrl("../sample/rectanlges/");
+            options: {
+                "Blue100x50": {
+                    color: "green"
+                }
+            }
         }
     }
 

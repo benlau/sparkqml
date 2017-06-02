@@ -9,6 +9,8 @@ Item {
 
     property alias soureComponent : loader.sourceComponent
 
+    property var properties: null
+
     function scaleToFit() {
         var sw = (component.width / loader.item.width);
         var sh = (component.height / loader.item.height);
@@ -38,6 +40,13 @@ Item {
         anchors.centerIn: parent
 
         onStatusChanged: {
+            if (loader.status === Loader.Ready) {
+                if (component.properties) {
+                    for (var i in component.properties) {
+                        loader.item[i] = component.properties[i];
+                    }
+                }
+            }
             refresh();
         }
     }
