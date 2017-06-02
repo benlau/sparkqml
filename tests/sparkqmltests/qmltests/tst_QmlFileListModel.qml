@@ -7,7 +7,6 @@ import "../sample/rectanlges"
 
 TestCase {
     name: "QmlFileListModel"
-    when: windowShown
 
     TestUtils {
         id: utils
@@ -21,6 +20,7 @@ TestCase {
     }
 
     function test_options() {
+        console.log("test_options");
         var model = creator.createObject();
 
         model.folder = Qt.resolvedUrl("../sample/rectanlges/");
