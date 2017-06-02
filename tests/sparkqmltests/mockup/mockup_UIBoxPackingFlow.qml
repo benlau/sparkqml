@@ -9,14 +9,9 @@ Item {
     ScaledContentFrame {
         anchors.fill: parent
 
-        UIFlow {
-            width: 320
+        UIBoxPackingFlow {
+            width: 300
             folder: Qt.resolvedUrl("../sample/rectanlges/");
-            options: {
-                "Blue100x50": {
-                    color: "green"
-                }
-            }
         }
     }
 

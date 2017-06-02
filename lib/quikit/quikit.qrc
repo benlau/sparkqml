@@ -6,5 +6,7 @@
         <file>QUIKit/NameTag.qml</file>
         <file>QUIKit/UIFlow.qml</file>
         <file>QUIKit/ScaledContentFrame.qml</file>
+        <file>QUIKit/BoxPackingFlow.qml</file>
+        <file>QUIKit/UIBoxPackingFlow.qml</file>
     </qresource>
 </RCC>

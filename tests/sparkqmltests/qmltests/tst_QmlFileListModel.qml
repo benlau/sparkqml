@@ -32,7 +32,9 @@ TestCase {
 
         utils.waitUntil(function() {
             return model.count > 0;
-        }, 1000)
+        }, 1000);
+
+        compare(model.count, 3);
 
         var item = model.get(0);
         compare(item.title, "Blue100x50");

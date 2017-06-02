@@ -17,6 +17,8 @@ Item {
     /// The font of name text
     property alias font : text.font
 
+    signal refreshed();
+
     function refresh() {
         if (growToFitContent) {
             component.width = Math.max(container.width, fontMetrics.boundingRect(name).width);
@@ -29,6 +31,7 @@ Item {
                 container.children[0].height = holder.height;
             }
         }
+        refreshed();
     }
 
     onNameChanged: {

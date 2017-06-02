@@ -42,7 +42,9 @@ DISTFILES +=     qpm.json \
     hotloader/1.txt \
     ../../qpm.json \
     qmltests/tst_QmlFileListModel.qml \
-    qmltests/TestUtils.qml
+    qmltests/TestUtils.qml \
+    mockup/mockup_BoxPackingFlow.qml \
+    mockup/mockup_UIBoxPackingFlow.qml
 
 HEADERS +=     tests.h \
     hotloadertests.h

@@ -48,5 +48,7 @@ int main(int argc, char *argv[])
         qDebug() << "All test cases passed!";
     }
 
+    QThreadPool::globalInstance()->waitForDone(1000);
+
     return error;
 }
