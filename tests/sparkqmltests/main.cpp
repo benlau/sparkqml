@@ -13,6 +13,7 @@ namespace AutoTestRegister {
 #if defined(Q_OS_MAC) || defined(Q_OS_LINUX)
 #include <execinfo.h>
 #include <unistd.h>
+#include <signal.h>
 void handleBacktrace(int sig) {
   void *array[100];
   size_t size;

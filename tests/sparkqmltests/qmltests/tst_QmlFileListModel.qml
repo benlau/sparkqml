@@ -7,6 +7,7 @@ import "../sample/rectanlges"
 
 TestCase {
     name: "QmlFileListModel"
+    when: windowShown
 
     TestUtils {
         id: utils
