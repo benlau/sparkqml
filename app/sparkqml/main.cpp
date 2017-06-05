@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 #endif
 
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    qputenv("QML_DISABLE_DISK_CACHE", "1"); // or
+    qputenv("QML_DISABLE_DISK_CACHE", "1");
 
     QGuiApplication app(argc, argv);
     app.setApplicationName("sparkqml");

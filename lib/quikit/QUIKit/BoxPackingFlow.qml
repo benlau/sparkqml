@@ -64,6 +64,10 @@ Item {
         onItemAdded: {
             refresh();
         }
+
+        onItemRemoved: {
+            refresh();
+        }
     }
 
 }
