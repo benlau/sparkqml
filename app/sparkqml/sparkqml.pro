@@ -22,5 +22,12 @@ DISTFILES +=     qpm.json \
 
 ICON = sparkqml.icns
 
+linux {
+    xcbplugins.path = plugins
+    xcbplugins.files += $$[QT_INSTALL_DATA]/plugins/xcbglintegrations/*.so
+    INSTALLS += xcbplugins
+}
+
 # For Qt Creator <= 4.1
 QML_IMPORT_PATH += $$ROOTDIR/mockup/designer
+
