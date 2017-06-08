@@ -182,6 +182,9 @@ void QmlFileListModel::feed()
 
 void QmlFileListModel::realFeed()
 {
+#ifdef QT_DEBUG
+    qDebug() << "QmlFileListModel::readlFeed";
+#endif
 
     QPointer<QmlFileListModel> thiz = this;
     QString folder = m_folder;

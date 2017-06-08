@@ -2,6 +2,7 @@
 #include <QtConcurrent>
 #include <QtShell>
 #include <QCMainThreadRunner>
+#include <asyncfuture.h>
 #include "qmlengine.h"
 #include "sparkqmlfunctions.h"
 
@@ -81,12 +82,11 @@ QFuture<bool> QmlEngine::scanImportPathList(const QString &folder)
     QPointer<QmlEngine> thiz = this;
     QString defaultImportPathFile = m_defaultImportPathFile;
 
-    auto worker = [folder, thiz, defaultImportPathFile]() -> bool {
+    auto worker = [folder, thiz, defaultImportPathFile]() -> QStringList {
 
         // Avoid to call a static member function due
         // to a bug in GCC 4.7 used in travis
         QString file = _searchImportPathFile(folder);
-        bool res = false;
 
         QStringList importPathList;
 
@@ -94,24 +94,21 @@ QFuture<bool> QmlEngine::scanImportPathList(const QString &folder)
             importPathList = _readImportPathFile(file);
         }
 
-        if (!importPathList.isEmpty()) {
-            res = true;
-        }
-
-        MAIN_THREAD {
-            if (thiz.isNull() || thiz->engine() == 0) {
-                return;
-            }
-            QStringList list = thiz->preImportPathList();
-            list.append(importPathList);
-            list.append(thiz->proImportPathList());
-            thiz->engine()->setImportPathList(list);
-        };
-
-        return res;
+        return importPathList;
     };
 
-    return QtConcurrent::run(worker);
+    auto cleanup = [=](QStringList importPathList) {
+
+        QStringList list = thiz->preImportPathList();
+        list.append(importPathList);
+        list.append(thiz->proImportPathList());
+        thiz->engine()->setImportPathList(list);
+
+        return !importPathList.isEmpty();
+    };
+
+    auto future = QtConcurrent::run(worker);
+    return AsyncFuture::observe(future).context(this, cleanup).future();
 }
 
 void QmlEngine::onWarnings(const QList<QQmlError> &warnings)

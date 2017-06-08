@@ -2,6 +2,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QtShell>
+#include <QEventLoop>
 #include "appview.h"
 #include "sparkqmlfunctions.h"
 
@@ -55,5 +56,9 @@ int main(int argc, char *argv[])
     }
 
     view.start();
-    return app.exec();
+    int code = app.exec();
+
+    app.processEvents(QEventLoop::AllEvents);
+
+    return code;
 }
