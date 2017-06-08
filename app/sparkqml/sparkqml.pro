@@ -23,10 +23,12 @@ DISTFILES +=     qpm.json \
 ICON = sparkqml.icns
 
 linux {
-    xcbplugins.path = /plugins
-    xcbplugins.files += $$[QT_INSTALL_DATA]/plugins/xcbglintegrations/*.so
-    target.path = /
-    INSTALLS += xcbplugins
+    defined(PREFIX) {
+        xcbplugins.path = /$$PREFIX/plugins/xcbglintegrations
+        xcbplugins.files += $$[QT_INSTALL_DATA]/plugins/xcbglintegrations/*.so
+        target.path = $$PREFIX
+        INSTALLS += xcbplugins
+    }
 }
 
 # For Qt Creator <= 4.1

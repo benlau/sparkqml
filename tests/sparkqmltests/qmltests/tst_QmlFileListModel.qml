@@ -31,9 +31,9 @@ TestCase {
             }
         }
 
-        utils.waitUntil(function() {
+        compare(utils.waitUntil(function() {
             return model.count > 0;
-        }, 5000);
+        }, 5000), true);
 
         compare(model.count, 3);
 
