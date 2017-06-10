@@ -65,5 +65,6 @@
         <file>Spark/store/Object.qml</file>
         <file>Spark/views/browserpanel/FolderCard.qml</file>
         <file>Spark/views/browserpanel/FolderCardForm.ui.qml</file>
+        <file>Spark/views/mainpanel/qmldir</file>
     </qresource>
 </RCC>
