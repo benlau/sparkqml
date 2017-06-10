@@ -22,5 +22,7 @@ private slots:
     void test_QmlFileListModel_options();
 
     void test_parseEnvFile();
+
+    void test_SparkQML_walkToRoot();
 };
 

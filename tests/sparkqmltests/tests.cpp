@@ -213,3 +213,24 @@ void Tests::test_parseEnvFile()
     QVERIFY(env["A"] == "123");
     QVERIFY(env["B"] == "456");
 }
+
+void Tests::test_SparkQML_walkToRoot()
+{
+    int count = 0;
+
+    auto counter = [&](const QString &path) {
+        Q_UNUSED(path);
+        count++;
+        return true;
+    };
+
+    SparkQML::walkToRoot("qrc:///1/2", counter);
+    QCOMPARE(count, 0);
+
+    SparkQML::walkToRoot("/1/2/3", counter);
+    QCOMPARE(count, 1);
+
+    count = 0;
+    SparkQML::walkToRoot(QtShell::pwd(), counter);
+    QVERIFY(count > 0);
+}

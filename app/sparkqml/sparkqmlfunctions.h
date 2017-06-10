@@ -4,19 +4,28 @@
 #include <QString>
 #include <QDir>
 #include <QVariantMap>
+#include <QtShell>
 
 namespace SparkQML {
 
     template <typename Predicate>
     inline void walkToRoot(const QString& path, Predicate predicate) {
-        QDir dir(path);
+        QString absPath = QtShell::realpath_strip(path);
+        QDir dir(absPath);
+
+        if (absPath.indexOf(":") == 0) {
+            // Resource path is not supported
+            return;
+        }
 
         while (!dir.isRoot()) {
 
             if (!predicate(dir.absolutePath())) {
                 break;
             }
-            dir.cdUp();
+            if (!dir.cdUp()) {
+                break;
+            }
         }
     }
 
