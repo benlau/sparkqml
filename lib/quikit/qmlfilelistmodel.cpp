@@ -172,10 +172,13 @@ void QmlFileListModel::feed()
     QPointer<QmlFileListModel> thiz = this;
 
     AConcurrent::runOnMainThread([=]() {
+        m_pendingToFeed = false;
         if (thiz.isNull()) {
+#ifdef QT_DEBUG
+            qDebug() << "QmlFileListModel::feed(): It is already destroyed";
+#endif
             return;
         }
-        m_pendingToFeed = false;
         realFeed();
     });
 }

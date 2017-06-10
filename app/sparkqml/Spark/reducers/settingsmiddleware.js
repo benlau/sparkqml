@@ -24,6 +24,7 @@ function create(settings) {
                 } else if (action.type === "addRecentFile" ||
                            action.type === "load") {
                     next(action);
+                    // Save recent files to settings
                     settings.recentFiles = JSON.stringify(store.getState().recentFiles);
                     return;
                 }

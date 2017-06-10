@@ -35,6 +35,7 @@ int main(int argc, char *argv[])
 #endif
 
     QGuiApplication app(argc, argv);
+    QThreadPool::globalInstance()->setMaxThreadCount(qMax(4, QThread::idealThreadCount()));
 
     TestRunner runner;
     runner.addImportPath("qrc:///");
@@ -48,7 +49,8 @@ int main(int argc, char *argv[])
         qDebug() << "All test cases passed!";
     }
 
-    QThreadPool::globalInstance()->waitForDone(1000);
+    QThreadPool::globalInstance()->waitForDone();
+    QCoreApplication::instance()->processEvents();
 
     return error;
 }

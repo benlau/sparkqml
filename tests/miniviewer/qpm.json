@@ -1,0 +1,19 @@
+{
+  "name": "",
+  "description": "",
+  "dependencies": [
+    "com.github.benlau.quickflux@1.0.5.4",
+    "com.github.benlau.qtshell@0.4.2",
+    "com.github.benlau.quickcross@1.0.2.20",
+    "quick.future.pri@1.0.0.0",
+    "com.github.benlau.quickpromise@1.0.3",
+    "font.awesome.pri@1.0.0",
+    "com.github.benlau.qsyncable@1.0.2.4",
+    "com.github.benlau.qredux@0.0.1",
+    "async.future.pri@0.3.4",
+    "net.efever.aconcurrent@0.1.7"
+  ],
+  "license": "NONE",
+  "pri_filename": "",
+  "webpage": ""
+}
