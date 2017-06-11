@@ -48,8 +48,6 @@ Item {
 
     function load(source) {
         loader.source = "";
-        Engine.clearComponentCache();
-        Engine.errorString = "";
         Q.setTimeout(function() {
             if (loader === null) {
                 return;

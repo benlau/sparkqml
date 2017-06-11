@@ -23,7 +23,11 @@ function create(settings) {
                         next(action);
                     });
                     return;
+                } else if (action.type === ActionTypes.reload) {
+                    Engine.clearComponentCache();
+                    Engine.errorString = "";
                 }
+
                 next(action);
             }
         }

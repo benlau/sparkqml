@@ -163,6 +163,9 @@ void QmlFileListModel::setFolder(const QString &folder)
 
 void QmlFileListModel::feed()
 {
+#ifdef QT_DEBUG
+    qDebug() << "QmlFileListModel::feed";
+#endif
     if (m_pendingToFeed) {
         return;
     }
@@ -186,7 +189,7 @@ void QmlFileListModel::feed()
 void QmlFileListModel::realFeed()
 {
 #ifdef QT_DEBUG
-    qDebug() << "QmlFileListModel::readlFeed";
+    qDebug() << "QmlFileListModel::realFeed";
 #endif
 
     QPointer<QmlFileListModel> thiz = this;
@@ -204,6 +207,9 @@ void QmlFileListModel::realFeed()
     };
 
     auto cleanup = [=](QList<File> res) {
+        if (thiz.isNull()) {
+            return;
+        }
         setContent(res);
     };
 
