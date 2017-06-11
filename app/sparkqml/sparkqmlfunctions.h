@@ -11,12 +11,18 @@ namespace SparkQML {
     template <typename Predicate>
     inline void walkToRoot(const QString& path, Predicate predicate) {
         QString absPath = QtShell::realpath_strip(path);
-        QDir dir(absPath);
 
         if (absPath.indexOf(":") == 0) {
             // Resource path is not supported
             return;
         }
+
+        QFileInfo info(absPath);
+        if (!info.isDir()) {
+            absPath = info.absolutePath();
+        }
+
+        QDir dir(absPath);
 
         while (!dir.isRoot()) {
 

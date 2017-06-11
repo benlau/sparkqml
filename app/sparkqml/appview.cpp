@@ -24,18 +24,17 @@ void AppView::start()
     m_engine.addImportPath("qrc:///");
     m_engine.addImageProvider("sparkqml", new AsyncImageProvider());
 
+    QStringList preImportPathList;
     if (!m_defaultImportPathFile.isEmpty() &&
         QFile::exists(m_defaultImportPathFile)) {
         qDebug().noquote() << "Default qmlimport.path: " << m_defaultImportPathFile;
-        QStringList importPathList = QmlEngine::readImportPathFile(m_defaultImportPathFile);
-        foreach (QString path , importPathList) {
-            m_engine.addImportPath(path);
-        }
+        preImportPathList = QmlEngine::readImportPathFile(m_defaultImportPathFile);
     }
     m_engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     QmlEngine* qmlEngine = qobject_cast<QmlEngine*>(QFAppDispatcher::singletonObject(&m_engine,"Spark.sys",1,0,"Engine"));
     qmlEngine->setDefaultImportPathFile(m_defaultImportPathFile);
+    qmlEngine->setPreImportPathList(qmlEngine->preImportPathList() << preImportPathList);
     qmlEngine->setProImportPathList(QStringList() << m_mockupFolder);
 
     QObject* contentItem = m_engine.rootObjects().first()->property("contentItem").value<QObject*>();

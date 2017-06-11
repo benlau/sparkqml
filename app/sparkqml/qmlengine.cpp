@@ -92,6 +92,7 @@ QFuture<bool> QmlEngine::scanImportPathList(const QString &path)
         QStringList importPathList;
 
         if (!file.isEmpty() && file != defaultImportPathFile) {
+            // Don't load it again. The content of defaultImportPathFile should be placed into preImportPathList already
             importPathList = _readImportPathFile(file);
         }
 

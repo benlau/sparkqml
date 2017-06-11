@@ -233,4 +233,8 @@ void Tests::test_SparkQML_walkToRoot()
     count = 0;
     SparkQML::walkToRoot(QtShell::pwd(), counter);
     QVERIFY(count > 0);
+
+    count = 0;
+    SparkQML::walkToRoot(QUrl::fromLocalFile(QtShell::realpath_strip(QtShell::pwd(), "tests.cpp")).toString() , counter);
+    QVERIFY(count > 2);
 }

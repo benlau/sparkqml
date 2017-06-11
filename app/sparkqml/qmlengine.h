@@ -36,6 +36,7 @@ public:
     static QStringList readImportPathFile(const QString &path);
 
     QString defaultImportPathFile() const;
+
     void setDefaultImportPathFile(const QString &defaultImportPathFile);
 
 signals:
