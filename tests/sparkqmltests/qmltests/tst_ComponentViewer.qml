@@ -1,6 +1,5 @@
 import QtQuick 2.0
 import QtTest 1.0
-
 import Spark.sys 1.0
 import QUIKit 1.0
 import Spark.views.components 1.0

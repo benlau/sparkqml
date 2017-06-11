@@ -77,10 +77,11 @@ void QmlEngine::clearComponentCache()
     m_engine->clearComponentCache();
 }
 
-QFuture<bool> QmlEngine::scanImportPathList(const QString &folder)
+QFuture<bool> QmlEngine::scanImportPathList(const QString &path)
 {
     QPointer<QmlEngine> thiz = this;
     QString defaultImportPathFile = m_defaultImportPathFile;
+    QString folder = QtShell::realpath_strip(path);
 
     auto worker = [folder, thiz, defaultImportPathFile]() -> QStringList {
 

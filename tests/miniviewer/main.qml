@@ -44,6 +44,7 @@ Window {
         var middlewares = QRedux.applyMiddleware(
                         logger,
                         SystemMiddleware.create(provider),
+                        LoadingMiddle.create(),
                         QRedux.signalProxyMiddleware(provider),
                         QRedux.syncMiddleware(provider)
                     );

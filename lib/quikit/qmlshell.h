@@ -20,6 +20,9 @@ public slots:
 
     QStringList find(const QString& path, const QStringList& filter);
 
+    QString cat(const QString& path);
+
+    QString realpathStrip(const QString& path);
 };
 
 };

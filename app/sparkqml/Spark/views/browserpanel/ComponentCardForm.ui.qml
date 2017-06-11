@@ -32,7 +32,6 @@ Rectangle {
                     id: viewer
                     anchors.fill: parent
                     asynchronous: true
-                    autoScanImportPathList: false
                     clip: true
                 }
             }

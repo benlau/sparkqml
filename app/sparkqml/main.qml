@@ -78,6 +78,7 @@ ApplicationWindow {
 
         var middlewares = QRedux.applyMiddleware(
 //                        logger,
+                        LoadingMiddleware.create(),
                         CopyToFileMiddleware.create(mainFileDialog, mainSettings),
                         SystemMiddleware.create(provider),
                         SettingsMiddleware.create(mainSettings),

@@ -29,4 +29,14 @@ QStringList QmlShell::find(const QString &path, const QStringList &filter)
     return QtShell::find(path, filter);
 }
 
+QString QmlShell::cat(const QString &path)
+{
+    return QtShell::cat(path);
+}
+
+QString QmlShell::realpathStrip(const QString &path)
+{
+    return QtShell::realpath_strip(path);
+}
+
 }

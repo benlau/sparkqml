@@ -16,8 +16,6 @@ Item {
 
     property var availableStates: new Array
 
-    property bool autoScanImportPathList: true
-
     property alias item: loader.item
 
     property alias asynchronous : loader.asynchronous
@@ -52,24 +50,12 @@ Item {
         loader.source = "";
         Engine.clearComponentCache();
         Engine.errorString = "";
-        if (autoScanImportPathList) {
-            var path = Shell.dirname(Url.path(source));
-            var future = Engine.scanImportPathList(path);
-            Future.onFinished(future, function() {
-                if (loader === null) {
-                    return;
-                }
-                loader.source = source;
-            });
-        } else {
-            Q.setTimeout(function() {
-                if (loader === null) {
-                    return;
-                }
-
-                loader.source = source;
-            },0);
-        }
+        Q.setTimeout(function() {
+            if (loader === null) {
+                return;
+            }
+            loader.source = source;
+        },0);
     }
 
     function reload() {

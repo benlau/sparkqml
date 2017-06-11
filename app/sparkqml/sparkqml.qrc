@@ -66,5 +66,6 @@
         <file>Spark/views/browserpanel/FolderCard.qml</file>
         <file>Spark/views/browserpanel/FolderCardForm.ui.qml</file>
         <file>Spark/views/mainpanel/qmldir</file>
+        <file>Spark/reducers/loadingmiddleware.js</file>
     </qresource>
 </RCC>
