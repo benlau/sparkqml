@@ -20,7 +20,6 @@ DEFINES += QUICK_TEST_SOURCE_DIR=\\\"$$PWD\\\"
 
 DISTFILES +=     qpm.json \     
     DummyItem1.qml \
-    sample/SyntaxError.qml \
     sample/Rect.qml \
     mockup/mockup_ComponentViewer.qml \
     qmltests/tst_ComponentViewer.qml \

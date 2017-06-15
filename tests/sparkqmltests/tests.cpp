@@ -8,6 +8,7 @@
 #include "mockupactor.h"
 #include "tests.h"
 #include "sparkqmlfunctions.h"
+#include "dehydrator.h"
 #include "aconcurrent.h"
 
 using namespace SparkQML;
@@ -237,4 +238,26 @@ void Tests::test_SparkQML_walkToRoot()
     count = 0;
     SparkQML::walkToRoot(QUrl::fromLocalFile(QtShell::realpath_strip(QtShell::pwd(), "tests.cpp")).toString() , counter);
     QVERIFY(count > 2);
+}
+
+void Tests::test_Dehydrator()
+{
+    QObject* parent = new QObject();
+    parent->setObjectName("parent");
+
+    QObject* child = new QObject(parent);
+    child->setObjectName("child");
+    Dehydrator dehydrator;
+
+    QVariantMap data = dehydrator.dehydrate(child);
+
+    QCOMPARE(data["objectName"].toString(), QString("child"));
+    QCOMPARE(data.size(), 1);
+
+     data = dehydrator.dehydrate(parent);
+     QCOMPARE(data["objectName"].toString(), QString("parent"));
+     QCOMPARE(data.size(), 2);
+     QVariantList list = data["$children"].toList();
+     QCOMPARE(list.size(), 1);
+     QCOMPARE(list[0].toMap()["objectName"].toString() , QString("child"));
 }

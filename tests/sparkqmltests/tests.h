@@ -24,5 +24,7 @@ private slots:
     void test_parseEnvFile();
 
     void test_SparkQML_walkToRoot();
+
+    void test_Dehydrator();
 };
 

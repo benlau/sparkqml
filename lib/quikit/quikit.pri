@@ -5,13 +5,15 @@ QT += concurrent
 HEADERS += \
     $$PWD/qmlfilelistmodel.h \
     $$PWD/qmlshell.h \
-    $$PWD/hotloader.h
+    $$PWD/hotloader.h \
+    $$PWD/dehydrator.h
 
 SOURCES += \
     $$PWD/qmlfilelistmodel.cpp \
     $$PWD/quikittypes.cpp \
     $$PWD/qmlshell.cpp \
-    $$PWD/hotloader.cpp
+    $$PWD/hotloader.cpp \
+    $$PWD/dehydrator.cpp
 
 RESOURCES += \
     $$PWD/quikit.qrc

@@ -152,7 +152,7 @@ QString QmlFileListModel::folder() const
 
 void QmlFileListModel::setFolder(const QString &folder)
 {
-    QString value = QUrl(folder).path();
+    QString value = QtShell::realpath_strip(folder);
     if (m_folder == value) {
         return;
     }

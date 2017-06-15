@@ -7,6 +7,8 @@
 #include <QFileSystemWatcher>
 #include <functional>
 
+/// Reload your QML application when any QML files changed.
+/// Status: Under development
 class HotLoader : public QObject
 {
 public:
