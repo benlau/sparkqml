@@ -188,10 +188,6 @@ void QmlFileListModel::feed()
 
 void QmlFileListModel::realFeed()
 {
-#ifdef QT_DEBUG
-    qDebug() << "QmlFileListModel::realFeed";
-#endif
-
     QPointer<QmlFileListModel> thiz = this;
     QString folder = m_folder;
     QStringList filters = m_filters;

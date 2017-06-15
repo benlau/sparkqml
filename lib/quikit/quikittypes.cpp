@@ -1,6 +1,7 @@
 #include <QtQml>
 #include "qmlfilelistmodel.h"
 #include "qmlshell.h"
+#include "boardpositionattachedtype.h"
 
 using namespace QUIKit;
 
@@ -15,6 +16,8 @@ static QObject* provider(QQmlEngine *engine, QJSEngine *scriptEngine) {
 
 static void registerTypes() {
     qmlRegisterType<QmlFileListModel>("QUIKit", 1, 0, "QmlFileListModel");
+    qmlRegisterType<BoardPositionAttachedType>("QUIKit", 1, 0, "BoardPosition");
+
     qmlRegisterSingletonType<QmlShell>("QUIKit", 1, 0, "Shell", provider<QmlShell>);
 }
 
