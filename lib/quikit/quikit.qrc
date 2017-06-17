@@ -8,5 +8,7 @@
         <file>QUIKit/ScaledContentFrame.qml</file>
         <file>QUIKit/BoxPackingFlow.qml</file>
         <file>QUIKit/UIBoxPackingFlow.qml</file>
+        <file>QUIKit/BoardLayout.qml</file>
+        <file>QUIKit/boardlayout.js</file>
     </qresource>
 </RCC>

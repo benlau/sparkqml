@@ -5,3 +5,4 @@ UIFlow 1.0 UIFlow.qml
 ScaledContentFrame 1.0 ScaledContentFrame.qml
 BoxPackingFlow 1.0 BoxPackingFlow.qml
 UIBoxPackingFlow 1.0 UIBoxPackingFlow.qml
+BoardLayout 1.0 BoardLayout.qml

@@ -62,7 +62,7 @@ void Tests::MockupActor_createProject()
     actor.init();
 
     QFuture<bool> future = actor.createProject();
-    future.waitForFinished();
+    AConcurrent::await(future);
     QVERIFY(future.result());
     QVERIFY(QFileInfo::exists(folder));
 
