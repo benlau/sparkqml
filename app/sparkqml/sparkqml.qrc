@@ -4,8 +4,6 @@
         <file>Spark/actions/qmldir</file>
         <file>Spark/constants/Constants.qml</file>
         <file>Spark/constants/qmldir</file>
-        <file>Spark/adapters/StoreAdapter.qml</file>
-        <file>Spark/adapters/qmldir</file>
         <file>Spark/views/mainpanel/ErrorPanel.qml</file>
         <file>Spark/views/mainpanel/ErrorPanelForm.ui.qml</file>
         <file>Spark/views/mainpanel/MainPanel.qml</file>

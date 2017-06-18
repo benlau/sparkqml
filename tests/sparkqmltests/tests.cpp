@@ -51,7 +51,7 @@ void Tests::mockupLoadingTests()
 
 void Tests::MockupActor_createProject()
 {
-    QString folder = QtShell::pwd() + "/mockup";
+    QString folder = QtShell::pwd() + "/mockup_project";
 
     if (QFileInfo::exists(folder)) {
         QtShell::rm("-rf", folder);
@@ -67,7 +67,8 @@ void Tests::MockupActor_createProject()
     QVERIFY(QFileInfo::exists(folder));
 
     QStringList files = QtShell::find(folder);
-    QVERIFY(files.count() == 3);
+    qDebug() << files;
+    QCOMPARE(files.count(), 3);
 }
 
 void Tests::QmlEngine_scanImagePath()
