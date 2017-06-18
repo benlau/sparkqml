@@ -163,9 +163,6 @@ void QmlFileListModel::setFolder(const QString &folder)
 
 void QmlFileListModel::feed()
 {
-#ifdef QT_DEBUG
-    qDebug() << "QmlFileListModel::feed";
-#endif
     if (m_pendingToFeed) {
         return;
     }

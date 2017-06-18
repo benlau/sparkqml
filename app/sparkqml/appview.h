@@ -13,6 +13,7 @@ class AppView : public QObject
     Q_OBJECT
 public:
     explicit AppView(QObject *parent = 0);
+    ~AppView();
 
     void start();
 

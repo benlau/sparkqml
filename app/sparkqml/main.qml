@@ -13,21 +13,13 @@ import "./Spark/views/mainpanel"
 import "./Spark/views"
 import "./Spark/views/navigationpanel"
 
-ApplicationWindow {
-    id: mainWindow
-    visible: provider.mainWindowVisible
-    width: 640
-    height: 480
-    title: provider.mainWindowTitle
+Item {
+    id: component
 
     property var store
 
     Settings {
         id: mainSettings
-        property alias x: mainWindow.x
-        property alias y: mainWindow.y
-        property alias width: mainWindow.width
-        property alias height: mainWindow.height
         property string saveFolder: ""
         property string recentFiles: ""
     }
@@ -53,15 +45,11 @@ ApplicationWindow {
         }
     }
 
-    FocusScope {
-        anchors.fill: parent
-        ViewStack {
-            anchors.fill: parent
-        }
-
-        NavigationDrawer {
-            id: drawer
-            height: mainWindow.height
+    Loader {
+        asynchronous: true
+        active: provider.mainWindowVisible
+        sourceComponent: MainWindow {
+            id: mainWindow
         }
     }
 
@@ -84,7 +72,7 @@ ApplicationWindow {
                         QRedux.signalProxyMiddleware(provider),
                         QRedux.syncMiddleware(provider)
                     );
-        mainWindow.store = Redux.createStore(App.reducer, middlewares);
+        component.store = Redux.createStore(App.reducer, middlewares);
         actions.dispatch = store.dispatch
     }
 

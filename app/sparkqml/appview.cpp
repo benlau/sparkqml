@@ -14,6 +14,11 @@ AppView::AppView(QObject *parent) : QObject(parent)
     m_mainProgramUrl = QUrl(QStringLiteral("qrc:/main.qml"));
 }
 
+AppView::~AppView()
+{
+    m_engine.clearComponentCache();
+}
+
 void AppView::start()
 {
     Q_ASSERT(!m_mockupFolder.isEmpty());
@@ -38,15 +43,15 @@ void AppView::start()
     qmlEngine->setPreImportPathList(qmlEngine->preImportPathList() << preImportPathList);
     qmlEngine->setProImportPathList(QStringList() << m_mockupFolder);
 
-    QObject* contentItem = m_engine.rootObjects().first()->property("contentItem").value<QObject*>();
-    Q_ASSERT(contentItem);
+    QObject* rootItem = m_engine.rootObjects()[0];
+    Q_ASSERT(rootItem);
 
-    QObject* provider = contentItem->findChild<QObject*>("provider");
+    QObject* provider = rootItem->findChild<QObject*>("provider");
     Q_ASSERT(provider);
 
     connect(provider, SIGNAL(openMockupProject()), this, SLOT(openMockupProject()));
 
-    QObject* actions = contentItem->findChild<QObject*>("actions");
+    QObject* actions = rootItem->findChild<QObject*>("actions");
     Q_ASSERT(actions);
 
     QMetaObject::invokeMethod(actions,"startApp");
@@ -68,8 +73,8 @@ void AppView::setSource(const QString &source)
 
 void AppView::loadSource()
 {    
-    QObject* contentItem = m_engine.rootObjects().first()->property("contentItem").value<QObject*>();
-    QObject* actions = contentItem->findChild<QObject*>("actions");
+    QObject* rootItem = m_engine.rootObjects()[0];
+    QObject* actions = rootItem->findChild<QObject*>("actions");
 
     QMetaObject::invokeMethod(actions,"load",Q_ARG(QVariant, m_source));
 }
