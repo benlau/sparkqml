@@ -27,6 +27,11 @@ Item {
     TestCase {
         name: "Middleware"
 
+        QtObject {
+            id: mockContext
+            property var mainFileDialog: mockDialog
+        }
+
         Item {
             id: mockDialog
             property bool selectMultiple
@@ -60,7 +65,7 @@ Item {
                 return state;
             }
             var middlewares = Redux.applyMiddleware(logger(log),
-                                                    CopyToFileMiddleware.create(mockDialog, mockSettings));
+                                                    CopyToFileMiddleware.create(mockContext, mockSettings));
             var store = Redux.createStore(reducer,middlewares);
 
             store.dispatch({type: "askToSaveFile"});
