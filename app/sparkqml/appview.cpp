@@ -17,6 +17,7 @@ AppView::AppView(QObject *parent) : QObject(parent)
 AppView::~AppView()
 {
     m_engine.clearComponentCache();
+    m_engine.collectGarbage();
 }
 
 void AppView::start()

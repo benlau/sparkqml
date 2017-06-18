@@ -9,7 +9,6 @@
         <file>Spark/views/mainpanel/MainPanel.qml</file>
         <file>Spark/views/mainpanel/MainPanelForm.ui.qml</file>
         <file>Spark/views/mainpanel/StateItem.qml</file>
-        <file>Spark/views/mainpanel/StateItemForm.ui.qml</file>
         <file>Spark/views/mainpanel/StatesPanel.qml</file>
         <file>Spark/views/mainpanel/StatesPanelForm.ui.qml</file>
         <file>Spark/views/mainpanel/ToolBar.qml</file>
@@ -53,8 +52,6 @@
         <file>Spark/reducers/settingsmiddleware.js</file>
         <file>Spark/actions/actiontypes.js</file>
         <file>Spark/views/navigationpanel/RecentFileItem.qml</file>
-        <file>Spark/js/taskqueue.js</file>
-        <file>Spark/js/qmldir</file>
         <file>Spark/views/browserpanel/PathViewer.qml</file>
         <file>Spark/views/browserpanel/PathButton.qml</file>
         <file>Spark/views/browserpanel/PathItem.qml</file>
