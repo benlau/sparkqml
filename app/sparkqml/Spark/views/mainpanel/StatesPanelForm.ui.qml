@@ -6,9 +6,8 @@ Rectangle {
     width: 400
     height: 400
     color: "#e7e7e7"
-    property alias columnLayout1: columnLayout1
-    property alias listView: listView
 
+    property alias listView: listView
 
     ColumnLayout {
         id: columnLayout1
@@ -56,6 +55,5 @@ Rectangle {
                 }
             }
         }
-
     }
 }

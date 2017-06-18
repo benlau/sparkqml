@@ -34,10 +34,6 @@ Item {
         objectName: "provider"
     }
 
-    FileDialog {
-        id: mainFileDialog
-    }
-
     FileWatcher {
         source: provider.source
         onChanged: {
@@ -45,11 +41,25 @@ Item {
         }
     }
 
+    QtObject {
+        id: mainContext
+
+        property var mainFileDialog
+    }
+
     Loader {
         asynchronous: true
         active: provider.mainWindowVisible
         sourceComponent: MainWindow {
             id: mainWindow
+
+            FileDialog {
+                id: mainFileDialog
+            }
+
+            Component.onCompleted: {
+                mainContext.mainFileDialog = mainFileDialog;
+            }
         }
     }
 
@@ -66,7 +76,7 @@ Item {
         var middlewares = QRedux.applyMiddleware(
 //                        logger,
                         LoadingMiddleware.create(),
-                        CopyToFileMiddleware.create(mainFileDialog, mainSettings),
+                        CopyToFileMiddleware.create(mainContext, mainSettings),
                         SystemMiddleware.create(provider),
                         SettingsMiddleware.create(mainSettings),
                         QRedux.signalProxyMiddleware(provider),

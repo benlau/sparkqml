@@ -43,7 +43,7 @@ function askToSaveFile(dialog, settings, store) {
     dialog.open();
 }
 
-function create(dialog, settings) {
+function create(context, settings) {
 
     return function (store) {
 
@@ -54,7 +54,7 @@ function create(dialog, settings) {
                     next(action);
                     return
                 }
-                askToSaveFile(dialog, settings, store);
+                askToSaveFile(context.mainFileDialog, settings, store);
             }
         }
     }
