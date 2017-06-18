@@ -16,10 +16,14 @@ Window {
 
     property var store: null
 
-    MainComponentViewer {
-        id: viewer
+    MainPanel {
         anchors.fill: parent
     }
+
+//    MainComponentViewer {
+//        id: viewer
+//        anchors.fill: parent
+//    }
 
     ActionCreator {
         id: actions
@@ -44,7 +48,7 @@ Window {
         var middlewares = QRedux.applyMiddleware(
                         logger,
                         SystemMiddleware.create(provider),
-                        LoadingMiddle.create(),
+                        LoadingMiddleware.create(),
                         QRedux.signalProxyMiddleware(provider),
                         QRedux.syncMiddleware(provider)
                     );

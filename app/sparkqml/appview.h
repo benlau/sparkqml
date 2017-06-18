@@ -27,6 +27,9 @@ public:
     QString source() const;
     void setSource(const QString &source);
 
+    QUrl mainProgramUrl() const;
+    void setMainProgramUrl(const QUrl &mainProgramUrl);
+
 signals:
 
 public slots:
@@ -41,6 +44,7 @@ private:
 
     MockupActor m_mockupActor;
 
+    QUrl m_mainProgramUrl;
     QString m_defaultImportPathFile;
     QString m_mockupFolder;
     QString m_source;

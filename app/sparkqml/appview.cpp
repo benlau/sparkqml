@@ -11,6 +11,7 @@
 
 AppView::AppView(QObject *parent) : QObject(parent)
 {
+    m_mainProgramUrl = QUrl(QStringLiteral("qrc:/main.qml"));
 }
 
 void AppView::start()
@@ -30,7 +31,7 @@ void AppView::start()
         qDebug().noquote() << "Default qmlimport.path: " << m_defaultImportPathFile;
         preImportPathList = QmlEngine::readImportPathFile(m_defaultImportPathFile);
     }
-    m_engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+    m_engine.load(m_mainProgramUrl);
 
     QmlEngine* qmlEngine = qobject_cast<QmlEngine*>(QFAppDispatcher::singletonObject(&m_engine,"Spark.sys",1,0,"Engine"));
     qmlEngine->setDefaultImportPathFile(m_defaultImportPathFile);
@@ -71,6 +72,16 @@ void AppView::loadSource()
     QObject* actions = contentItem->findChild<QObject*>("actions");
 
     QMetaObject::invokeMethod(actions,"load",Q_ARG(QVariant, m_source));
+}
+
+QUrl AppView::mainProgramUrl() const
+{
+    return m_mainProgramUrl;
+}
+
+void AppView::setMainProgramUrl(const QUrl &mainProgramUrl)
+{
+    m_mainProgramUrl = mainProgramUrl;
 }
 
 QQmlApplicationEngine *AppView::engine()
