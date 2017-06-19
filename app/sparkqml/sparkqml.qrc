@@ -7,10 +7,8 @@
         <file>Spark/views/mainpanel/ErrorPanel.qml</file>
         <file>Spark/views/mainpanel/ErrorPanelForm.ui.qml</file>
         <file>Spark/views/mainpanel/MainPanel.qml</file>
-        <file>Spark/views/mainpanel/MainPanelForm.ui.qml</file>
         <file>Spark/views/mainpanel/StateItem.qml</file>
         <file>Spark/views/mainpanel/StatesPanel.qml</file>
-        <file>Spark/views/mainpanel/StatesPanelForm.ui.qml</file>
         <file>Spark/views/mainpanel/ToolBar.qml</file>
         <file>Spark/views/mainpanel/ToolBarButton.qml</file>
         <file>Spark/views/mainpanel/ToolBarForm.ui.qml</file>
