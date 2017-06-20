@@ -15,8 +15,6 @@ ViewStack {
 
     stack: provider.views
 
-    onStackChanged: console.log(JSON.stringify(provider.views));
-
     pushEnter: Transition {
         PropertyAction {
             property: "opacity"

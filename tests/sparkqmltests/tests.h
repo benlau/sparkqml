@@ -26,5 +26,7 @@ private slots:
     void test_SparkQML_walkToRoot();
 
     void test_Dehydrator();
+
+    void test_AppView();
 };
 

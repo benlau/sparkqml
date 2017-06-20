@@ -3,6 +3,7 @@
 #include <QTest>
 #include <Automator>
 #include <QFutureWatcher>
+#include <appview.h>
 #include <qmlfilelistmodel.h>
 #include "qmlengine.h"
 #include "mockupactor.h"
@@ -261,4 +262,23 @@ void Tests::test_Dehydrator()
      QVariantList list = data["$children"].toList();
      QCOMPARE(list.size(), 1);
      QCOMPARE(list[0].toMap()["objectName"].toString() , QString("child"));
+}
+
+void Tests::test_AppView()
+{
+    AppView *appView = new AppView();
+
+    appView->setMockupFolder(QtShell::pwd());
+
+    appView->setSource(QUrl::fromLocalFile(QtShell::realpath_strip(SRCDIR, "mockup/mockup_BoardLayout.qml")).toString());
+    appView->start();
+
+    QEventLoop loop;
+    QTimer::singleShot(5000, [&loop]() {
+        loop.quit();;
+    });
+    loop.exec();
+
+    delete appView;
+
 }

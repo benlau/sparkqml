@@ -24,7 +24,6 @@ DISTFILES +=     qpm.json \
     mockup/mockup_ComponentViewer.qml \
     qmltests/tst_ComponentViewer.qml \
     mockup/mockup_BrowserPanel.qml \
-    mockup/mockup_ViewStack.qml \
     mockup/mockup_ComponetCard.qml \
     qmltests/tst_Reducer.qml \
     qmltests/tst_Middleware.qml \

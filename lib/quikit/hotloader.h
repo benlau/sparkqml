@@ -20,6 +20,7 @@ public:
 
     void addResourceFile(const QString& file);
 
+    /// Run a function. The call is blocked until the function terminated.
     int run(std::function<int (void)> func);
 
     QUrl mappedUrl(const QString& source) const;
