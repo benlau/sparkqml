@@ -167,15 +167,21 @@ void QmlFileListModel::feed()
         return;
     }
 
+    if (m_folder.isEmpty()) {
+        return;
+    }
+
     m_pendingToFeed = true;
 
     QPointer<QmlFileListModel> thiz = this;
+    QString folder = m_folder;
 
     AConcurrent::runOnMainThread([=]() {
         m_pendingToFeed = false;
         if (thiz.isNull()) {
 #ifdef QT_DEBUG
             qDebug() << "QmlFileListModel::feed(): It is already destroyed";
+            qDebug() << "folder:" << folder;
 #endif
             return;
         }

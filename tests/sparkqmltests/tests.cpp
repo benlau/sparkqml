@@ -271,6 +271,8 @@ void Tests::test_AppView()
     appView->setMockupFolder(QtShell::pwd());
 
     appView->setSource(QUrl::fromLocalFile(QtShell::realpath_strip(SRCDIR, "mockup/mockup_BoardLayout.qml")).toString());
+
+    qDebug() << "start";
     appView->start();
 
     QEventLoop loop;
@@ -278,6 +280,7 @@ void Tests::test_AppView()
         loop.quit();;
     });
     loop.exec();
+    qDebug() << "finished";
 
     delete appView;
 
