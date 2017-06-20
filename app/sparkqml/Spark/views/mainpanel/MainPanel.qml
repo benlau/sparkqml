@@ -20,7 +20,8 @@ FocusScope {
             ColumnLayout {
                 spacing: 0
                 anchors.fill: parent
-                ToolBar {
+
+                MainToolbar {
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     Layout.maximumHeight: 24

@@ -9,9 +9,7 @@
         <file>Spark/views/mainpanel/MainPanel.qml</file>
         <file>Spark/views/mainpanel/StateItem.qml</file>
         <file>Spark/views/mainpanel/StatesPanel.qml</file>
-        <file>Spark/views/mainpanel/ToolBar.qml</file>
         <file>Spark/views/mainpanel/ToolBarButton.qml</file>
-        <file>Spark/views/mainpanel/ToolBarForm.ui.qml</file>
         <file>Spark/views/browserpanel/Card.qml</file>
         <file>Spark/views/browserpanel/Shadow.qml</file>
         <file>Spark/views/components/ComponentViewer.qml</file>
@@ -61,5 +59,6 @@
         <file>Spark/views/mainpanel/qmldir</file>
         <file>Spark/reducers/loadingmiddleware.js</file>
         <file>MainWindow.qml</file>
+        <file>Spark/views/mainpanel/MainToolbar.qml</file>
     </qresource>
 </RCC>
