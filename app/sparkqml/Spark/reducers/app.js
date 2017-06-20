@@ -166,7 +166,7 @@ function reducer(state, action) {
         state = Lodash.assign({}, state,
                               {
                                   browsingFolder: state.folder,
-                                  views: [ {name: "browserPanel"} ]
+                                  views: [ {title: "browserPanel"} ]
                               });
         break;
 

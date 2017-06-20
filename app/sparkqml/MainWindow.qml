@@ -31,7 +31,7 @@ ApplicationWindow {
     FocusScope {
         anchors.fill: parent
 
-        ViewStack {
+        MainViewStack {
             anchors.fill: parent
         }
 

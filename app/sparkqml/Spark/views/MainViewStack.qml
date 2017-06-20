@@ -1,14 +1,21 @@
 import QtQuick 2.7
-
+import ViewStack 1.0
 import "./components"
 import "./browserpanel"
 import "./mainpanel"
 
-PageStack {
+ViewStack {
     id: component
     clip: true
 
-    views: provider.views
+    model: Item {
+        property Component browserPanel: BrowserPanel {
+        }
+    }
+
+    stack: provider.views
+
+    onStackChanged: console.log(JSON.stringify(provider.views));
 
     pushEnter: Transition {
         PropertyAction {
@@ -39,11 +46,6 @@ PageStack {
             to: 0
             duration: 200
             easing.type: Easing.Linear
-        }
-    }
-
-    model: Item {
-        property Component browserPanel: BrowserPanel {
         }
     }
 

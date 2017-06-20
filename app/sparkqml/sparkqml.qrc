@@ -28,8 +28,6 @@
         <file>Spark/views/browserpanel/ComponentCard.qml</file>
         <file>Spark/views/browserpanel/ComponentCardForm.ui.qml</file>
         <file>Spark/views/browserpanel/ComponentGridView.qml</file>
-        <file>Spark/views/components/PageStack.qml</file>
-        <file>Spark/views/ViewStack.qml</file>
         <file>Spark/views/mainpanel/StateListView.qml</file>
         <file>Spark/actions/ActionCreator.qml</file>
         <file>Spark/reducers/app.js</file>
@@ -60,5 +58,6 @@
         <file>Spark/reducers/loadingmiddleware.js</file>
         <file>MainWindow.qml</file>
         <file>Spark/views/mainpanel/MainToolbar.qml</file>
+        <file>Spark/views/MainViewStack.qml</file>
     </qresource>
 </RCC>

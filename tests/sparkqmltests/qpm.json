@@ -12,7 +12,8 @@
     "com.github.benlau.qsyncable@1.0.2.4",
     "com.github.benlau.qredux@0.0.1",
     "async.future.pri@0.3.4",
-    "net.efever.aconcurrent@0.1.7"
+    "net.efever.aconcurrent@0.1.7",
+    "net.efever.viewstack@0.0.1"
   ],
   "license": "NONE",
   "pri_filename": "",
