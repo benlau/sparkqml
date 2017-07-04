@@ -3,6 +3,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.3
 import FontAwesome 1.0
+import "../uikit"
 
 Card {
     width: 400

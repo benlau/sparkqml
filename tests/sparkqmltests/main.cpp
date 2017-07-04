@@ -33,6 +33,7 @@ int main(int argc, char *argv[])
 #if defined(Q_OS_MAC) || defined(Q_OS_LINUX)
     signal(SIGSEGV, handleBacktrace);
 #endif
+    qputenv("QML_DISABLE_DISK_CACHE", "1");
 
     QGuiApplication app(argc, argv);
     QThreadPool::globalInstance()->setMaxThreadCount(qMax(4, QThread::idealThreadCount()));
