@@ -264,6 +264,7 @@ void Tests::test_Dehydrator()
      QCOMPARE(list[0].toMap()["objectName"].toString() , QString("child"));
 }
 
+#if 0
 void Tests::test_AppView()
 {
     AppView *appView = new AppView();
@@ -283,5 +284,5 @@ void Tests::test_AppView()
     qDebug() << "finished";
 
     delete appView;
-
 }
+#endif

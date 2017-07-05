@@ -21,7 +21,6 @@
         <file>Spark/views/browserpanel/BrowserActionBar.qml</file>
         <file>Spark/views/browserpanel/BrowserActionBarForm.ui.qml</file>
         <file>Spark/views/browserpanel/BrowserPanel.qml</file>
-        <file>Spark/views/browserpanel/BrowserPanelForm.ui.qml</file>
         <file>Spark/views/components/Button.qml</file>
         <file>Spark/views/browserpanel/ComponentCard.qml</file>
         <file>Spark/views/browserpanel/ComponentCardForm.ui.qml</file>

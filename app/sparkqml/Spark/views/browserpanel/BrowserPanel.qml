@@ -4,7 +4,11 @@ import Spark.sys 1.0
 import QUIKit 1.0
 import Future 1.0
 
-BrowserPanelForm {
+Item {
+    implicitWidth: 640
+    implicitHeight: 480
+
+    property alias model: componentGridView.model
 
     function browse(folder) {
         var future = Engine.scanImportPathList(folder);
@@ -13,12 +17,35 @@ BrowserPanelForm {
         });
     }
 
-    model: QmlFileListModel {
-        id: listModel
-    }
+    ColumnLayout {
+        id: columnLayout1
+        spacing: 0
+        anchors.fill: parent
 
-    Component.onCompleted: {
-        browse(provider.browsingFolder);
+        BrowserActionBar {
+            z: 1
+            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+            Layout.fillWidth: true
+        }
+
+        Rectangle {
+            color: "#eaeaea"
+            clip: true
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+
+            ComponentGridView {
+                id: componentGridView
+
+                model: QmlFileListModel {
+                    id: listModel
+                }
+
+                anchors.fill: parent
+                anchors.margins: 10
+            }
+        }
+
     }
 
     Connections {
@@ -28,4 +55,11 @@ BrowserPanelForm {
             browse(provider.browsingFolder);
         }
     }
+
+    Component.onCompleted: {
+        browse(provider.browsingFolder);
+    }
 }
+
+
+
