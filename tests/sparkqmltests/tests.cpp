@@ -2,6 +2,8 @@
 #include <QQmlApplicationEngine>
 #include <QTest>
 #include <Automator>
+#include <QQmlEngine>
+#include <QQmlInfo>
 #include <QFutureWatcher>
 #include <appview.h>
 #include <qmlfilelistmodel.h>
@@ -11,6 +13,10 @@
 #include "sparkqmlfunctions.h"
 #include "dehydrator.h"
 #include "aconcurrent.h"
+
+// Private headers
+#include <private/qqmldata_p.h>
+#include <private/qqmlcontext_p.h>
 
 using namespace SparkQML;
 using namespace QUIKit;
@@ -244,24 +250,51 @@ void Tests::test_SparkQML_walkToRoot()
 
 void Tests::test_Dehydrator()
 {
-    QObject* parent = new QObject();
-    parent->setObjectName("parent");
+    {
+        // Basic
 
-    QObject* child = new QObject(parent);
-    child->setObjectName("child");
-    Dehydrator dehydrator;
+        QObject* parent = new QObject();
+        parent->setObjectName("parent");
 
-    QVariantMap data = dehydrator.dehydrate(child);
+        QObject* child = new QObject(parent);
+        child->setObjectName("child");
+        Dehydrator dehydrator;
 
-    QCOMPARE(data["objectName"].toString(), QString("child"));
-    QCOMPARE(data.size(), 1);
+        QVariantMap data = dehydrator.dehydrate(child);
 
-     data = dehydrator.dehydrate(parent);
-     QCOMPARE(data["objectName"].toString(), QString("parent"));
-     QCOMPARE(data.size(), 2);
-     QVariantList list = data["$children"].toList();
-     QCOMPARE(list.size(), 1);
-     QCOMPARE(list[0].toMap()["objectName"].toString() , QString("child"));
+        QCOMPARE(data["objectName"].toString(), QString("child"));
+        QCOMPARE(data.size(), 1);
+
+        data = dehydrator.dehydrate(parent);
+        QCOMPARE(data["objectName"].toString(), QString("parent"));
+        QCOMPARE(data.size(), 2);
+        QVariantList list = data["$children"].toList();
+        QCOMPARE(list.size(), 1);
+        QCOMPARE(list[0].toMap()["objectName"].toString() , QString("child"));
+    }
+}
+
+void Tests::test_private_api()
+{
+
+    QQmlApplicationEngine engine;
+
+    QUrl url = QUrl::fromLocalFile(QtShell::realpath_strip(SRCDIR, "sample/rectanlges/Blue100x50.qml"));
+
+    QQmlComponent component(&engine,url);
+    QQuickItem *childItem = qobject_cast<QQuickItem*>(component.create());
+    QVERIFY(childItem);
+
+    QQmlData *ddata = QQmlData::get(childItem, false);
+
+    QUrl fileUrl = ddata->outerContext->url();
+
+    QString path = QtShell::realpath_strip(fileUrl.toString());
+
+    QString fileName = QtShell::basename(path);
+
+    QCOMPARE(fileName, QString("Blue100x50.qml"));
+
 }
 
 #if 0

@@ -1,4 +1,4 @@
-QT       += testlib qml
+QT       += testlib qml qml-private
 
 TARGET = sparkqmltests
 CONFIG   += console
