@@ -22,7 +22,6 @@
         <file>Spark/views/browserpanel/BrowserPanel.qml</file>
         <file>Spark/views/components/Button.qml</file>
         <file>Spark/views/browserpanel/ComponentCard.qml</file>
-        <file>Spark/views/browserpanel/ComponentCardForm.ui.qml</file>
         <file>Spark/views/browserpanel/ComponentGridView.qml</file>
         <file>Spark/views/mainpanel/StateListView.qml</file>
         <file>Spark/actions/ActionCreator.qml</file>
