@@ -13,7 +13,8 @@
     "async.future.pri@0.3.4",
     "com.github.benlau.fluid@0.10.0.1",
     "net.efever.aconcurrent@0.1.7",
-    "net.efever.viewstack@0.0.1"
+    "net.efever.viewstack@0.0.1",
+    "com.github.benlau.qmlbox2d@2.3.2.4"
   ],
   "license": "NONE",
   "pri_filename": "",
