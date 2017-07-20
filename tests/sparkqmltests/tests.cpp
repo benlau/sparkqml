@@ -15,10 +15,6 @@
 #include "aconcurrent.h"
 #include "snapshot/snapshot.h"
 
-// Private headers
-#include <private/qqmldata_p.h>
-#include <private/qqmlcontext_p.h>
-
 using namespace SparkQML;
 using namespace QUIKit;
 using namespace AConcurrent;
@@ -275,34 +271,11 @@ void Tests::test_Dehydrator()
     }
 }
 
-void Tests::test_private_api()
-{
-
-    QQmlApplicationEngine engine;
-
-    QUrl url = QUrl::fromLocalFile(QtShell::realpath_strip(SRCDIR, "sample/snapshot/Container.qml"));
-
-    QQmlComponent component(&engine,url);
-    QQuickItem *childItem = qobject_cast<QQuickItem*>(component.create());
-    QVERIFY(childItem);
-
-    QQmlData *ddata = QQmlData::get(childItem, false);
-
-    QUrl fileUrl = ddata->outerContext->url();
-
-    QString path = QtShell::realpath_strip(fileUrl.toString());
-
-    QString fileName = QtShell::basename(path);
-
-    QCOMPARE(fileName, QString("Blue100x50.qml"));
-
-}
-
 void Tests::test_Snapshot()
 {
     QQmlApplicationEngine engine;
 
-    QUrl url = QUrl::fromLocalFile(QtShell::realpath_strip(SRCDIR, "sample/rectanlges/Blue100x50.qml"));
+    QUrl url = QUrl::fromLocalFile(QtShell::realpath_strip(SRCDIR, "sample/snapshot/Container.qml"));
 
     QQmlComponent component(&engine,url);
     QQuickItem *childItem = qobject_cast<QQuickItem*>(component.create());
