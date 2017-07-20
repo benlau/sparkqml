@@ -13,7 +13,7 @@
 #include "sparkqmlfunctions.h"
 #include "dehydrator.h"
 #include "aconcurrent.h"
-#include "snapshot.h"
+#include "snapshot/snapshot.h"
 
 // Private headers
 #include <private/qqmldata_p.h>
@@ -280,7 +280,7 @@ void Tests::test_private_api()
 
     QQmlApplicationEngine engine;
 
-    QUrl url = QUrl::fromLocalFile(QtShell::realpath_strip(SRCDIR, "sample/rectanlges/Blue100x50.qml"));
+    QUrl url = QUrl::fromLocalFile(QtShell::realpath_strip(SRCDIR, "sample/snapshot/Container.qml"));
 
     QQmlComponent component(&engine,url);
     QQuickItem *childItem = qobject_cast<QQuickItem*>(component.create());
@@ -312,7 +312,7 @@ void Tests::test_Snapshot()
 
     snapshot.capture(childItem);
 
-    qDebug() << snapshot.snapshot();
+    qDebug().noquote() << snapshot.snapshot();
 }
 
 #if 0

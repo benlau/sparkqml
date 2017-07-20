@@ -8,7 +8,7 @@ TEMPLATE = app
 
 SOURCES +=     main.cpp     tests.cpp \
     hotloadertests.cpp \
-    snapshot.cpp
+    snapshot/snapshot.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 ROOTDIR = $$PWD/../../
@@ -45,13 +45,13 @@ DISTFILES +=     qpm.json \
     mockup/mockup_BoxPackingFlow.qml \
     mockup/mockup_UIBoxPackingFlow.qml \
     qmltests/tst_BoardLayout.qml \
-    mockup/mockup_BoardLayout.qml
+    mockup/mockup_BoardLayout.qml \
+    sample/snapshot/Container.qml
 
 HEADERS +=     tests.h \
     hotloadertests.h \
-    snapshot.h
+    snapshot/snapshot.h
 
 RESOURCES += \
     hotloadertests.qrc
-
 
