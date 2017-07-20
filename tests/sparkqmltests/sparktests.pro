@@ -7,7 +7,8 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 SOURCES +=     main.cpp     tests.cpp \
-    hotloadertests.cpp
+    hotloadertests.cpp \
+    snapshot.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 ROOTDIR = $$PWD/../../
@@ -47,7 +48,8 @@ DISTFILES +=     qpm.json \
     mockup/mockup_BoardLayout.qml
 
 HEADERS +=     tests.h \
-    hotloadertests.h
+    hotloadertests.h \
+    snapshot.h
 
 RESOURCES += \
     hotloadertests.qrc

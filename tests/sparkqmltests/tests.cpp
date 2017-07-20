@@ -13,6 +13,7 @@
 #include "sparkqmlfunctions.h"
 #include "dehydrator.h"
 #include "aconcurrent.h"
+#include "snapshot.h"
 
 // Private headers
 #include <private/qqmldata_p.h>
@@ -295,6 +296,23 @@ void Tests::test_private_api()
 
     QCOMPARE(fileName, QString("Blue100x50.qml"));
 
+}
+
+void Tests::test_Snapshot()
+{
+    QQmlApplicationEngine engine;
+
+    QUrl url = QUrl::fromLocalFile(QtShell::realpath_strip(SRCDIR, "sample/rectanlges/Blue100x50.qml"));
+
+    QQmlComponent component(&engine,url);
+    QQuickItem *childItem = qobject_cast<QQuickItem*>(component.create());
+    QVERIFY(childItem);
+
+    Snapshot snapshot;
+
+    snapshot.capture(childItem);
+
+    qDebug() << snapshot.snapshot();
 }
 
 #if 0

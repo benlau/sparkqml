@@ -30,6 +30,8 @@ private slots:
     /// Proof the use of private API works and the behaviour is not changed
     void test_private_api();
 
+    void test_Snapshot();
+
 #if 0
     void test_AppView();
 #endif
