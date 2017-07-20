@@ -18,8 +18,9 @@ static QVariantMap dehydrate(QObject* source) {
 
         QQmlData *ddata = QQmlData::get(object, false);
 
-        if (ddata && ddata->outerContext) {
-            QUrl fileUrl = ddata->outerContext->url();
+        if (ddata && ddata->context) {
+            QUrl fileUrl = ddata->context->url();
+            qDebug() << fileUrl;
 
             if (!fileUrl.isEmpty()) {
                 QString path = QtShell::realpath_strip(fileUrl.toString());
@@ -32,10 +33,12 @@ static QVariantMap dehydrate(QObject* source) {
         return result;
     };
 
-    auto _dehydrate = [=](QObject* source) {
+    std::function<QVariantMap(QObject*)> _dehydrate;
+
+    _dehydrate = [=, &_dehydrate](QObject* object) {
 
         QVariantMap dest;
-        const QMetaObject* meta = source->metaObject();
+        const QMetaObject* meta = object->metaObject();
 
         for (int i = 0 ; i < meta->propertyCount(); i++) {
             const QMetaProperty property = meta->property(i);
@@ -46,30 +49,30 @@ static QVariantMap dehydrate(QObject* source) {
                 continue;
             }
 
-            QVariant value = source->property(name);
+            QVariant value = object->property(name);
 
             if (value.canConvert<QObject*>()) {
-                QObject* object = value.value<QObject*>();
-                if (!object) {
+                QObject* subObject = value.value<QObject*>();
+                if (!subObject) {
                     continue;
                 }
-                value = dehydrate(object);
+                value = _dehydrate(subObject);
             }
             dest[stringName] = value;
         }
 
-        QObjectList children = source->children();
+        QObjectList children = object->children();
         QVariantList childrenDataList;
         for (int i = 0 ; i < children.size() ; i++) {
             QObject* child = children[i];
-            childrenDataList << dehydrate(child);
+            childrenDataList << _dehydrate(child);
         }
 
         if (childrenDataList.size() > 0) {
             dest["$children"] = childrenDataList;
         }
 
-        dest["$type"] = itemName(source);
+        dest["$type"] = itemName(object);
         return dest;
     };
 
@@ -106,15 +109,17 @@ static QString prettyText(QVariantMap snapshot) {
             return QString("");
         }
 
-        res = QString("").leftJustified(indent, ' ') + res;
+        res = QString("").fill(' ', indent) + res;
 
         return res;
     };
 
-    auto _prettyText = [=](QVariantMap snapshot, int indent) {
+    std::function<QString(QVariantMap, int)> _prettyText;
+
+    _prettyText = [=, &_prettyText](QVariantMap snapshot, int indent) {
         QStringList lines;
-        lines << snapshot["$type"].toString().leftJustified(indent, ' ');
-        lines << QString("{").leftJustified(indent, ' ');
+        lines << QString().fill(' ',indent) + snapshot["$type"].toString();
+        lines << QString().fill(' ',indent) + QString("{");
 
         QStringList keys = snapshot.keys();
         for (int i = 0 ; i < keys.size();i++) {
@@ -127,7 +132,13 @@ static QString prettyText(QVariantMap snapshot) {
                 lines << line;
         }
 
-        lines << QString("}").leftJustified(indent, ' ');
+        QVariantList children = snapshot["$children"].toList();
+        for (int i = 0 ; i < children.size() ;i++) {
+            QVariantMap data = children[i].toMap();
+            lines << _prettyText(data, indent + 4);
+        }
+
+        lines << QString().fill(' ',indent) +  QString("}");
 
         return lines.join("\n");
     };
