@@ -1,5 +1,6 @@
 #include <QFileInfo>
 #include <QtShell>
+#include <functional>
 #include <math.h>
 #include <private/qqmldata_p.h>
 #include <private/qqmlcontext_p.h>
@@ -7,7 +8,23 @@
 
 static QStringList ignoreList;
 
+static QStringList knownComponentList;
+
+static QMap<QString, QVariantMap> defaultValueMap;
+
 static QVariantMap dehydrate(QObject* source) {
+
+    auto itemType = [=](QObject* object) {
+      const QMetaObject* meta = object->metaObject();
+      QString res;
+
+      while (knownComponentList.indexOf(res) < 0 && meta != 0) {
+          res = meta->className();
+          meta = meta->superClass();
+      }
+
+      return res;
+    };
 
     auto itemName = [=](QObject* object) {
         QString result = "Item";
@@ -39,6 +56,8 @@ static QVariantMap dehydrate(QObject* source) {
 
         QVariantMap dest;
         const QMetaObject* meta = object->metaObject();
+        QString type = itemType(object);
+        QVariantMap defaultValues = defaultValueMap[type];
 
         for (int i = 0 ; i < meta->propertyCount(); i++) {
             const QMetaProperty property = meta->property(i);
@@ -50,6 +69,11 @@ static QVariantMap dehydrate(QObject* source) {
             }
 
             QVariant value = object->property(name);
+
+            if (value == defaultValues[stringName]) {
+                // ignore default value
+                continue;
+            }
 
             if (value.canConvert<QObject*>()) {
                 QObject* subObject = value.value<QObject*>();
@@ -72,7 +96,8 @@ static QVariantMap dehydrate(QObject* source) {
             dest["$children"] = childrenDataList;
         }
 
-        dest["$type"] = itemName(object);
+        dest["$type"] = itemType(object);
+        dest["$name"] = itemName(object);
         return dest;
     };
 
@@ -118,8 +143,7 @@ static QString prettyText(QVariantMap snapshot) {
 
     _prettyText = [=, &_prettyText](QVariantMap snapshot, int indent) {
         QStringList lines;
-        lines << QString().fill(' ',indent) + snapshot["$type"].toString();
-        lines << QString().fill(' ',indent) + QString("{");
+        lines << QString().fill(' ',indent) + snapshot["$name"].toString() + " {";
 
         QStringList keys = snapshot.keys();
         for (int i = 0 ; i < keys.size();i++) {
@@ -159,12 +183,39 @@ QString Snapshot::snapshot() const
 void Snapshot::capture(QObject *object)
 {
     QVariantMap data = dehydrate(object);
-//    qDebug() << data;
     m_snapshot = prettyText(data);
 }
 
 static void init() {
-    ignoreList << "parent" << "transitions" << "visibleChildren";
+    ignoreList << "parent" << "transitions" << "visibleChildren"
+               << "states" << "transform" << "top" << "left" << "right" << "bottom";
+
+    knownComponentList << "QQuickItem" << "QObject";
+
+    QVariantMap itemDefaultValue;
+    itemDefaultValue["activeFocus"] = false;
+    itemDefaultValue["activeFocusOnTab"] = false;
+    itemDefaultValue["antialiasing"] = false;
+    itemDefaultValue["baselineOffset"] = 0;
+    itemDefaultValue["clip"] = false;
+    itemDefaultValue["enabled"] = true;
+    itemDefaultValue["focus"] = false;
+    itemDefaultValue["height"] = 0;
+    itemDefaultValue["x"] = 0;
+    itemDefaultValue["y"] = 0;
+    itemDefaultValue["z"] = 0;
+    itemDefaultValue["width"] = 0;
+    itemDefaultValue["visible"] = true;
+    itemDefaultValue["state"] = "";
+    itemDefaultValue["smooth"] = true;
+    itemDefaultValue["scale"] = 1;
+    itemDefaultValue["rotation"] = 0;
+    itemDefaultValue["opacity"] = 1;
+    itemDefaultValue["objectName"] = "";
+    itemDefaultValue["implicitHeight"] = 0;
+    itemDefaultValue["implicitWidth"] = 0;
+
+    defaultValueMap["QQuickItem"] = itemDefaultValue;
 }
 
 Q_COREAPP_STARTUP_FUNCTION(init)
