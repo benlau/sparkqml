@@ -8,7 +8,8 @@ TEMPLATE = app
 
 SOURCES +=     main.cpp     tests.cpp \
     hotloadertests.cpp \
-    snapshot/snapshot.cpp
+    snapshot/snapshot.cpp \
+    snapshottests.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 ROOTDIR = $$PWD/../../
@@ -50,7 +51,16 @@ DISTFILES +=     qpm.json \
 
 HEADERS +=     tests.h \
     hotloadertests.h \
-    snapshot/snapshot.h
+    snapshot/snapshot.h \
+    snapshot/dtl/Diff.hpp \
+    snapshot/dtl/Diff3.hpp \
+    snapshot/dtl/dtl.hpp \
+    snapshot/dtl/functors.hpp \
+    snapshot/dtl/Lcs.hpp \
+    snapshot/dtl/Sequence.hpp \
+    snapshot/dtl/Ses.hpp \
+    snapshot/dtl/variables.hpp \
+    snapshottests.h
 
 RESOURCES += \
     hotloadertests.qrc

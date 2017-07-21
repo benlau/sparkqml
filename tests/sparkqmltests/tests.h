@@ -27,8 +27,6 @@ private slots:
 
     void test_Dehydrator();
 
-    void test_Snapshot();
-
 #if 0
     void test_AppView();
 #endif

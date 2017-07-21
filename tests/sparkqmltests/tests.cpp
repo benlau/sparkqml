@@ -271,23 +271,6 @@ void Tests::test_Dehydrator()
     }
 }
 
-void Tests::test_Snapshot()
-{
-    QQmlApplicationEngine engine;
-
-    QUrl url = QUrl::fromLocalFile(QtShell::realpath_strip(SRCDIR, "sample/snapshot/Container.qml"));
-
-    QQmlComponent component(&engine,url);
-    QQuickItem *childItem = qobject_cast<QQuickItem*>(component.create());
-    QVERIFY(childItem);
-
-    Snapshot snapshot;
-
-    snapshot.capture(childItem);
-
-    qDebug().noquote() << snapshot.snapshot();
-}
-
 #if 0
 void Tests::test_AppView()
 {
