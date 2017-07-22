@@ -17,6 +17,24 @@ static QStringList knownComponentList;
 static QMap<QString, QVariantMap> defaultValueMap;
 
 static QVariantMap dehydrate(QObject* source) {
+    QString outerMostContextName;
+
+    auto outerContextName = [=](QObject* object) {
+        QString result;
+        QQmlData *ddata = QQmlData::get(object, false);
+        if (ddata && ddata->outerContext) {
+            QUrl fileUrl = ddata->outerContext->url();
+
+            if (!fileUrl.isEmpty()) {
+                QString path = QtShell::realpath_strip(fileUrl.toString());
+                QFileInfo info(path);
+
+                result = info.completeBaseName();
+            }
+
+        }
+        return result;
+    };
 
     auto itemType = [=](QObject* object) {
       const QMetaObject* meta = object->metaObject();
@@ -30,7 +48,7 @@ static QVariantMap dehydrate(QObject* source) {
       return res;
     };
 
-    auto itemName = [=](QObject* object) {
+    auto itemName = [=,&outerMostContextName](QObject* object) {
         QString result = "Item";
 
         if (object == source) {
@@ -41,13 +59,15 @@ static QVariantMap dehydrate(QObject* source) {
 
         if (ddata && ddata->context) {
             QUrl fileUrl = ddata->context->url();
-            qDebug() << fileUrl;
 
             if (!fileUrl.isEmpty()) {
                 QString path = QtShell::realpath_strip(fileUrl.toString());
                 QFileInfo info(path);
 
-                result = info.completeBaseName();
+                QString contextName = info.completeBaseName();
+                if (contextName != outerMostContextName) {
+                    result = contextName;
+                }
             }
         }
 
@@ -102,6 +122,7 @@ static QVariantMap dehydrate(QObject* source) {
         return dest;
     };
 
+    outerMostContextName = outerContextName(source);
     return _dehydrate(source);
 }
 
@@ -259,7 +280,9 @@ bool Snapshot::compare()
 
 static void init() {
     ignoreList << "parent" << "transitions" << "visibleChildren"
-               << "states" << "transform" << "top" << "left" << "right" << "bottom";
+               << "states" << "transform" << "top" << "left"
+               << "right" << "bottom" << "transformOrigin"
+               << "data" << "verticalCenter";
 
     knownComponentList << "QQuickItem" << "QObject";
 
