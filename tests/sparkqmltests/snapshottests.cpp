@@ -5,15 +5,7 @@
 #include <QQuickItem>
 #include "snapshottests.h"
 #include "snapshot/snapshot.h"
-
-using namespace std;
-#include <iostream>
-#include "snapshot/dtl/Sequence.hpp"
-#include "snapshot/dtl/Lcs.hpp"
-#include "snapshot/dtl/variables.hpp"
-#include "snapshot/dtl/functors.hpp"
-#include "snapshot/dtl/Ses.hpp"
-#include "snapshot/dtl/Diff.hpp"
+#include "snapshot/snapshottools.h"
 
 SnapshotTests::SnapshotTests(QObject *parent) : QObject(parent)
 {
@@ -40,22 +32,12 @@ void SnapshotTests::test_Snapshot()
     qDebug().noquote() << snapshot.snapshot();
 }
 
-void SnapshotTests::test_dfl()
+void SnapshotTests::test_Snapshot_diff()
 {
-    std::vector<string> input1, input2;
+    QString text1 = "A\nB\nC";
+    QString text2 = "A\nD\nC";
 
-    input1.push_back("A");
-    input1.push_back("B");
-    input1.push_back("C");
+    QString result = SnapshotTools::diff(text1, text2);
 
-    input2.push_back("A");
-    input2.push_back("D");
-    input2.push_back("C");
-
-    dtl::Diff<string> diff(input1, input2);
-
-    diff.onHuge();
-    diff.compose();
-    diff.composeUnifiedHunks();
-    diff.printUnifiedFormat();
+    qDebug().noquote() << result;
 }
