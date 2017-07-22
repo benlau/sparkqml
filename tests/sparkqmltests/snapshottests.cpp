@@ -58,7 +58,7 @@ void SnapshotTests::test_Snapshot_compare()
 {
     QQmlApplicationEngine engine;
 
-    QUrl url = QUrl::fromLocalFile(QtShell::realpath_strip(SRCDIR, "sample/snapshot/Container.qml"));
+    QUrl url = QUrl::fromLocalFile(QtShell::realpath_strip(SRCDIR, "sample/snapshot/Sample1.qml"));
 
     QQmlComponent component(&engine,url);
     QQuickItem *childItem = qobject_cast<QQuickItem*>(component.create());

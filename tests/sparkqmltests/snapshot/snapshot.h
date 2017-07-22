@@ -9,7 +9,11 @@ class Snapshot
 public:
     Snapshot();
 
+    /// The current version of snapshot
     QString snapshot() const;
+
+    /// The previous version of snapshot
+    QString previousSnapshot() const;
 
     void capture(QObject* object);
 

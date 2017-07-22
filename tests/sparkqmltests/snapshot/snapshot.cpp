@@ -3,6 +3,7 @@
 #include <QTest>
 #include <snapshot/snapshottesting.h>
 #include <snapshot/snapshottools.h>
+#include <QQmlApplicationEngine>
 #include <functional>
 #include <math.h>
 #include <private/qqmldata_p.h>
@@ -79,11 +80,8 @@ static QVariantMap dehydrate(QObject* source) {
             }
 
             if (value.canConvert<QObject*>()) {
-                QObject* subObject = value.value<QObject*>();
-                if (!subObject) {
-                    continue;
-                }
-                value = _dehydrate(subObject);
+                // ignore object value
+                continue;
             }
             dest[stringName] = value;
         }
@@ -183,6 +181,11 @@ QString Snapshot::snapshot() const
     return m_snapshot;
 }
 
+QString Snapshot::previousSnapshot() const
+{
+    return SnapshotTesting::loadSnapshots()[m_name].toString();
+}
+
 void Snapshot::capture(QObject *object)
 {
     QVariantMap data = dehydrate(object);
@@ -229,7 +232,27 @@ bool Snapshot::compare()
         return true;
     }
 
-    qDebug().noquote() << SnapshotTools::diff(originalVersion, m_snapshot);
+    QString diff = SnapshotTools::diff(originalVersion, m_snapshot);
+
+    QQmlApplicationEngine engine;
+    engine.addImportPath("qrc:///");
+    engine.load(QUrl("qrc:/SnapshotTesting/Matcher.qml"));
+
+    QObject* dialog = engine.rootObjects()[0];
+    Q_ASSERT(dialog);
+
+    dialog->setProperty("diff", diff);
+    dialog->setProperty("previousSnapshot", previousSnapshot());
+    dialog->setProperty("snapshot", m_snapshot);
+
+    QCoreApplication::exec();
+
+    int button = dialog->property("clickedButton").value<int>();
+    if (button == 0x02000000) {
+        SnapshotTesting::setSnapshot(m_name, m_snapshot);
+        SnapshotTesting::saveSnapshots();
+        return true;
+    }
 
     return false;
 }
