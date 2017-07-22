@@ -51,5 +51,25 @@ void SnapshotTests::test_Snapshot_diff()
 
 void SnapshotTests::test_SnapshotTesting_saveSnapshots()
 {
-   SnapshotTesting::saveSnapshots();
+    SnapshotTesting::saveSnapshots();
+}
+
+void SnapshotTests::test_Snapshot_compare()
+{
+    QQmlApplicationEngine engine;
+
+    QUrl url = QUrl::fromLocalFile(QtShell::realpath_strip(SRCDIR, "sample/snapshot/Container.qml"));
+
+    QQmlComponent component(&engine,url);
+    QQuickItem *childItem = qobject_cast<QQuickItem*>(component.create());
+    QVERIFY(childItem);
+
+    Snapshot snapshot = Snapshot::createFromQTest();
+
+    snapshot.capture(childItem);
+
+    qDebug().noquote() << snapshot.snapshot();
+
+    QVERIFY(snapshot.compare());
+
 }

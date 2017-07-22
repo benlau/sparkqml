@@ -23,8 +23,6 @@ QString SnapshotTools::diff(QString original, QString current)
             res.push_back(lines[i].toStdString());
         }
 
-        qDebug() << lines;
-
         return res;
     };
 

@@ -78,4 +78,9 @@ void SnapshotTesting::saveSnapshots()
     file.close();
 }
 
+void SnapshotTesting::setSnapshot(const QString &name, const QString &content)
+{
+    m_snapshots[name] = content;
+}
+
 Q_COREAPP_STARTUP_FUNCTION(init)

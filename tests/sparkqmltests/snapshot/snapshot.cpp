@@ -1,6 +1,8 @@
 #include <QFileInfo>
 #include <QtShell>
 #include <QTest>
+#include <snapshot/snapshottesting.h>
+#include <snapshot/snapshottools.h>
 #include <functional>
 #include <math.h>
 #include <private/qqmldata_p.h>
@@ -209,6 +211,27 @@ QString Snapshot::name() const
 void Snapshot::setName(const QString &name)
 {
     m_name = name;
+}
+
+bool Snapshot::compare()
+{
+    QVariantMap snapshots = SnapshotTesting::loadSnapshots();
+
+    if (!snapshots.contains(m_name)) {
+        SnapshotTesting::setSnapshot(m_name, m_snapshot);
+        SnapshotTesting::saveSnapshots();
+        return true;
+    }
+
+    QString originalVersion = snapshots[m_name].toString();
+
+    if (originalVersion == m_snapshot) {
+        return true;
+    }
+
+    qDebug().noquote() << SnapshotTools::diff(originalVersion, m_snapshot);
+
+    return false;
 }
 
 static void init() {

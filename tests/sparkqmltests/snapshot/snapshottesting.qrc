@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>SnapshotTesting/Matcher.qml</file>
+        <file>SnapshotTesting/MatcherContentView.qml</file>
+    </qresource>
+</RCC>

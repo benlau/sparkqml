@@ -19,6 +19,8 @@ public:
 
     void setName(const QString &name);
 
+    bool compare();
+
 private:
     QString m_snapshot;
     QString m_name;

@@ -1,4 +1,5 @@
 {
     "content": {
+        "test_Snapshot_compare": "Item {\n    transformOrigin: 4\n    Blue100x50 {\n        color: \"#0000ff\"\n        height: 50\n        radius: 0\n        transformOrigin: 4\n        width: 100\n    }\n}"
     }
 }

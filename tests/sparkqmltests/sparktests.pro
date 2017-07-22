@@ -50,7 +50,8 @@ DISTFILES +=     qpm.json \
     qmltests/tst_BoardLayout.qml \
     mockup/mockup_BoardLayout.qml \
     sample/snapshot/Container.qml \
-    sample/snapshot/Sample1.qml
+    sample/snapshot/Sample1.qml \
+    snapshot/snapshots.json
 
 HEADERS +=     tests.h \
     hotloadertests.h \
@@ -68,5 +69,6 @@ HEADERS +=     tests.h \
     snapshot/snapshottesting.h
 
 RESOURCES += \
-    hotloadertests.qrc
+    hotloadertests.qrc \
+    snapshot/snapshottesting.qrc
 
