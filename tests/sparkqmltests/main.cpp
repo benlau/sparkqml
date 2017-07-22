@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
     QThreadPool::globalInstance()->setMaxThreadCount(qMax(4, QThread::idealThreadCount()));
 
-    SnapshotTesting::setSnapshotFiles(QtShell::pwd() + "/snapshots.json");
+    SnapshotTesting::setSnapshotFiles(QtShell::realpath_strip(SRCDIR, "snapshot/snapshots.json"));
 
     TestRunner runner;
     runner.addImportPath("qrc:///");

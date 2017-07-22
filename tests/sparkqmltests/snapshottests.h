@@ -19,6 +19,8 @@ private slots:
     void test_Snapshot_name();
 
     void test_Snapshot_diff();
+
+    void test_SnapshotTesting_saveSnapshots();
 };
 
 #endif // SNAPSHOTTESTS_H

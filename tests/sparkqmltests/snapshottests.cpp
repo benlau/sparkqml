@@ -6,6 +6,7 @@
 #include "snapshottests.h"
 #include "snapshot/snapshot.h"
 #include "snapshot/snapshottools.h"
+#include "snapshot/snapshottesting.h"
 
 SnapshotTests::SnapshotTests(QObject *parent) : QObject(parent)
 {
@@ -46,4 +47,9 @@ void SnapshotTests::test_Snapshot_diff()
     QString result = SnapshotTools::diff(text1, text2);
 
     qDebug().noquote() << result;
+}
+
+void SnapshotTests::test_SnapshotTesting_saveSnapshots()
+{
+   SnapshotTesting::saveSnapshots();
 }
