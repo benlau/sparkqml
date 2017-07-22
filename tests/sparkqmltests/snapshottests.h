@@ -16,6 +16,8 @@ public slots:
 private slots:
     void test_Snapshot();
 
+    void test_Snapshot_name();
+
     void test_Snapshot_diff();
 };
 

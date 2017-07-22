@@ -1,5 +1,6 @@
 #include <QFileInfo>
 #include <QtShell>
+#include <QTest>
 #include <functional>
 #include <math.h>
 #include <private/qqmldata_p.h>
@@ -184,6 +185,30 @@ void Snapshot::capture(QObject *object)
 {
     QVariantMap data = dehydrate(object);
     m_snapshot = prettyText(data);
+}
+
+Snapshot Snapshot::createFromQTest()
+{
+    Snapshot snapshot;
+    QString name = QTest::currentTestFunction();
+
+    if (QTest::currentDataTag()) {
+        name = QString("%1_%2").arg(name).arg(QTest::currentDataTag());
+    }
+
+    snapshot.m_name = name;
+
+    return snapshot;
+}
+
+QString Snapshot::name() const
+{
+    return m_name;
+}
+
+void Snapshot::setName(const QString &name)
+{
+    m_name = name;
 }
 
 static void init() {

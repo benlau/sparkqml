@@ -1,11 +1,12 @@
 #include <QString>
 #include <QtTest>
-
+#include <QtShell>
 #include <TestRunner>
 #include <QtQuickTest/quicktest.h>
 #include "tests.h"
 #include "hotloadertests.h"
 #include "snapshottests.h"
+#include "snapshot/snapshottesting.h"
 
 namespace AutoTestRegister {
     QUICK_TEST_MAIN(QuickTests)
@@ -38,6 +39,8 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
     QThreadPool::globalInstance()->setMaxThreadCount(qMax(4, QThread::idealThreadCount()));
+
+    SnapshotTesting::setSnapshotFiles(QtShell::pwd() + "/snapshots.json");
 
     TestRunner runner;
     runner.addImportPath("qrc:///");

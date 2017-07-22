@@ -32,6 +32,12 @@ void SnapshotTests::test_Snapshot()
     qDebug().noquote() << snapshot.snapshot();
 }
 
+void SnapshotTests::test_Snapshot_name()
+{
+    Snapshot snapshot = Snapshot::createFromQTest();
+    QCOMPARE(snapshot.name(), QString("test_Snapshot_name"));
+}
+
 void SnapshotTests::test_Snapshot_diff()
 {
     QString text1 = "A\nB\nC";

@@ -10,7 +10,8 @@ SOURCES +=     main.cpp     tests.cpp \
     hotloadertests.cpp \
     snapshot/snapshot.cpp \
     snapshottests.cpp \
-    snapshot/snapshottools.cpp
+    snapshot/snapshottools.cpp \
+    snapshot/snapshottesting.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 ROOTDIR = $$PWD/../../
@@ -62,7 +63,8 @@ HEADERS +=     tests.h \
     snapshot/dtl/Ses.hpp \
     snapshot/dtl/variables.hpp \
     snapshottests.h \
-    snapshot/snapshottools.h
+    snapshot/snapshottools.h \
+    snapshot/snapshottesting.h
 
 RESOURCES += \
     hotloadertests.qrc
