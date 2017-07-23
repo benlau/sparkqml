@@ -4,7 +4,7 @@ import QtQuick.Dialogs 1.2
 Dialog {
     id: component
 
-    visible: true
+    visible: false
     title: "Snapshot Testing"
     property alias diff: content.diff
     property alias previousSnapshot: content.originalVersion

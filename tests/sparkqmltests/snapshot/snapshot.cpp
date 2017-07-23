@@ -13,6 +13,7 @@
 static QStringList ignoreList;
 
 static QStringList knownComponentList;
+static QMap<QString,QString> classNameToItemNameTable;
 
 static QMap<QString, QVariantMap> defaultValueMap;
 
@@ -36,11 +37,32 @@ static QVariantMap dehydrate(QObject* source) {
         return result;
     };
 
-    auto itemType = [=](QObject* object) {
+    auto obtainDefaultValuesMap = [=](QObject* object) {
+        const QMetaObject* meta = object->metaObject();
+        QVariantMap result;
+
+        while (meta != 0) {
+            QString className = meta->className();
+            if (defaultValueMap.contains(className)) {
+                QVariantMap map = defaultValueMap[className];
+                QStringList keys = map.keys();
+                foreach (QString key, keys) {
+                    result[key] = map[key];
+                }
+            }
+
+            meta = meta->superClass();
+        }
+
+        return result;
+    };
+
+    /// Obtain the class name of QObject which is known to the system
+    auto obtainClassName = [=](QObject* object) {
       const QMetaObject* meta = object->metaObject();
       QString res;
 
-      while (knownComponentList.indexOf(res) < 0 && meta != 0) {
+      while (!classNameToItemNameTable.contains(res) && meta != 0) {
           res = meta->className();
           meta = meta->superClass();
       }
@@ -48,8 +70,9 @@ static QVariantMap dehydrate(QObject* source) {
       return res;
     };
 
-    auto itemName = [=,&outerMostContextName](QObject* object) {
-        QString result = "Item";
+    /// Obtain the item name in QML
+    auto obtainItemName = [=,&outerMostContextName](QObject* object, QString className) {
+        QString result = classNameToItemNameTable[className];
 
         if (object == source) {
             return result;
@@ -80,8 +103,7 @@ static QVariantMap dehydrate(QObject* source) {
 
         QVariantMap dest;
         const QMetaObject* meta = object->metaObject();
-        QString type = itemType(object);
-        QVariantMap defaultValues = defaultValueMap[type];
+        QVariantMap defaultValues = obtainDefaultValuesMap(object);
 
         for (int i = 0 ; i < meta->propertyCount(); i++) {
             const QMetaProperty property = meta->property(i);
@@ -117,8 +139,8 @@ static QVariantMap dehydrate(QObject* source) {
             dest["$children"] = childrenDataList;
         }
 
-        dest["$type"] = itemType(object);
-        dest["$name"] = itemName(object);
+        dest["$type"] = obtainClassName(object);
+        dest["$name"] = obtainItemName(object, dest["$type"].toString());
         return dest;
     };
 
@@ -194,7 +216,6 @@ static QString prettyText(QVariantMap snapshot) {
 
 Snapshot::Snapshot()
 {
-
 }
 
 QString Snapshot::snapshot() const
@@ -265,7 +286,9 @@ bool Snapshot::compare()
     dialog->setProperty("diff", diff);
     dialog->setProperty("previousSnapshot", previousSnapshot());
     dialog->setProperty("snapshot", m_snapshot);
+    dialog->setProperty("title", m_name);
 
+    QMetaObject::invokeMethod(dialog, "open");
     QCoreApplication::exec();
 
     int button = dialog->property("clickedButton").value<int>();
@@ -300,7 +323,9 @@ static void init() {
     knownComponentList = map.keys();
     for (int i = 0 ; i < knownComponentList.size() ; i++) {
         QString key = knownComponentList[i];
-        defaultValueMap[key] = map[key].toMap();
+        QVariantMap record =  map[key].toMap();
+        classNameToItemNameTable[key] = record["name"].toString();
+        defaultValueMap[key] = record["defaultValues"].toMap();
     }
 }
 

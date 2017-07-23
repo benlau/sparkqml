@@ -23,4 +23,10 @@ Item {
         height: 100
         anchors.right: parent.right
     }
+
+    Rectangle {
+        id: item3
+        width: 100
+        height: 100
+    }
 }
