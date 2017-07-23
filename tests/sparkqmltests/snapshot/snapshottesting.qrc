@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>SnapshotTesting/Matcher.qml</file>
         <file>SnapshotTesting/MatcherContentView.qml</file>
+        <file>SnapshotTesting/config/snapshot-config.json</file>
     </qresource>
 </RCC>

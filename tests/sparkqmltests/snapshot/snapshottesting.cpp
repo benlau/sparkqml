@@ -8,6 +8,7 @@
 
 static QString m_snapshotFile;
 static QVariantMap m_snapshots;
+static bool m_snapshotsDirty = false;
 
 void SnapshotTesting::setSnapshotFiles(const QString &file)
 {
@@ -57,6 +58,12 @@ void SnapshotTesting::saveSnapshots()
         loadSnapshots();
     }
 
+    if (!m_snapshotsDirty) {
+        return;
+    }
+
+    m_snapshotsDirty = false;
+
     QVariantMap data;
 
     data["content"] = m_snapshots;
@@ -81,6 +88,7 @@ void SnapshotTesting::saveSnapshots()
 void SnapshotTesting::setSnapshot(const QString &name, const QString &content)
 {
     m_snapshots[name] = content;
+    m_snapshotsDirty = true;
 }
 
 Q_COREAPP_STARTUP_FUNCTION(init)

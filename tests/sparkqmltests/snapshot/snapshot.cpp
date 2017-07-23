@@ -279,37 +279,29 @@ bool Snapshot::compare()
 }
 
 static void init() {
+    // QQuickItem
     ignoreList << "parent" << "transitions" << "visibleChildren"
                << "states" << "transform" << "top" << "left"
                << "right" << "bottom" << "transformOrigin"
-               << "data" << "verticalCenter";
+               << "data" << "verticalCenter" << "transformOriginPoint"
+               << "resources" << "childrenRect" << "anchors" << "children"
+               << "horizontalCenter" << "baseline";
 
-    knownComponentList << "QQuickItem" << "QObject";
+    QString text = QtShell::cat(":/SnapshotTesting/config/snapshot-config.json");
 
-    QVariantMap itemDefaultValue;
-    itemDefaultValue["activeFocus"] = false;
-    itemDefaultValue["activeFocusOnTab"] = false;
-    itemDefaultValue["antialiasing"] = false;
-    itemDefaultValue["baselineOffset"] = 0;
-    itemDefaultValue["clip"] = false;
-    itemDefaultValue["enabled"] = true;
-    itemDefaultValue["focus"] = false;
-    itemDefaultValue["height"] = 0;
-    itemDefaultValue["x"] = 0;
-    itemDefaultValue["y"] = 0;
-    itemDefaultValue["z"] = 0;
-    itemDefaultValue["width"] = 0;
-    itemDefaultValue["visible"] = true;
-    itemDefaultValue["state"] = "";
-    itemDefaultValue["smooth"] = true;
-    itemDefaultValue["scale"] = 1;
-    itemDefaultValue["rotation"] = 0;
-    itemDefaultValue["opacity"] = 1;
-    itemDefaultValue["objectName"] = "";
-    itemDefaultValue["implicitHeight"] = 0;
-    itemDefaultValue["implicitWidth"] = 0;
+    QJsonParseError error;
+    QJsonDocument doc = QJsonDocument::fromJson(text.toUtf8(),&error);
 
-    defaultValueMap["QQuickItem"] = itemDefaultValue;
+    if (error.error != QJsonParseError::NoError) {
+        qWarning() << "JSON::parse() error: "<< error.errorString();
+    }
+
+    QVariantMap map = doc.object().toVariantMap();;
+    knownComponentList = map.keys();
+    for (int i = 0 ; i < knownComponentList.size() ; i++) {
+        QString key = knownComponentList[i];
+        defaultValueMap[key] = map[key].toMap();
+    }
 }
 
 Q_COREAPP_STARTUP_FUNCTION(init)

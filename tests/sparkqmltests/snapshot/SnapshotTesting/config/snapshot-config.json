@@ -1,0 +1,26 @@
+{
+    "QObject": {},
+    "QQuickItem": {
+        "activeFocus": false,
+        "activeFocusOnTab": false,
+        "antialiasing": false,
+        "baselineOffset": 0,
+        "clip": false,
+        "enabled": true,
+        "focus": false,
+        "height": 0,
+        "implicitHeight": 0,
+        "implicitWidth": 0,
+        "objectName": "",
+        "opacity": 1,
+        "rotation": 0,
+        "scale": 1,
+        "smooth": true,
+        "state": "",
+        "visible": true,
+        "width": 0,
+        "x": 0,
+        "y": 0,
+        "z": 0
+    }
+}

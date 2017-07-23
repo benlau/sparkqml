@@ -1,3 +1,8 @@
+/* Sample1.qml
+
+  1) Simple structure. No dependence to other component
+  2) No list structure
+ */
 import QtQuick 2.0
 
 Item {
