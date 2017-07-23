@@ -28,5 +28,5 @@ Dialog {
         Qt.quit();
     }
 
-    standardButtons: Dialog.Ignore | Dialog.Apply
+    standardButtons: Dialog.Ignore | Dialog.Apply | Dialog.NoToAll
 }

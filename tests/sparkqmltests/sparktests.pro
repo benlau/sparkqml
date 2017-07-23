@@ -50,7 +50,8 @@ DISTFILES +=     qpm.json \
     qmltests/tst_BoardLayout.qml \
     mockup/mockup_BoardLayout.qml \
     sample/snapshot/Sample1.qml \
-    snapshot/snapshots.json
+    snapshot/snapshots.json \
+    sample/snapshot/Sample2.qml
 
 HEADERS +=     tests.h \
     hotloadertests.h \

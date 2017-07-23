@@ -22,7 +22,8 @@ private slots:
 
     void test_SnapshotTesting_saveSnapshots();
 
-    void test_Snapshot_compare();
+    void test_Snapshot_compare();    
+    void test_Snapshot_compare_data();
 };
 
 #endif // SNAPSHOTTESTS_H

@@ -56,17 +56,34 @@ void SnapshotTests::test_SnapshotTesting_saveSnapshots()
 
 void SnapshotTests::test_Snapshot_compare()
 {
+    QFETCH(QString, input);
+
+    QString fileName = QtShell::basename(input);
+
     QQmlApplicationEngine engine;
 
-    QUrl url = QUrl::fromLocalFile(QtShell::realpath_strip(SRCDIR, "sample/snapshot/Sample1.qml"));
+    QUrl url = QUrl::fromLocalFile(input);
 
     QQmlComponent component(&engine,url);
     QQuickItem *childItem = qobject_cast<QQuickItem*>(component.create());
     QVERIFY(childItem);
 
-    Snapshot snapshot = Snapshot::createFromQTest();
+    Snapshot snapshot;
+    snapshot.setName(QString("%1_%2").arg(QTest::currentTestFunction()).arg(fileName));
 
     snapshot.capture(childItem);
+    qDebug().noquote() << snapshot.snapshot();
 
     QVERIFY(snapshot.compare());
+}
+
+void SnapshotTests::test_Snapshot_compare_data()
+{
+    QTest::addColumn<QString>("input");
+
+    QStringList files = QtShell::find(QtShell::realpath_strip(SRCDIR, "sample/snapshot"), "*.qml");
+
+    foreach (QString file, files) {
+        QTest::newRow(file.toUtf8().constData()) << file;
+    }
 }

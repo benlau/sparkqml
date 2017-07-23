@@ -4,6 +4,7 @@
 #include <snapshot/snapshottesting.h>
 #include <snapshot/snapshottools.h>
 #include <QQmlApplicationEngine>
+#include <QStack>
 #include <functional>
 #include <math.h>
 #include <private/qqmldata_p.h>
@@ -19,12 +20,13 @@ static QMap<QString, QVariantMap> defaultValueMap;
 
 static QVariantMap dehydrate(QObject* source) {
     QString outerMostContextName;
+    QStack<QString> contextStack;
 
-    auto outerContextName = [=](QObject* object) {
+    auto obtainContextName = [=](QObject *object) {
         QString result;
         QQmlData *ddata = QQmlData::get(object, false);
-        if (ddata && ddata->outerContext) {
-            QUrl fileUrl = ddata->outerContext->url();
+        if (ddata && ddata->context) {
+            QUrl fileUrl = ddata->context->url();
 
             if (!fileUrl.isEmpty()) {
                 QString path = QtShell::realpath_strip(fileUrl.toString());
@@ -32,10 +34,11 @@ static QVariantMap dehydrate(QObject* source) {
 
                 result = info.completeBaseName();
             }
-
         }
         return result;
     };
+
+    outerMostContextName = obtainContextName(source);
 
     auto obtainDefaultValuesMap = [=](QObject* object) {
         const QMetaObject* meta = object->metaObject();
@@ -78,20 +81,9 @@ static QVariantMap dehydrate(QObject* source) {
             return result;
         }
 
-        QQmlData *ddata = QQmlData::get(object, false);
-
-        if (ddata && ddata->context) {
-            QUrl fileUrl = ddata->context->url();
-
-            if (!fileUrl.isEmpty()) {
-                QString path = QtShell::realpath_strip(fileUrl.toString());
-                QFileInfo info(path);
-
-                QString contextName = info.completeBaseName();
-                if (contextName != outerMostContextName) {
-                    result = contextName;
-                }
-            }
+        QString contextName = obtainContextName(object);
+        if (contextName != outerMostContextName) {
+            result = contextName;
         }
 
         return result;
@@ -99,11 +91,12 @@ static QVariantMap dehydrate(QObject* source) {
 
     std::function<QVariantMap(QObject*)> _dehydrate;
 
-    _dehydrate = [=, &_dehydrate](QObject* object) {
+    _dehydrate = [=, &_dehydrate, &contextStack](QObject* object) {
 
         QVariantMap dest;
         const QMetaObject* meta = object->metaObject();
         QVariantMap defaultValues = obtainDefaultValuesMap(object);
+        QString contextName = obtainContextName(object);
 
         for (int i = 0 ; i < meta->propertyCount(); i++) {
             const QMetaProperty property = meta->property(i);
@@ -132,7 +125,10 @@ static QVariantMap dehydrate(QObject* source) {
         QVariantList childrenDataList;
         for (int i = 0 ; i < children.size() ; i++) {
             QObject* child = children[i];
-            childrenDataList << _dehydrate(child);
+            QVariantMap childData = _dehydrate(child);
+            if (!childData.isEmpty()) {
+                childrenDataList << childData;
+            }
         }
 
         if (childrenDataList.size() > 0) {
@@ -144,7 +140,6 @@ static QVariantMap dehydrate(QObject* source) {
         return dest;
     };
 
-    outerMostContextName = outerContextName(source);
     return _dehydrate(source);
 }
 

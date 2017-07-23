@@ -1,5 +1,6 @@
 {
     "content": {
-        "test_Snapshot_compare": "Item {\n    height: 480\n    width: 640\n    x: 10\n    y: 10\n    Item {\n        height: 480\n        width: 640\n    }\n    Item {\n        height: 100\n        width: 100\n        x: 540\n    }\n    Rectangle {\n        color: \"#ffffff\"\n        height: 100\n        width: 100\n    }\n}"
+        "test_Snapshot_compare_Sample1.qml": "Item {\n    height: 480\n    width: 640\n    x: 10\n    y: 10\n    Item {\n        height: 480\n        width: 640\n    }\n    Item {\n        height: 100\n        width: 100\n        x: 540\n    }\n    Rectangle {\n        color: \"#ffffff\"\n        height: 100\n        width: 100\n    }\n}",
+        "test_Snapshot_compare_Sample2.qml": "Item {\n    Sample1 {\n        height: 480\n        width: 640\n        x: 10\n        y: 10\n        Sample1 {\n            height: 480\n            width: 640\n        }\n        Sample1 {\n            height: 100\n            width: 100\n            x: 540\n        }\n        Sample1 {\n            color: \"#ffffff\"\n            height: 100\n            width: 100\n        }\n    }\n}"
     }
 }
