@@ -10,10 +10,12 @@ public:
     Snapshot();
 
     /// The current version of snapshot
-    QString snapshot() const;
+    QString snapshotText() const;
+
+    void setSnapshotText(const QString &snapshotText);
 
     /// The previous version of snapshot
-    QString previousSnapshot() const;
+    QString previousSnapshotText() const;
 
     void capture(QObject* object);
 
@@ -25,8 +27,9 @@ public:
 
     bool compare();
 
+
 private:
-    QString m_snapshot;
+    QString m_snapshotText;
     QString m_name;
 };
 

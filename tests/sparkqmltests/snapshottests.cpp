@@ -30,7 +30,7 @@ void SnapshotTests::test_Snapshot()
 
     snapshot.capture(childItem);
 
-    qDebug().noquote() << snapshot.snapshot();
+    qDebug().noquote() << snapshot.snapshotText();
 }
 
 void SnapshotTests::test_Snapshot_name()
@@ -72,7 +72,7 @@ void SnapshotTests::test_Snapshot_compare()
     snapshot.setName(QString("%1_%2").arg(QTest::currentTestFunction()).arg(fileName));
 
     snapshot.capture(childItem);
-    qDebug().noquote() << snapshot.snapshot();
+    qDebug().noquote() << snapshot.snapshotText();
 
     QVERIFY(snapshot.compare());
 }

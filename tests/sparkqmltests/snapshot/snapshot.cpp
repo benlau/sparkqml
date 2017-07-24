@@ -19,7 +19,8 @@ static QMap<QString,QString> classNameToItemNameTable;
 static QMap<QString, QVariantMap> defaultValueMap;
 
 static QVariantMap dehydrate(QObject* source) {
-    QString topLevelContext;
+    QString topLevelContextName;
+    QQmlContext* topLevelContext = qmlContext(source);
     QStack<QString> contextStack;
 
     auto obtainContextName = [=](QObject *object) {
@@ -38,8 +39,15 @@ static QVariantMap dehydrate(QObject* source) {
         return result;
     };
 
-    topLevelContext = obtainContextName(source);
-    contextStack.push(topLevelContext);
+    topLevelContextName = obtainContextName(source);
+    contextStack.push(topLevelContextName);
+
+    auto obtainId = [=](QObject* object) -> QString {
+        if (!topLevelContext) {
+            return "";
+        }
+        return topLevelContext->nameForObject(object);
+    };
 
     auto lastContext = [=]() {
         if (contextStack.size() == 0) {
@@ -82,7 +90,7 @@ static QVariantMap dehydrate(QObject* source) {
     };
 
     /// Obtain the item name in QML
-    auto obtainItemName = [=,&topLevelContext](QObject* object, QString className) {
+    auto obtainItemName = [=,&topLevelContextName](QObject* object, QString className) {
         QString result = classNameToItemNameTable[className];
 
         if (object == source) {
@@ -90,7 +98,7 @@ static QVariantMap dehydrate(QObject* source) {
         }
 
         QString contextName = obtainContextName(object);
-        if (contextName != topLevelContext) {
+        if (contextName != topLevelContextName) {
             result = contextName;
         }
 
@@ -102,6 +110,11 @@ static QVariantMap dehydrate(QObject* source) {
         QVariantMap dest;
         QVariantMap defaultValues = obtainDefaultValuesMap(object);
         const QMetaObject* meta = object->metaObject();
+
+        QString id = obtainId(object);
+        if (!id.isNull()) {
+            dest["id"] = id;
+        }
 
         for (int i = 0 ; i < meta->propertyCount(); i++) {
             const QMetaProperty property = meta->property(i);
@@ -214,6 +227,12 @@ static QString prettyText(QVariantMap snapshot) {
         lines << QString().fill(' ',indent) + snapshot["$name"].toString() + " {";
 
         QStringList keys = snapshot.keys();
+
+        if (keys.indexOf("id") >= 0) {
+            lines << _prettyField("id", snapshot["id"], indent + 4);
+            keys.removeOne("id");
+        }
+
         for (int i = 0 ; i < keys.size();i++) {
             QString key = keys[i];
             if (key.indexOf("$") == 0) {
@@ -242,12 +261,12 @@ Snapshot::Snapshot()
 {
 }
 
-QString Snapshot::snapshot() const
+QString Snapshot::snapshotText() const
 {
-    return m_snapshot;
+    return m_snapshotText;
 }
 
-QString Snapshot::previousSnapshot() const
+QString Snapshot::previousSnapshotText() const
 {
     return SnapshotTesting::loadSnapshots()[m_name].toString();
 }
@@ -255,7 +274,7 @@ QString Snapshot::previousSnapshot() const
 void Snapshot::capture(QObject *object)
 {
     QVariantMap data = dehydrate(object);
-    m_snapshot = prettyText(data);
+    m_snapshotText = prettyText(data);
 }
 
 Snapshot Snapshot::createFromQTest()
@@ -287,18 +306,18 @@ bool Snapshot::compare()
     QVariantMap snapshots = SnapshotTesting::loadSnapshots();
 
     if (!snapshots.contains(m_name)) {
-        SnapshotTesting::setSnapshot(m_name, m_snapshot);
+        SnapshotTesting::setSnapshot(m_name, m_snapshotText);
         SnapshotTesting::saveSnapshots();
         return true;
     }
 
     QString originalVersion = snapshots[m_name].toString();
 
-    if (originalVersion == m_snapshot) {
+    if (originalVersion == m_snapshotText) {
         return true;
     }
 
-    QString diff = SnapshotTools::diff(originalVersion, m_snapshot);
+    QString diff = SnapshotTools::diff(originalVersion, m_snapshotText);
 
     QQmlApplicationEngine engine;
     engine.addImportPath("qrc:///");
@@ -308,8 +327,8 @@ bool Snapshot::compare()
     Q_ASSERT(dialog);
 
     dialog->setProperty("diff", diff);
-    dialog->setProperty("previousSnapshot", previousSnapshot());
-    dialog->setProperty("snapshot", m_snapshot);
+    dialog->setProperty("previousSnapshot", previousSnapshotText());
+    dialog->setProperty("snapshot", m_snapshotText);
     dialog->setProperty("title", m_name);
 
     QMetaObject::invokeMethod(dialog, "open");
@@ -317,12 +336,17 @@ bool Snapshot::compare()
 
     int button = dialog->property("clickedButton").value<int>();
     if (button == 0x02000000) {
-        SnapshotTesting::setSnapshot(m_name, m_snapshot);
+        SnapshotTesting::setSnapshot(m_name, m_snapshotText);
         SnapshotTesting::saveSnapshots();
         return true;
     }
 
     return false;
+}
+
+void Snapshot::setSnapshotText(const QString &snapshotText)
+{
+    m_snapshotText = snapshotText;
 }
 
 static void init() {
