@@ -19,7 +19,7 @@ static QMap<QString,QString> classNameToItemNameTable;
 static QMap<QString, QVariantMap> defaultValueMap;
 
 static QVariantMap dehydrate(QObject* source) {
-    QString outerMostContextName;
+    QString topLevelContext;
     QStack<QString> contextStack;
 
     auto obtainContextName = [=](QObject *object) {
@@ -38,7 +38,15 @@ static QVariantMap dehydrate(QObject* source) {
         return result;
     };
 
-    outerMostContextName = obtainContextName(source);
+    topLevelContext = obtainContextName(source);
+    contextStack.push(topLevelContext);
+
+    auto lastContext = [=]() {
+        if (contextStack.size() == 0) {
+            return QString("");
+        }
+        return contextStack.last();
+    };
 
     auto obtainDefaultValuesMap = [=](QObject* object) {
         const QMetaObject* meta = object->metaObject();
@@ -74,7 +82,7 @@ static QVariantMap dehydrate(QObject* source) {
     };
 
     /// Obtain the item name in QML
-    auto obtainItemName = [=,&outerMostContextName](QObject* object, QString className) {
+    auto obtainItemName = [=,&topLevelContext](QObject* object, QString className) {
         QString result = classNameToItemNameTable[className];
 
         if (object == source) {
@@ -82,21 +90,18 @@ static QVariantMap dehydrate(QObject* source) {
         }
 
         QString contextName = obtainContextName(object);
-        if (contextName != outerMostContextName) {
+        if (contextName != topLevelContext) {
             result = contextName;
         }
 
         return result;
     };
 
-    std::function<QVariantMap(QObject*)> _dehydrate;
-
-    _dehydrate = [=, &_dehydrate, &contextStack](QObject* object) {
+    auto _dehyrdate = [=](QObject* object) {
 
         QVariantMap dest;
-        const QMetaObject* meta = object->metaObject();
         QVariantMap defaultValues = obtainDefaultValuesMap(object);
-        QString contextName = obtainContextName(object);
+        const QMetaObject* meta = object->metaObject();
 
         for (int i = 0 ; i < meta->propertyCount(); i++) {
             const QMetaProperty property = meta->property(i);
@@ -120,12 +125,32 @@ static QVariantMap dehydrate(QObject* source) {
             }
             dest[stringName] = value;
         }
+        return dest;
+    };
+
+    std::function<QVariantMap(QObject*)> travel;
+
+    travel = [=, &travel, &contextStack](QObject* object) {
+
+        QVariantMap dest;
+        QString contextName = obtainContextName(object);
+        bool popOnQuit = false;
+
+        if (lastContext() != contextName) {
+            if (contextStack.size() >= 2) {
+                return dest;
+            }
+            contextStack.push(contextName);
+            popOnQuit = true;
+        }
+
+        dest = _dehyrdate(object);
 
         QObjectList children = object->children();
         QVariantList childrenDataList;
         for (int i = 0 ; i < children.size() ; i++) {
             QObject* child = children[i];
-            QVariantMap childData = _dehydrate(child);
+            QVariantMap childData = travel(child);
             if (!childData.isEmpty()) {
                 childrenDataList << childData;
             }
@@ -137,10 +162,14 @@ static QVariantMap dehydrate(QObject* source) {
 
         dest["$type"] = obtainClassName(object);
         dest["$name"] = obtainItemName(object, dest["$type"].toString());
+
+        if (popOnQuit) {
+            contextStack.pop();
+        }
         return dest;
     };
 
-    return _dehydrate(source);
+    return travel(source);
 }
 
 static QString prettyText(QVariantMap snapshot) {
