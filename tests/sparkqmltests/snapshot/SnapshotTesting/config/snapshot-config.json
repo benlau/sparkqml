@@ -33,5 +33,40 @@
         "defaultValues": {
             "radius": 0
         }
+    },
+    "QQuickText": {
+        "name": "Text",
+        "defaultValues": {
+            "antialiasing": true,
+            "baselineOffset": 12.56,
+            "bottomPadding": 0,
+            "contentHeight": 16,
+            "contentWidth": 0,
+            "effectiveHorizontalAlignment": 1,
+            "elide": 3,
+            "fontSizeMode": 0,
+            "horizontalAlignment": 1,
+            "hoveredLink": "",
+            "implicitHeight": 16,
+            "leftPadding": 0,
+            "lineCount": 1,
+            "lineHeight": 1,
+            "lineHeightMode": 0,
+            "maximumLineCount": 2147483647,
+            "minimumPixelSize": 12,
+            "minimumPointSize": 12,
+            "padding": 0,
+            "paintedHeight": 16,
+            "paintedWidth": 0,
+            "renderType": 0,
+            "rightPadding": 0,
+            "style": 0,
+            "text": "",
+            "textFormat": 2,
+            "topPadding": 0,
+            "truncated": false,
+            "verticalAlignment": 32,
+            "wrapMode": 0
+        }
     }
 }

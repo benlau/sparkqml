@@ -76,8 +76,13 @@ static QVariantMap dehydrate(QObject* source) {
         return result;
     };
 
-    /// Obtain the class name of QObject which is known to the system
     auto obtainClassName = [=](QObject* object) {
+        const QMetaObject* meta = object->metaObject();
+        return meta->className();
+    };
+
+    /// Obtain the class name of QObject which is known to the system
+    auto obtainKnownClassName = [=](QObject* object) {
       const QMetaObject* meta = object->metaObject();
       QString res;
 
@@ -90,8 +95,18 @@ static QVariantMap dehydrate(QObject* source) {
     };
 
     /// Obtain the item name in QML
-    auto obtainItemName = [=,&topLevelContextName](QObject* object, QString className) {
-        QString result = classNameToItemNameTable[className];
+    auto obtainItemName = [=,&topLevelContextName](QObject* object) {
+        QString result;
+        QString className = obtainClassName(object);
+        if (className.indexOf("QQuick") == 0) {
+            result = className.replace("QQuick", "");
+        }
+
+        QString knownClassName = obtainKnownClassName(object);
+
+        if (result.isNull()) {
+            result = classNameToItemNameTable[knownClassName];
+        }
 
         if (object == source) {
             return result;
@@ -173,8 +188,8 @@ static QVariantMap dehydrate(QObject* source) {
             dest["$children"] = childrenDataList;
         }
 
-        dest["$type"] = obtainClassName(object);
-        dest["$name"] = obtainItemName(object, dest["$type"].toString());
+        dest["$type"] = obtainKnownClassName(object);
+        dest["$name"] = obtainItemName(object);
 
         if (popOnQuit) {
             contextStack.pop();

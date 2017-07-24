@@ -1,6 +1,6 @@
 {
     "content": {
-        "test_Snapshot_compare_Sample1.qml": "Item {\n    id: \"sample1\"\n    height: 480\n    width: 640\n    x: 10\n    y: 10\n    Item {\n        id: \"item1\"\n        height: 480\n        width: 640\n    }\n    Item {\n        id: \"item2\"\n        height: 100\n        width: 100\n        x: 540\n    }\n    Rectangle {\n        id: \"item3\"\n        color: \"#ffffff\"\n        height: 100\n        width: 100\n    }\n}",
+        "test_Snapshot_compare_Sample1.qml": "Item {\n    id: \"sample1\"\n    height: 480\n    width: 640\n    x: 10\n    y: 10\n    Item {\n        id: \"item1\"\n        height: 480\n        width: 640\n    }\n    Item {\n        id: \"item2\"\n        height: 100\n        width: 100\n        x: 540\n    }\n    Rectangle {\n        id: \"item3\"\n        color: \"#ffffff\"\n        height: 100\n        width: 100\n    }\n    Text {\n        id: \"item4\"\n        antialiasing: true\n        baselineOffset: 12.56\n        color: \"#000000\"\n        height: 16\n        implicitHeight: 16\n        linkColor: \"#0000ff\"\n        styleColor: \"#000000\"\n    }\n}",
         "test_Snapshot_compare_Sample2.qml": "Item {\n    Sample1 {\n        height: 480\n        width: 640\n        x: 10\n        y: 10\n        Item {\n        }\n    }\n    Sample1 {\n        height: 480\n        width: 640\n        x: 10\n        y: 10\n    }\n}"
     }
 }
