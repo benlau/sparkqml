@@ -11,12 +11,12 @@
 #include <private/qqmlcontext_p.h>
 #include "snapshot.h"
 
-static QStringList ignoreList;
 
 static QStringList knownComponentList;
 static QMap<QString,QString> classNameToItemNameTable;
 
 static QMap<QString, QVariantMap> defaultValueMap;
+static QMap<QString, QStringList> ignoreListMap;
 
 static QVariantMap dehydrate(QObject* source) {
     QString topLevelContextName;
@@ -76,6 +76,22 @@ static QVariantMap dehydrate(QObject* source) {
         return result;
     };
 
+    auto obtainIgnoreList = [=](QObject* object) {
+        const QMetaObject* meta = object->metaObject();
+        QStringList result;
+        while (meta != 0) {
+            QString className = meta->className();
+            if (ignoreListMap.contains(className)) {
+                QStringList list = ignoreListMap[className];
+                result.append(list);
+            }
+
+            meta = meta->superClass();
+        }
+
+        return result;
+    };
+
     auto obtainClassName = [=](QObject* object) {
         const QMetaObject* meta = object->metaObject();
         return meta->className();
@@ -124,12 +140,15 @@ static QVariantMap dehydrate(QObject* source) {
 
         QVariantMap dest;
         QVariantMap defaultValues = obtainDefaultValuesMap(object);
+        QStringList ignoreList = obtainIgnoreList(object);
+
         const QMetaObject* meta = object->metaObject();
 
         QString id = obtainId(object);
         if (!id.isNull()) {
             dest["id"] = id;
         }
+
 
         for (int i = 0 ; i < meta->propertyCount(); i++) {
             const QMetaProperty property = meta->property(i);
@@ -383,14 +402,6 @@ void Snapshot::setSnapshotText(const QString &snapshotText)
 }
 
 static void init() {
-    // QQuickItem
-    ignoreList << "parent" << "transitions" << "visibleChildren"
-               << "states" << "transform" << "top" << "left"
-               << "right" << "bottom" << "transformOrigin"
-               << "data" << "verticalCenter" << "transformOriginPoint"
-               << "resources" << "childrenRect" << "anchors" << "children"
-               << "horizontalCenter" << "baseline";
-
     QString text = QtShell::cat(":/SnapshotTesting/config/snapshot-config.json");
 
     QJsonParseError error;
@@ -407,6 +418,7 @@ static void init() {
         QVariantMap record =  map[key].toMap();
         classNameToItemNameTable[key] = record["name"].toString();
         defaultValueMap[key] = record["defaultValues"].toMap();
+        ignoreListMap[key] = record["ignoreList"].toStringList();
     }
 }
 

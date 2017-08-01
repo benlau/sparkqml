@@ -26,7 +26,28 @@
             "x": 0,
             "y": 0,
             "z": 0
-        }
+        },
+        "ignoreList": [
+            "parent",
+            "transformOrigin",
+            "transitions",
+            "verticalCenter",
+            "visibleChildren",
+            "states",
+            "right",
+            "left",
+            "top",
+            "bottom",
+            "resources",
+            "transform",
+            "data",
+            "horizontalCenter",
+            "children",
+            "transformOriginPoint",
+            "childrenRect",
+            "status",
+            "baseline"
+        ]
     },
     "QQuickRectangle": {
         "name": "Rectangle",
@@ -67,7 +88,13 @@
             "truncated": false,
             "verticalAlignment": 32,
             "wrapMode": 0
-        }
+        },
+        "ignoreList": [
+            "baselineOffset",
+            "implicitHeight",
+            "contentHeight",
+            "paintedHeight"
+        ]
     },
     "QQuickColumn": {
         "name" : "Column",
