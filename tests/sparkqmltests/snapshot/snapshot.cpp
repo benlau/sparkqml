@@ -184,11 +184,26 @@ static QVariantMap dehydrate(QObject* source) {
             }
         }
 
+        QString className = obtainClassName(object);
+        if (className == "QQuickRepeater") {
+            int count = object->property("count").toInt();
+            for (int i = 0 ; i < count; i++) {
+                QQuickItem* child;
+                QMetaObject::invokeMethod(object,"itemAt",Qt::DirectConnection,
+                                          Q_RETURN_ARG(QQuickItem*,child),
+                                          Q_ARG(int,i));
+                QVariantMap childData = travel(child);
+                if (!childData.isEmpty()) {
+                    childrenDataList << childData;
+                }
+            }
+        }
+
         if (childrenDataList.size() > 0) {
             dest["$children"] = childrenDataList;
         }
 
-        dest["$type"] = obtainKnownClassName(object);
+        dest["$class"] = obtainKnownClassName(object);
         dest["$name"] = obtainItemName(object);
 
         if (popOnQuit) {
@@ -333,6 +348,9 @@ bool Snapshot::compare()
     }
 
     QString diff = SnapshotTools::diff(originalVersion, m_snapshotText);
+
+    qDebug().noquote() << "Snapshot::compare: The snapshot is changed:";
+    qDebug().noquote() << diff;
 
     QQmlApplicationEngine engine;
     engine.addImportPath("qrc:///");

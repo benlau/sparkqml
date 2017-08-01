@@ -68,5 +68,16 @@
             "verticalAlignment": 32,
             "wrapMode": 0
         }
+    },
+    "QQuickColumn": {
+        "name" : "Column",
+        "defaultValues": {
+            "leftPadding": 0,
+            "rightPadding": 0,
+            "topPadding" : 0,
+            "bottomPadding": 0,
+            "spacing" : 0,
+            "padding" : 0
+        }
     }
 }

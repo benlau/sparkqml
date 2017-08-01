@@ -1,7 +1,7 @@
 /* Sample1.qml
 
   1) Simple structure. No dependence to other component
-  2) No list structure
+  2) No list structure like repeater / list view
  */
 import QtQuick 2.0
 
