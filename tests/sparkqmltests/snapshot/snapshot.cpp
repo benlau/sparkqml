@@ -50,55 +50,6 @@ static QVariantMap dehydrate(const Snapshot& snapshot, QObject* source) {
         return topLevelContext->nameForObject(object);
     };
 
-    auto lastContext = [=]() {
-        if (contextStack.size() == 0) {
-            return QString("");
-        }
-        return contextStack.last();
-    };
-
-    auto obtainDefaultValuesMap = [=](QObject* object) {
-        const QMetaObject* meta = object->metaObject();
-        QVariantMap result;
-
-        QStringList classes;
-
-        while (meta != 0) {
-            QString className = meta->className();
-            classes << className;
-            meta = meta->superClass();
-        }
-
-        while (classes.size() > 0) {
-            QString className = classes.takeLast();
-            if (defaultValueMap.contains(className)) {
-                QVariantMap map = defaultValueMap[className];
-                QStringList keys = map.keys();
-                foreach (QString key, keys) {
-                    result[key] = map[key];
-                }
-            }
-        }
-
-        return result;
-    };
-
-    auto obtainIgnoreList = [=](QObject* object) {
-        const QMetaObject* meta = object->metaObject();
-        QStringList result;
-        while (meta != 0) {
-            QString className = meta->className();
-            if (ignoreListMap.contains(className)) {
-                QStringList list = ignoreListMap[className];
-                result.append(list);
-            }
-
-            meta = meta->superClass();
-        }
-
-        return result;
-    };
-
     auto obtainClassName = [=](QObject* object) {
         const QMetaObject* meta = object->metaObject();
         return meta->className();
@@ -142,6 +93,98 @@ static QVariantMap dehydrate(const Snapshot& snapshot, QObject* source) {
 
         return result;
     };
+
+    auto lastContext = [=]() {
+        if (contextStack.size() == 0) {
+            return QString("");
+        }
+        return contextStack.last();
+    };
+
+    auto obtainDynamicGeneratedDefaultValuesMap = [=](QObject* object) {
+        static QMap<QString, QVariantMap> autoDefaultValueMap;
+
+        QString className = obtainClassName(object);
+        if (autoDefaultValueMap.contains(className)) {
+            return autoDefaultValueMap[className];
+        }
+
+        QVariantMap res;
+        if (className.indexOf("QQuick") != 0) {
+            return res;
+        }
+
+        QString itemName = obtainItemName(object);
+
+        QQmlApplicationEngine engine;
+
+        QString qml  = QString("import QtQuick 2.4\n %1 {}").arg(itemName);
+
+        QQmlComponent comp (&engine);
+        comp.setData(qml.toUtf8(),QUrl());
+        QObject* holder = comp.create();
+
+        if (holder) {
+            const QMetaObject* meta = holder->metaObject();
+
+            for (int i = 0 ; i < meta->propertyCount(); i++) {
+
+                const QMetaProperty property = meta->property(i);
+                const char* name = property.name();
+
+                QVariant value = object->property(name);
+                res[name] = value;
+            }
+            delete holder;
+        }
+
+        autoDefaultValueMap[className] = res;
+        return res;
+    };
+
+
+    auto obtainDefaultValuesMap = [=](QObject* object) {
+        const QMetaObject* meta = object->metaObject();
+        QVariantMap result = obtainDynamicGeneratedDefaultValuesMap(object);
+
+        QStringList classes;
+
+        while (meta != 0) {
+            QString className = meta->className();
+            classes << className;
+            meta = meta->superClass();
+        }
+
+        while (classes.size() > 0) {
+            QString className = classes.takeLast();
+            if (defaultValueMap.contains(className)) {
+                QVariantMap map = defaultValueMap[className];
+                QStringList keys = map.keys();
+                foreach (QString key, keys) {
+                    result[key] = map[key];
+                }
+            }
+        }
+
+        return result;
+    };
+
+    auto obtainIgnoreList = [=](QObject* object) {
+        const QMetaObject* meta = object->metaObject();
+        QStringList result;
+        while (meta != 0) {
+            QString className = meta->className();
+            if (ignoreListMap.contains(className)) {
+                QStringList list = ignoreListMap[className];
+                result.append(list);
+            }
+
+            meta = meta->superClass();
+        }
+
+        return result;
+    };
+
 
     auto _dehyrdate = [=](QObject* object) {
 
