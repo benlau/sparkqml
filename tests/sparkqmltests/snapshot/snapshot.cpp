@@ -61,8 +61,16 @@ static QVariantMap dehydrate(const Snapshot& snapshot, QObject* source) {
         const QMetaObject* meta = object->metaObject();
         QVariantMap result;
 
+        QStringList classes;
+
         while (meta != 0) {
             QString className = meta->className();
+            classes << className;
+            meta = meta->superClass();
+        }
+
+        while (classes.size() > 0) {
+            QString className = classes.takeLast();
             if (defaultValueMap.contains(className)) {
                 QVariantMap map = defaultValueMap[className];
                 QStringList keys = map.keys();
@@ -70,8 +78,6 @@ static QVariantMap dehydrate(const Snapshot& snapshot, QObject* source) {
                     result[key] = map[key];
                 }
             }
-
-            meta = meta->superClass();
         }
 
         return result;
@@ -175,6 +181,22 @@ static QVariantMap dehydrate(const Snapshot& snapshot, QObject* source) {
         return dest;
     };
 
+    auto inherited = [=](QObject *object, QString className) {
+        bool res = false;
+
+        const QMetaObject *metaObject = object->metaObject();
+
+        while (metaObject) {
+            if (metaObject->className() == className) {
+                res = true;
+                break;
+            }
+            metaObject = metaObject->superClass();
+        }
+
+        return res;
+    };
+
     auto _allowTravel = [=](QObject* object) {
         if (!captureVisibleItemOnly) {
             return true;
@@ -236,6 +258,20 @@ static QVariantMap dehydrate(const Snapshot& snapshot, QObject* source) {
                 QVariantMap childData = travel(child);
                 if (!childData.isEmpty()) {
                     childrenDataList << childData;
+                }
+            }
+        } else if (inherited(object, "QQuickFlickable")) {
+
+            QQuickItem* contentItem = object->property("contentItem").value<QQuickItem*>();
+
+            if (contentItem) {
+                QList<QQuickItem *>items = contentItem->childItems() ;
+
+                for (int i = 0 ;  i < items.size() ; i++) {
+                    QVariantMap childData = travel(items.at(i));
+                    if (!childData.isEmpty()) {
+                        childrenDataList << childData;
+                    }
                 }
             }
         }
@@ -391,7 +427,7 @@ bool Snapshot::compare()
 
     QString diff = SnapshotTools::diff(originalVersion, m_snapshotText);
 
-    qDebug().noquote() << "Snapshot::compare: The snapshot is changed:";
+    qDebug().noquote() << "Snapshot::compare: The snapshot is different:";
     qDebug().noquote() << diff;
 
     if (SnapshotTesting::interactiveEnabled()) {
@@ -446,7 +482,7 @@ static void init() {
         qWarning() << "JSON::parse() error: "<< error.errorString();
     }
 
-    QVariantMap map = doc.object().toVariantMap();;
+    QVariantMap map = doc.object().toVariantMap();
     knownComponentList = map.keys();
     for (int i = 0 ; i < knownComponentList.size() ; i++) {
         QString key = knownComponentList[i];

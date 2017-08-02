@@ -40,7 +40,13 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     qDebug() << "TRAVIS Environment Variable" << qgetenv("TRAVIS");
+    qDebug() << "APPVEYOR Environment Variable" << qgetenv("APPVEYOR");
+
     if (qgetenv("TRAVIS") == "true") {
+        SnapshotTesting::setInteractiveEnabled(false);
+    }
+
+    if (qgetenv("APPVEYOR") == "True") {
         SnapshotTesting::setInteractiveEnabled(false);
     }
 

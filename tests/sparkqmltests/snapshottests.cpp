@@ -3,6 +3,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlComponent>
 #include <QQuickItem>
+#include <QJsonDocument>
 #include "snapshottests.h"
 #include "snapshot/snapshot.h"
 #include "snapshot/snapshottools.h"
@@ -18,6 +19,16 @@ SnapshotTests::SnapshotTests(QObject *parent) : QObject(parent)
 
 void SnapshotTests::test_Snapshot()
 {
+    {
+        QString text = QtShell::cat(":/SnapshotTesting/config/snapshot-config.json");
+
+        QJsonParseError error;
+        QJsonDocument doc = QJsonDocument::fromJson(text.toUtf8(),&error);
+        Q_UNUSED(doc);
+
+        QVERIFY(error.error == QJsonParseError::NoError);
+    }
+
     QQmlApplicationEngine engine;
 
     QUrl url = QUrl::fromLocalFile(QtShell::realpath_strip(SRCDIR, "sample/snapshot/Sample1.qml"));
@@ -74,7 +85,8 @@ void SnapshotTests::test_Snapshot_compare()
     snapshot.capture(childItem);
     qDebug().noquote() << snapshot.snapshotText();
 
-    QVERIFY(snapshot.compare());
+    bool compareResult = snapshot.compare();
+    QVERIFY(compareResult);
 }
 
 void SnapshotTests::test_Snapshot_compare_data()

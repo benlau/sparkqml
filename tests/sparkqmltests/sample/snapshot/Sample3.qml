@@ -16,4 +16,12 @@ Item {
             }
         }
     }
+
+    ListView {
+        model: 5
+        delegate: Item {
+            width: 640
+            height: 48
+        }
+    }
 }
