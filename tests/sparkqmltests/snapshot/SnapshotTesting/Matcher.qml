@@ -28,5 +28,9 @@ Dialog {
         Qt.quit();
     }
 
+    onNo: {
+        Qt.quit();
+    }
+
     standardButtons: Dialog.Ignore | Dialog.Apply | Dialog.NoToAll
 }

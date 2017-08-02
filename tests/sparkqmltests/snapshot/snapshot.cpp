@@ -490,10 +490,15 @@ bool Snapshot::compare()
         QCoreApplication::exec();
 
         int button = dialog->property("clickedButton").value<int>();
-        if (button == 0x02000000) {
+        switch (button) {
+        case 0x00020000: // No to all
+            SnapshotTesting::setIgnoreAll(true);
+            break;
+        case 0x02000000:
             SnapshotTesting::setSnapshot(m_name, m_snapshotText);
             SnapshotTesting::saveSnapshots();
             return true;
+            break;
         }
     }
 

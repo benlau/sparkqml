@@ -18,4 +18,7 @@ namespace SnapshotTesting {
     void setInteractiveEnabled(bool value);
 
     bool interactiveEnabled();
+
+    bool setIgnoreAll(bool value);
+    bool ignoreAll();
 }

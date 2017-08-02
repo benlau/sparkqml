@@ -85,8 +85,7 @@ void SnapshotTests::test_Snapshot_compare()
     snapshot.capture(childItem);
     qDebug().noquote() << snapshot.snapshotText();
 
-    bool compareResult = snapshot.compare();
-    QVERIFY(compareResult);
+    QVERIFY(snapshot.compare());
 }
 
 void SnapshotTests::test_Snapshot_compare_data()
