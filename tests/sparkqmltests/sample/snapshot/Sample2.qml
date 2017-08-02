@@ -3,9 +3,13 @@
 import QtQuick 2.0
 
 Item {
+    width: 640
+    height: 480
+
     Sample1 {
         Item {
-
+            width: 10
+            height: 10
         }
     }
 

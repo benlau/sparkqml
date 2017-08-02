@@ -9,6 +9,7 @@
 static QString m_snapshotFile;
 static QVariantMap m_snapshots;
 static bool m_snapshotsDirty = false;
+static bool m_interactiveEnabled = true;
 
 void SnapshotTesting::setSnapshotFiles(const QString &file)
 {
@@ -89,6 +90,16 @@ void SnapshotTesting::setSnapshot(const QString &name, const QString &content)
 {
     m_snapshots[name] = content;
     m_snapshotsDirty = true;
+}
+
+void SnapshotTesting::setInteractiveEnabled(bool value)
+{
+    m_interactiveEnabled = value;
+}
+
+bool SnapshotTesting::interactiveEnabled()
+{
+    return m_interactiveEnabled;
 }
 
 Q_COREAPP_STARTUP_FUNCTION(init)

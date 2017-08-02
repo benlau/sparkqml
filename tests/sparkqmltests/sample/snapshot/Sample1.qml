@@ -32,5 +32,7 @@ Item {
 
     Text {
         id: item4
+        width: 100
+        height: 10 // It is suggested to assign a fixed height to a text item. Otherwise, the value may be changed on different machine
     }
 }

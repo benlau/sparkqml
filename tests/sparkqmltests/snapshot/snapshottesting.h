@@ -14,4 +14,8 @@ namespace SnapshotTesting {
     void saveSnapshots();
 
     void setSnapshot(const QString& name , const QString& content);
+
+    void setInteractiveEnabled(bool value);
+
+    bool interactiveEnabled();
 }

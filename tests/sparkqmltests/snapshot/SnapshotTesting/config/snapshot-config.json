@@ -92,8 +92,7 @@
         "ignoreList": [
             "baselineOffset",
             "implicitHeight",
-            "contentHeight",
-            "paintedHeight"
+            "contentHeight"
         ]
     },
     "QQuickColumn": {

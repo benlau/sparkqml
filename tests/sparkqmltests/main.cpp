@@ -38,6 +38,12 @@ int main(int argc, char *argv[])
     qputenv("QML_DISABLE_DISK_CACHE", "1");
 
     QGuiApplication app(argc, argv);
+
+    qDebug() << "TRAVIS Environment Variable" << qgetenv("TRAVIS");
+    if (qgetenv("TRAVIS") == "true") {
+        SnapshotTesting::setInteractiveEnabled(false);
+    }
+
     QThreadPool::globalInstance()->setMaxThreadCount(qMax(4, QThread::idealThreadCount()));
 
     SnapshotTesting::setSnapshotFiles(QtShell::realpath_strip(SRCDIR, "snapshot/snapshots.json"));

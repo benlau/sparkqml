@@ -27,10 +27,13 @@ public:
 
     bool compare();
 
+    bool captureVisibleItemOnly() const;
+    void setCaptureVisibleItemOnly(bool captureVisibleItemOnly);
 
 private:
     QString m_snapshotText;
     QString m_name;
+    bool m_captureVisibleItemOnly;
 };
 
 #endif // SNAPSHOT_H

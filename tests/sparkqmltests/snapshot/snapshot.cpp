@@ -18,10 +18,11 @@ static QMap<QString,QString> classNameToItemNameTable;
 static QMap<QString, QVariantMap> defaultValueMap;
 static QMap<QString, QStringList> ignoreListMap;
 
-static QVariantMap dehydrate(QObject* source) {
+static QVariantMap dehydrate(const Snapshot& snapshot, QObject* source) {
     QString topLevelContextName;
     QQmlContext* topLevelContext = qmlContext(source);
     QStack<QString> contextStack;
+    bool captureVisibleItemOnly = snapshot.captureVisibleItemOnly();
 
     auto obtainContextName = [=](QObject *object) {
         QString result;
@@ -149,7 +150,6 @@ static QVariantMap dehydrate(QObject* source) {
             dest["id"] = id;
         }
 
-
         for (int i = 0 ; i < meta->propertyCount(); i++) {
             const QMetaProperty property = meta->property(i);
             const char* name = property.name();
@@ -175,9 +175,31 @@ static QVariantMap dehydrate(QObject* source) {
         return dest;
     };
 
+    auto _allowTravel = [=](QObject* object) {
+        if (!captureVisibleItemOnly) {
+            return true;
+        }
+
+        QQuickItem* item = qobject_cast<QQuickItem*>(object);
+
+        if (!item) {
+            return false;
+        }
+
+        if (item->opacity() == 0 ||
+            !item->isVisible()) {
+            return false;
+        }
+
+        return true;
+    };
+
     std::function<QVariantMap(QObject*)> travel;
 
     travel = [=, &travel, &contextStack](QObject* object) {
+        if (!_allowTravel(object)) {
+            return QVariantMap();
+        }
 
         QVariantMap dest;
         QString contextName = obtainContextName(object);
@@ -308,6 +330,7 @@ static QString prettyText(QVariantMap snapshot) {
 
 Snapshot::Snapshot()
 {
+    m_captureVisibleItemOnly = true;
 }
 
 QString Snapshot::snapshotText() const
@@ -322,7 +345,7 @@ QString Snapshot::previousSnapshotText() const
 
 void Snapshot::capture(QObject *object)
 {
-    QVariantMap data = dehydrate(object);
+    QVariantMap data = dehydrate(*this, object);
     m_snapshotText = prettyText(data);
 }
 
@@ -371,29 +394,41 @@ bool Snapshot::compare()
     qDebug().noquote() << "Snapshot::compare: The snapshot is changed:";
     qDebug().noquote() << diff;
 
-    QQmlApplicationEngine engine;
-    engine.addImportPath("qrc:///");
-    engine.load(QUrl("qrc:/SnapshotTesting/Matcher.qml"));
+    if (SnapshotTesting::interactiveEnabled()) {
+        QQmlApplicationEngine engine;
+        engine.addImportPath("qrc:///");
+        engine.load(QUrl("qrc:/SnapshotTesting/Matcher.qml"));
 
-    QObject* dialog = engine.rootObjects()[0];
-    Q_ASSERT(dialog);
+        QObject* dialog = engine.rootObjects()[0];
+        Q_ASSERT(dialog);
 
-    dialog->setProperty("diff", diff);
-    dialog->setProperty("previousSnapshot", previousSnapshotText());
-    dialog->setProperty("snapshot", m_snapshotText);
-    dialog->setProperty("title", m_name);
+        dialog->setProperty("diff", diff);
+        dialog->setProperty("previousSnapshot", previousSnapshotText());
+        dialog->setProperty("snapshot", m_snapshotText);
+        dialog->setProperty("title", m_name);
 
-    QMetaObject::invokeMethod(dialog, "open");
-    QCoreApplication::exec();
+        QMetaObject::invokeMethod(dialog, "open");
+        QCoreApplication::exec();
 
-    int button = dialog->property("clickedButton").value<int>();
-    if (button == 0x02000000) {
-        SnapshotTesting::setSnapshot(m_name, m_snapshotText);
-        SnapshotTesting::saveSnapshots();
-        return true;
+        int button = dialog->property("clickedButton").value<int>();
+        if (button == 0x02000000) {
+            SnapshotTesting::setSnapshot(m_name, m_snapshotText);
+            SnapshotTesting::saveSnapshots();
+            return true;
+        }
     }
 
     return false;
+}
+
+bool Snapshot::captureVisibleItemOnly() const
+{
+    return m_captureVisibleItemOnly;
+}
+
+void Snapshot::setCaptureVisibleItemOnly(bool captureVisibleItemOnly)
+{
+    m_captureVisibleItemOnly = captureVisibleItemOnly;
 }
 
 void Snapshot::setSnapshotText(const QString &snapshotText)
