@@ -433,12 +433,12 @@ static QString prettyText(QVariantMap snapshot) {
 }
 
 
-void SnapshotTesting::setSnapshotFiles(const QString &file)
+void SnapshotTesting::setSnapshotsFile(const QString &file)
 {
-    m_snapshotFile = file;
+    m_snapshotFile = QtShell::realpath_strip(file);
 }
 
-QString SnapshotTesting::snapshotFiles()
+QString SnapshotTesting::snapshotsFile()
 {
     return m_snapshotFile;
 }

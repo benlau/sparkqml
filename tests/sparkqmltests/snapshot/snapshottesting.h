@@ -6,9 +6,9 @@
 
 namespace SnapshotTesting {
 
-    void setSnapshotFiles(const QString& file);
+    void setSnapshotsFile(const QString& file);
 
-    QString snapshotFiles();
+    QString snapshotsFile();
 
     QVariantMap loadStoredSnapshots();
 

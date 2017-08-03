@@ -10,7 +10,8 @@ SOURCES +=     main.cpp     tests.cpp \
     hotloadertests.cpp \
     snapshottests.cpp \
     snapshot/snapshottools.cpp \
-    snapshot/snapshottesting.cpp
+    snapshot/snapshottesting.cpp \
+    snapshot/snapshottestingadapter.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 ROOTDIR = $$PWD/../../
@@ -51,7 +52,8 @@ DISTFILES +=     qpm.json \
     sample/snapshot/Sample1.qml \
     snapshot/snapshots.json \
     sample/snapshot/Sample2.qml \
-    sample/snapshot/Sample3.qml
+    sample/snapshot/Sample3.qml \
+    qmltests/tst_SnapshotTesting.qml
 
 HEADERS +=     tests.h \
     hotloadertests.h \
@@ -66,7 +68,8 @@ HEADERS +=     tests.h \
     snapshottests.h \
     snapshot/snapshottools.h \
     snapshot/snapshottesting.h \
-    snapshot/snapshottestingoptions.h
+    snapshot/snapshottestingoptions.h \
+    snapshot/snapshottestingadapter.h
 
 RESOURCES += \
     hotloadertests.qrc \

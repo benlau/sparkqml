@@ -4,6 +4,7 @@
   2) No list structure like repeater / list view
  */
 import QtQuick 2.0
+import QtQuick.Controls 2.0 as QQC2
 
 Item {
     id: sample1
