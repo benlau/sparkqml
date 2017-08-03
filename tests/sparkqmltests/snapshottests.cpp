@@ -72,24 +72,17 @@ void SnapshotTests::test_Snapshot_compare()
 {
     QFETCH(QString, input);
 
-    QQuickWindow window;
-    window.setVisible(true);
-
     QString fileName = QtShell::basename(input);
 
     QQmlApplicationEngine engine;
-    engine.setIncubationController(window.incubationController());
-
     QUrl url = QUrl::fromLocalFile(input);
 
     QQmlComponent component(&engine,url);
     QQuickItem *childItem = qobject_cast<QQuickItem*>(component.create());
-    childItem->setParentItem(window.contentItem());
     QVERIFY(childItem);
 
     Snapshot snapshot;
     snapshot.setName(QString("%1_%2").arg(QTest::currentTestFunction()).arg(fileName));
-    snapshot.setCaptureScreenshotEnabled(true);
 
     snapshot.capture(childItem);
     qDebug().noquote() << snapshot.snapshotText();
@@ -101,20 +94,50 @@ void SnapshotTests::test_Snapshot_compare()
     snapshot.setSnapshotText(text);
 
     QVERIFY(snapshot.compare());
-
-    {
-        QString screenshotFolder = QtShell::realpath_strip(QtShell::pwd(), "screenshots");
-        QtShell::mkdir("-p", screenshotFolder);
-
-        QString screenshotFile = QtShell::realpath_strip(screenshotFolder, QtShell::basename(input)) + ".png";
-
-        QImage image = snapshot.screenshot();
-        QVERIFY(image.save(screenshotFile));
-    }
-
 }
 
 void SnapshotTests::test_Snapshot_compare_data()
+{
+    QTest::addColumn<QString>("input");
+
+    QStringList files = QtShell::find(QtShell::realpath_strip(SRCDIR, "sample/snapshot"), "*.qml");
+
+    foreach (QString file, files) {
+        QTest::newRow(file.toUtf8().constData()) << file;
+    }
+}
+
+void SnapshotTests::test_Snapshot_compare_expandAll()
+{
+    QFETCH(QString, input);
+
+    QString fileName = QtShell::basename(input);
+
+    QQmlApplicationEngine engine;
+
+    QUrl url = QUrl::fromLocalFile(input);
+
+    QQmlComponent component(&engine,url);
+    QQuickItem *childItem = qobject_cast<QQuickItem*>(component.create());
+    QVERIFY(childItem);
+
+    Snapshot snapshot;
+    snapshot.setName(QString("%1_%2").arg(QTest::currentTestFunction()).arg(fileName));
+    snapshot.setExpandAll(true);
+
+    snapshot.capture(childItem);
+    qDebug().noquote() << snapshot.snapshotText();
+
+    QString text = snapshot.snapshotText();
+    text.replace(QUrl::fromLocalFile(QString(SRCDIR)).toString(), "");
+    text.replace(QString(SRCDIR), "");
+
+    snapshot.setSnapshotText(text);
+
+    QVERIFY(snapshot.compare());
+}
+
+void SnapshotTests::test_Snapshot_compare_expandAll_data()
 {
     QTest::addColumn<QString>("input");
 

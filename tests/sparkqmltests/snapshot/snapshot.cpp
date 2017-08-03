@@ -25,6 +25,7 @@ static QVariantMap dehydrate(const Snapshot& snapshot, QObject* source) {
     QQmlContext* topLevelContext = qmlContext(source);
     QStack<QString> contextStack;
     bool captureVisibleItemOnly = snapshot.captureVisibleItemOnly();
+    bool expandAll = snapshot.expandAll();
 
     auto obtainContextName = [=](QObject *object) {
         QString result;
@@ -95,9 +96,11 @@ static QVariantMap dehydrate(const Snapshot& snapshot, QObject* source) {
             return result;
         }
 
-        QString contextName = obtainContextName(object);
-        if (contextName != topLevelContextName && contextName != "") {
-            result = contextName;
+        if (!expandAll) {
+            QString contextName = obtainContextName(object);
+            if (contextName != topLevelContextName && contextName != "") {
+                result = contextName;
+            }
         }
 
         return result;
@@ -280,7 +283,7 @@ static QVariantMap dehydrate(const Snapshot& snapshot, QObject* source) {
         bool popOnQuit = false;
 
         if (lastContext() != contextName) {
-            if (contextStack.size() >= 2) {
+            if (!expandAll && contextStack.size() >= 2) {
                 return dest;
             }
             contextStack.push(contextName);
@@ -424,6 +427,7 @@ Snapshot::Snapshot()
 {
     m_captureVisibleItemOnly = true;
     m_captureScreenshotEnabled = false;
+    m_expandAll = false;
 }
 
 QString Snapshot::snapshotText() const
@@ -498,7 +502,7 @@ bool Snapshot::compare()
     qDebug().noquote() << "Snapshot::compare: The snapshot is different:";
     qDebug().noquote() << diff;
 
-    if (SnapshotTesting::interactiveEnabled()) {
+    if (SnapshotTesting::interactiveEnabled() && !SnapshotTesting::ignoreAll()) {
         QQmlApplicationEngine engine;
         engine.addImportPath("qrc:///");
         engine.load(QUrl("qrc:/SnapshotTesting/Matcher.qml"));
@@ -518,7 +522,6 @@ bool Snapshot::compare()
             m_screenshot.save(&buffer, "PNG");
             buffer.close();
             QString base64 = QString("data:image/png;base64,") + ba.toBase64();
-//            QUrl source = QUrl::fromEncoded(base64.toUtf8());
             QUrl source(base64);
             dialog->setProperty("screenshot", source);
         }
@@ -528,6 +531,7 @@ bool Snapshot::compare()
 
         int button = dialog->property("clickedButton").value<int>();
         switch (button) {
+        // Use hex code to avoid the dependence to QtWidget
         case 0x00020000: // No to all
             SnapshotTesting::setIgnoreAll(true);
             break;
@@ -565,6 +569,16 @@ void Snapshot::setCaptureScreenshotEnabled(bool captureScreenshotEnabled)
 QImage Snapshot::screenshot() const
 {
     return m_screenshot;
+}
+
+bool Snapshot::expandAll() const
+{
+    return m_expandAll;
+}
+
+void Snapshot::setExpandAll(bool expendAll)
+{
+    m_expandAll = expendAll;
 }
 
 void Snapshot::setSnapshotText(const QString &snapshotText)

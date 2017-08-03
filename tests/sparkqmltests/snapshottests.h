@@ -24,6 +24,10 @@ private slots:
 
     void test_Snapshot_compare();    
     void test_Snapshot_compare_data();
+
+    void test_Snapshot_compare_expandAll();
+    void test_Snapshot_compare_expandAll_data();
+
 };
 
 #endif // SNAPSHOTTESTS_H

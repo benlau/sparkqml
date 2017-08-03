@@ -36,11 +36,15 @@ public:
 
     QImage screenshot() const;
 
+    bool expandAll() const;
+    void setExpandAll(bool expandAll);
+
 private:
     QString m_snapshotText;
     QString m_name;
     bool m_captureVisibleItemOnly;
     bool m_captureScreenshotEnabled;
+    bool m_expandAll;
     QImage m_screenshot;
 };
 

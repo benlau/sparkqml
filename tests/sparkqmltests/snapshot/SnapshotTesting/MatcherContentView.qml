@@ -44,16 +44,6 @@ Item {
                 }
             }
         }
-
-        Tab {
-            title: "Screenshot"
-            Item {
-                Image {
-                    anchors.centerIn: parent
-                    source: contentView.screenshot;
-                }
-            }
-        }
     }
 
 
