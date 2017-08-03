@@ -52,7 +52,8 @@ DISTFILES +=     qpm.json \
     snapshot/snapshots.json \
     sample/snapshot/Sample2.qml \
     sample/snapshot/Sample3.qml \
-    qmltests/tst_SnapshotTesting.qml
+    qmltests/tst_SnapshotTesting.qml \
+    sample/snapshot/Sample4.qml
 
 HEADERS +=     tests.h \
     hotloadertests.h \

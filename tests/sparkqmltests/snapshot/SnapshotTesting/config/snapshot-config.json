@@ -122,5 +122,13 @@
             "paintedHeight",
             "paintedWidth"
         ]
+    },
+    "QQuickButton": {
+        "defaultValues": {
+            "activeFocusOnTab": true
+        },
+        "ignoreList": [
+            "baselineOffset"
+        ]
     }
 }

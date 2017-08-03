@@ -45,4 +45,8 @@ Item {
     Image {
         id: item6
     }
+
+    QQC2.Button {
+        id: item7
+    }
 }

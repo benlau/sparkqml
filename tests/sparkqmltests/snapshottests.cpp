@@ -46,6 +46,15 @@ void SnapshotTests::test_SnapshotTesting_saveSnapshots()
     SnapshotTesting::saveSnapshots();
 }
 
+void SnapshotTests::test_SnapshotTesting_capture_QObject()
+{
+    QObject object;
+
+    QString snapshot = SnapshotTesting::capture(&object);
+
+    QCOMPARE(snapshot, QString(""));
+}
+
 void SnapshotTests::test_Snapshot_matchStoredSnapshot()
 {
     QFETCH(QString, input);

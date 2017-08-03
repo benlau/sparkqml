@@ -151,7 +151,7 @@ static QVariantMap dehydrate(const SnapshotTesting::Options& options, QObject* s
 
         QQmlApplicationEngine engine;
 
-        QString qml  = QString("import QtQuick 2.4\n %1 {}").arg(itemName);
+        QString qml  = QString("import QtQuick 2.4\n import QtQuick.Controls 2.0\n %1 {}").arg(itemName);
 
         QQmlComponent comp (&engine);
         comp.setData(qml.toUtf8(),QUrl());
@@ -363,8 +363,6 @@ static QVariantMap dehydrate(const SnapshotTesting::Options& options, QObject* s
         dest["$class"] = obtainKnownClassName(object);
         dest["$name"] = obtainItemName(object);
 
-        qDebug() << dest;
-
         if (popOnQuit) {
             contextStack.pop();
         }
@@ -372,7 +370,7 @@ static QVariantMap dehydrate(const SnapshotTesting::Options& options, QObject* s
     };
 
     if (captureVisibleItemOnly && !isVisible(source)) {
-        qDebug() << "SnapshotTesting::capture(): The object is not visible";
+        qDebug() << "SnapshotTesting::capture(): The capture target is not visible";
     }
 
     return travel(source);
@@ -420,6 +418,10 @@ static QString prettyText(QVariantMap snapshot) {
     std::function<QString(QVariantMap, int)> _prettyText;
 
     _prettyText = [=, &_prettyText](QVariantMap snapshot, int indent) {
+        if (snapshot.isEmpty()) {
+            return QString("");
+        }
+
         QStringList lines;
         lines << QString().fill(' ',indent) + snapshot["$name"].toString() + " {";
 
