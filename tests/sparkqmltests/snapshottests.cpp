@@ -8,7 +8,6 @@
 #include <QQuickWindow>
 #include "automator.h"
 #include "snapshottests.h"
-#include "snapshot/snapshot.h"
 #include "snapshot/snapshottools.h"
 #include "snapshot/snapshottesting.h"
 
@@ -31,26 +30,6 @@ void SnapshotTests::test_Snapshot()
 
         QVERIFY(error.error == QJsonParseError::NoError);
     }
-
-    QQmlApplicationEngine engine;
-
-    QUrl url = QUrl::fromLocalFile(QtShell::realpath_strip(SRCDIR, "sample/snapshot/Sample1.qml"));
-
-    QQmlComponent component(&engine,url);
-    QQuickItem *childItem = qobject_cast<QQuickItem*>(component.create());
-    QVERIFY(childItem);
-
-    Snapshot snapshot;
-
-    snapshot.capture(childItem);
-
-    qDebug().noquote() << snapshot.snapshotText();
-}
-
-void SnapshotTests::test_Snapshot_name()
-{
-    Snapshot snapshot = Snapshot::createFromQTest();
-    QCOMPARE(snapshot.name(), QString("test_Snapshot_name"));
 }
 
 void SnapshotTests::test_Snapshot_diff()
@@ -81,19 +60,13 @@ void SnapshotTests::test_Snapshot_matchStoredSnapshot()
     QQuickItem *childItem = qobject_cast<QQuickItem*>(component.create());
     QVERIFY(childItem);
 
-    Snapshot snapshot;
-    snapshot.setName(QString("%1_%2").arg(QTest::currentTestFunction()).arg(fileName));
+    QString name = QString("%1_%2").arg(QTest::currentTestFunction()).arg(fileName);
 
-    snapshot.capture(childItem);
-    qDebug().noquote() << snapshot.snapshotText();
-
-    QString text = snapshot.snapshotText();
+    QString text = SnapshotTesting::capture(childItem);
     text.replace(QUrl::fromLocalFile(QString(SRCDIR)).toString(), "");
     text.replace(QString(SRCDIR), "");
 
-    snapshot.setSnapshotText(text);
-
-    QVERIFY(snapshot.matchStoredSnapshot());
+    QVERIFY(SnapshotTesting::matchStoredSnapshot(name, text));
 }
 
 void SnapshotTests::test_Snapshot_matchStoredSnapshot_data()
@@ -121,20 +94,15 @@ void SnapshotTests::test_Snapshot_matchStoredSnapshot_expandAll()
     QQuickItem *childItem = qobject_cast<QQuickItem*>(component.create());
     QVERIFY(childItem);
 
-    Snapshot snapshot;
-    snapshot.setName(QString("%1_%2").arg(QTest::currentTestFunction()).arg(fileName));
-    snapshot.setExpandAll(true);
+    SnapshotTesting::Options options;
+    options.expandAll = true;
+    QString name = QString("%1_%2").arg(QTest::currentTestFunction()).arg(fileName);
 
-    snapshot.capture(childItem);
-    qDebug().noquote() << snapshot.snapshotText();
-
-    QString text = snapshot.snapshotText();
+    QString text = SnapshotTesting::capture(childItem, options);
     text.replace(QUrl::fromLocalFile(QString(SRCDIR)).toString(), "");
     text.replace(QString(SRCDIR), "");
 
-    snapshot.setSnapshotText(text);
-
-    QVERIFY(snapshot.matchStoredSnapshot());
+    QVERIFY(SnapshotTesting::matchStoredSnapshot(name, text));
 }
 
 void SnapshotTests::test_Snapshot_matchStoredSnapshot_expandAll_data()

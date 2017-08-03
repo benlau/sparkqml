@@ -9,9 +9,12 @@
 #include <QQmlApplicationEngine>
 #include <QQmlComponent>
 #include <QQuickItem>
+#include <QBuffer>
 #include "snapshottesting.h"
 #include <private/qqmldata_p.h>
 #include <private/qqmlcontext_p.h>
+#include <functional>
+#include "snapshot/snapshottools.h"
 
 static QString m_snapshotFile;
 static QVariantMap m_snapshots;
@@ -528,10 +531,65 @@ bool SnapshotTesting::ignoreAll()
 }
 
 
-QString SnapshotTesting::capture(QObject *object, SnapshotTesting::Options &options)
+QString SnapshotTesting::capture(QObject *object, SnapshotTesting::Options options)
 {
     QVariantMap data = dehydrate(options, object);
     return prettyText(data);
+}
+
+bool SnapshotTesting::matchStoredSnapshot(const QString &name, const QString &snapshot)
+{
+    QVariantMap snapshots = SnapshotTesting::loadStoredSnapshots();
+
+    if (!snapshots.contains(name)) {
+        SnapshotTesting::setSnapshot(name, snapshot);
+        SnapshotTesting::saveSnapshots();
+        return true;
+    }
+
+    QString originalVersion = snapshots[name].toString();
+
+    if (originalVersion == snapshot) {
+        return true;
+    }
+
+    QString diff = SnapshotTools::diff(originalVersion, snapshot);
+
+    qDebug().noquote() << "Snapshot::matchStoredSnapshot: The snapshot is different:";
+    qDebug().noquote() << diff;
+
+    if (SnapshotTesting::interactiveEnabled() && !SnapshotTesting::ignoreAll()) {
+        QQmlApplicationEngine engine;
+        engine.addImportPath("qrc:///");
+        engine.load(QUrl("qrc:/SnapshotTesting/Matcher.qml"));
+
+        QObject* dialog = engine.rootObjects()[0];
+        Q_ASSERT(dialog);
+
+        dialog->setProperty("diff", diff);
+        dialog->setProperty("previousSnapshot", originalVersion);
+        dialog->setProperty("snapshot", snapshot);
+        dialog->setProperty("title", name);
+
+        QMetaObject::invokeMethod(dialog, "open");
+        QCoreApplication::exec();
+
+        int button = dialog->property("clickedButton").value<int>();
+        switch (button) {
+        // Use hex code to avoid the dependence to QtWidget
+        case 0x00020000: // No to all
+            SnapshotTesting::setIgnoreAll(true);
+            break;
+        case 0x00004000:
+        case 0x02000000:
+            SnapshotTesting::setSnapshot(name, snapshot);
+            SnapshotTesting::saveSnapshots();
+            return true;
+            break;
+        }
+    }
+
+    return false;
 }
 
 static void init() {

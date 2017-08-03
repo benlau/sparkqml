@@ -13,7 +13,6 @@
 #include "sparkqmlfunctions.h"
 #include "dehydrator.h"
 #include "aconcurrent.h"
-#include "snapshot/snapshot.h"
 
 using namespace SparkQML;
 using namespace QUIKit;

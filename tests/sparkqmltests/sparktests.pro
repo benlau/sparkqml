@@ -8,7 +8,6 @@ TEMPLATE = app
 
 SOURCES +=     main.cpp     tests.cpp \
     hotloadertests.cpp \
-    snapshot/snapshot.cpp \
     snapshottests.cpp \
     snapshot/snapshottools.cpp \
     snapshot/snapshottesting.cpp
@@ -56,7 +55,6 @@ DISTFILES +=     qpm.json \
 
 HEADERS +=     tests.h \
     hotloadertests.h \
-    snapshot/snapshot.h \
     snapshot/dtl/Diff.hpp \
     snapshot/dtl/Diff3.hpp \
     snapshot/dtl/dtl.hpp \
