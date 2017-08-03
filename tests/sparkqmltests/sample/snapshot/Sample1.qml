@@ -35,4 +35,13 @@ Item {
         width: 100
         height: 10 // It is suggested to assign a fixed height to a text item. Otherwise, the value may be changed on different machine
     }
+
+    Image {
+        id: item5
+        source: "red-100x100.png"
+    }
+
+    Image {
+        id: item6
+    }
 }

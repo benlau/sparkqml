@@ -94,7 +94,8 @@
             "implicitHeight",
             "paintedHeight",
             "paintedWidth",
-            "contentHeight"
+            "contentHeight",
+            "baseUrl"
         ]
     },
     "QQuickColumn": {
@@ -112,5 +113,14 @@
         "defaultValues": {
             "count": 0
         }
+    },
+    "QQuickImage": {
+        "defaultValues": {
+            "source": ""
+        },
+        "ignoreList": [
+            "paintedHeight",
+            "paintedWidth"
+        ]
     }
 }

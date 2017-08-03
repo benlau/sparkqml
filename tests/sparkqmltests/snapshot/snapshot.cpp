@@ -132,7 +132,7 @@ static QVariantMap dehydrate(const Snapshot& snapshot, QObject* source) {
                 const QMetaProperty property = meta->property(i);
                 const char* name = property.name();
 
-                QVariant value = object->property(name);
+                QVariant value = holder->property(name);
                 res[name] = value;
             }
             delete holder;
@@ -359,6 +359,11 @@ static QString prettyText(QVariantMap snapshot) {
             res = QString(format).arg(field).arg(v.toInt());
         } else if (v.type() == QVariant::Color) {
             res = QString(quotedFormat).arg(field).arg(v.value<QColor>().name());
+        } else if (v.type() == QVariant::Url) {
+            res = QString(quotedFormat).arg(field).arg(v.toUrl().toString());
+        } else if (v.type() == QVariant::Size) {
+            QSize size = v.toSize();
+            res = QString("%1: Qt.size(%2,%3)").arg(field).arg(size.width()).arg(size.height());
         } else {
             qDebug() << "Non-supported type" << v.typeName() << " Field :" << field;
             return QString("");

@@ -85,6 +85,12 @@ void SnapshotTests::test_Snapshot_compare()
     snapshot.capture(childItem);
     qDebug().noquote() << snapshot.snapshotText();
 
+    QString text = snapshot.snapshotText();
+    text.replace(QUrl::fromLocalFile(QString(SRCDIR)).toString(), "");
+    text.replace(QString(SRCDIR), "");
+
+    snapshot.setSnapshotText(text);
+
     QVERIFY(snapshot.compare());
 }
 
