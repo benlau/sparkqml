@@ -2,6 +2,7 @@
 
 #include <QString>
 #include <QVariantMap>
+#include <snapshot/snapshottestingoptions.h>
 
 namespace SnapshotTesting {
 
@@ -9,7 +10,7 @@ namespace SnapshotTesting {
 
     QString snapshotFiles();
 
-    QVariantMap loadSnapshots();
+    QVariantMap loadStoredSnapshots();
 
     void saveSnapshots();
 
@@ -20,5 +21,8 @@ namespace SnapshotTesting {
     bool interactiveEnabled();
 
     void setIgnoreAll(bool value);
+
     bool ignoreAll();
+
+    QString capture(QObject* object, Options & options);
 }

@@ -27,7 +27,7 @@ Item {
         }
 
         Tab {
-            title: "Original Version"
+            title: "Stored Snapshot"
             Item {
                 TextArea {
                     anchors.fill: parent
@@ -37,7 +37,7 @@ Item {
         }
 
         Tab {
-            title: "Current Version"
+            title: "Current Snapshot"
             Item {
                 TextArea {
                     anchors.fill: parent
