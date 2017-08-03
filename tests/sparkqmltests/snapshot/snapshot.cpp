@@ -87,7 +87,7 @@ static QVariantMap dehydrate(const Snapshot& snapshot, QObject* source) {
         }
 
         QString contextName = obtainContextName(object);
-        if (contextName != topLevelContextName) {
+        if (contextName != topLevelContextName && contextName != "") {
             result = contextName;
         }
 
@@ -353,7 +353,6 @@ static QString prettyText(QVariantMap snapshot) {
             } else {
                 res = QString(format).arg(field).arg(v.toInt());
             }
-
         } else if (v.type() == QVariant::String) {
             res = QString(quotedFormat).arg(field).arg(v.toString());
         } else if (v.type() == QVariant::Int) {
@@ -379,7 +378,7 @@ static QString prettyText(QVariantMap snapshot) {
         QStringList keys = snapshot.keys();
 
         if (keys.indexOf("id") >= 0) {
-            lines << _prettyField("id", snapshot["id"], indent + 4);
+            lines << _prettyField("id", snapshot["id"], indent + 4).replace("\"","");
             keys.removeOne("id");
         }
 

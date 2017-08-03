@@ -103,7 +103,7 @@ bool SnapshotTesting::interactiveEnabled()
     return m_interactiveEnabled;
 }
 
-bool SnapshotTesting::setIgnoreAll(bool value)
+void SnapshotTesting::setIgnoreAll(bool value)
 {
     m_ignoreAll = value;
 }
