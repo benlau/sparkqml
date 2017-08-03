@@ -31,6 +31,7 @@ static QVariantMap dehydrate(const Snapshot& snapshot, QObject* source) {
         QString result;
         QQmlData *ddata = QQmlData::get(object, false);
         if (ddata && ddata->context) {
+            // obtain the inner context name
             QUrl fileUrl = ddata->context->url();
 
             if (!fileUrl.isEmpty()) {
@@ -481,7 +482,7 @@ void Snapshot::setName(const QString &name)
     m_name = name;
 }
 
-bool Snapshot::compare()
+bool Snapshot::matchStoredSnapshot()
 {
     QVariantMap snapshots = SnapshotTesting::loadSnapshots();
 
@@ -499,7 +500,7 @@ bool Snapshot::compare()
 
     QString diff = SnapshotTools::diff(originalVersion, m_snapshotText);
 
-    qDebug().noquote() << "Snapshot::compare: The snapshot is different:";
+    qDebug().noquote() << "Snapshot::matchStoredSnapshot: The snapshot is different:";
     qDebug().noquote() << diff;
 
     if (SnapshotTesting::interactiveEnabled() && !SnapshotTesting::ignoreAll()) {
@@ -535,6 +536,7 @@ bool Snapshot::compare()
         case 0x00020000: // No to all
             SnapshotTesting::setIgnoreAll(true);
             break;
+        case 0x00004000:
         case 0x02000000:
             SnapshotTesting::setSnapshot(m_name, m_snapshotText);
             SnapshotTesting::saveSnapshots();

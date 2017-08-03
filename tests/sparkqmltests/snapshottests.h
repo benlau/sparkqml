@@ -22,11 +22,11 @@ private slots:
 
     void test_SnapshotTesting_saveSnapshots();
 
-    void test_Snapshot_compare();    
-    void test_Snapshot_compare_data();
+    void test_Snapshot_matchStoredSnapshot();
+    void test_Snapshot_matchStoredSnapshot_data();
 
-    void test_Snapshot_compare_expandAll();
-    void test_Snapshot_compare_expandAll_data();
+    void test_Snapshot_matchStoredSnapshot_expandAll();
+    void test_Snapshot_matchStoredSnapshot_expandAll_data();
 
 };
 

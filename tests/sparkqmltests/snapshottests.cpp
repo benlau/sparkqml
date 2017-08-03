@@ -68,7 +68,7 @@ void SnapshotTests::test_SnapshotTesting_saveSnapshots()
     SnapshotTesting::saveSnapshots();
 }
 
-void SnapshotTests::test_Snapshot_compare()
+void SnapshotTests::test_Snapshot_matchStoredSnapshot()
 {
     QFETCH(QString, input);
 
@@ -93,10 +93,10 @@ void SnapshotTests::test_Snapshot_compare()
 
     snapshot.setSnapshotText(text);
 
-    QVERIFY(snapshot.compare());
+    QVERIFY(snapshot.matchStoredSnapshot());
 }
 
-void SnapshotTests::test_Snapshot_compare_data()
+void SnapshotTests::test_Snapshot_matchStoredSnapshot_data()
 {
     QTest::addColumn<QString>("input");
 
@@ -107,7 +107,7 @@ void SnapshotTests::test_Snapshot_compare_data()
     }
 }
 
-void SnapshotTests::test_Snapshot_compare_expandAll()
+void SnapshotTests::test_Snapshot_matchStoredSnapshot_expandAll()
 {
     QFETCH(QString, input);
 
@@ -134,10 +134,10 @@ void SnapshotTests::test_Snapshot_compare_expandAll()
 
     snapshot.setSnapshotText(text);
 
-    QVERIFY(snapshot.compare());
+    QVERIFY(snapshot.matchStoredSnapshot());
 }
 
-void SnapshotTests::test_Snapshot_compare_expandAll_data()
+void SnapshotTests::test_Snapshot_matchStoredSnapshot_expandAll_data()
 {
     QTest::addColumn<QString>("input");
 

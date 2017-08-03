@@ -25,7 +25,7 @@ public:
 
     void setName(const QString &name);
 
-    bool compare();
+    bool matchStoredSnapshot();
 
     bool captureVisibleItemOnly() const;
 

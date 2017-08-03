@@ -1,4 +1,5 @@
 import QtQuick 2.4
+import QtQuick.Controls 1.2
 import QtQuick.Dialogs 1.2
 
 Dialog {
@@ -29,9 +30,13 @@ Dialog {
         Qt.quit();
     }
 
+    onYes: {
+        Qt.quit();
+    }
+
     onNo: {
         Qt.quit();
     }
 
-    standardButtons: Dialog.Ignore | Dialog.Apply | Dialog.NoToAll
+    standardButtons: StandardButton.No | StandardButton.Yes | StandardButton.NoToAll
 }
