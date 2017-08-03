@@ -8,7 +8,6 @@
 #include <QQuickWindow>
 #include "automator.h"
 #include "snapshottests.h"
-#include "snapshot/snapshottools.h"
 #include "snapshot/snapshottesting.h"
 
 SnapshotTests::SnapshotTests(QObject *parent) : QObject(parent)
@@ -37,7 +36,7 @@ void SnapshotTests::test_Snapshot_diff()
     QString text1 = "A\nB\nC";
     QString text2 = "A\nD\nC";
 
-    QString result = SnapshotTools::diff(text1, text2);
+    QString result = SnapshotTesting::diff(text1, text2);
 
     qDebug().noquote() << result;
 }

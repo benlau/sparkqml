@@ -14,7 +14,19 @@
 #include <private/qqmldata_p.h>
 #include <private/qqmlcontext_p.h>
 #include <functional>
-#include "snapshot/snapshottools.h"
+
+/* For dtl */
+using namespace std;
+#include <iostream>
+#include <sstream>
+#include <vector>
+#include "snapshot/dtl/Sequence.hpp"
+#include "snapshot/dtl/Lcs.hpp"
+#include "snapshot/dtl/variables.hpp"
+#include "snapshot/dtl/functors.hpp"
+#include "snapshot/dtl/Ses.hpp"
+#include "snapshot/dtl/Diff.hpp"
+
 
 static QString m_snapshotFile;
 static QVariantMap m_snapshots;
@@ -261,11 +273,7 @@ static QVariantMap dehydrate(const SnapshotTesting::Options& options, QObject* s
         return res;
     };
 
-    auto _allowTravel = [=](QObject* object) {
-        if (!captureVisibleItemOnly) {
-            return true;
-        }
-
+    auto isVisible = [=](QObject* object) {
         QQuickItem* item = qobject_cast<QQuickItem*>(object);
 
         if (!item) {
@@ -278,6 +286,14 @@ static QVariantMap dehydrate(const SnapshotTesting::Options& options, QObject* s
         }
 
         return true;
+    };
+
+    auto _allowTravel = [=](QObject* object) {
+        if (!captureVisibleItemOnly) {
+            return true;
+        }
+
+        return isVisible(object);
     };
 
     std::function<QVariantMap(QObject*)> travel;
@@ -347,11 +363,17 @@ static QVariantMap dehydrate(const SnapshotTesting::Options& options, QObject* s
         dest["$class"] = obtainKnownClassName(object);
         dest["$name"] = obtainItemName(object);
 
+        qDebug() << dest;
+
         if (popOnQuit) {
             contextStack.pop();
         }
         return dest;
     };
+
+    if (captureVisibleItemOnly && !isVisible(source)) {
+        qDebug() << "SnapshotTesting::capture(): The object is not visible";
+    }
 
     return travel(source);
 }
@@ -553,7 +575,7 @@ bool SnapshotTesting::matchStoredSnapshot(const QString &name, const QString &sn
         return true;
     }
 
-    QString diff = SnapshotTools::diff(originalVersion, snapshot);
+    QString diff = SnapshotTesting::diff(originalVersion, snapshot);
 
     qDebug().noquote() << "Snapshot::matchStoredSnapshot: The snapshot is different:";
     qDebug().noquote() << diff;
@@ -613,6 +635,37 @@ static void init() {
         defaultValueMap[key] = record["defaultValues"].toMap();
         ignoreListMap[key] = record["ignoreList"].toStringList();
     }
+}
+
+
+QString SnapshotTesting::diff(QString original, QString current)
+{
+    auto toVector = [=](QString text) {
+        vector<string> res;
+
+        QStringList lines = text.split("\n");
+        for (int i = 0 ; i < lines.size() ;i++) {
+            res.push_back(lines[i].toStdString());
+        }
+
+        return res;
+    };
+
+    std::vector<string> text1, text2;
+
+    text1 = toVector(original);
+    text2 = toVector(current);
+    dtl::Diff<std::string> diff(text1, text2);
+
+    diff.onHuge();
+    diff.compose();
+    diff.composeUnifiedHunks();
+
+    std::stringstream stream;
+
+    diff.printUnifiedFormat(stream);
+
+    return QString::fromStdString(stream.str());
 }
 
 Q_COREAPP_STARTUP_FUNCTION(init)

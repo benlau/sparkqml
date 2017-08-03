@@ -4,23 +4,26 @@ import SnapshotTesting 1.0
 
 Item {
 
-    TestCase {
-        name: "SnapshotTesting"
+    Item {
+        id: item1
+
+        width: 100
+        height: 100
 
         Item {
-            id: item1
-
+            id: child1
             width: 100
             height: 100
-
-            Item {
-                id: child1
-                width: 100
-                height: 100
-            }
         }
+    }
+
+    TestCase {
+        name: "SnapshotTesting"
+        when: windowShown
+
 
         function test_capture() {
+            console.log(item1.visible)
             var snapshot = SnapshotTesting.capture(item1);
             console.log(snapshot);
             compare(SnapshotTesting.matchStoredSnapshot("test_capture", snapshot), true);

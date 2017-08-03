@@ -9,7 +9,6 @@ TEMPLATE = app
 SOURCES +=     main.cpp     tests.cpp \
     hotloadertests.cpp \
     snapshottests.cpp \
-    snapshot/snapshottools.cpp \
     snapshot/snapshottesting.cpp \
     snapshot/snapshottestingadapter.cpp
 
@@ -66,7 +65,6 @@ HEADERS +=     tests.h \
     snapshot/dtl/Ses.hpp \
     snapshot/dtl/variables.hpp \
     snapshottests.h \
-    snapshot/snapshottools.h \
     snapshot/snapshottesting.h \
     snapshot/snapshottestingoptions.h \
     snapshot/snapshottestingadapter.h

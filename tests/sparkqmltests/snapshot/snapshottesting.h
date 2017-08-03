@@ -24,6 +24,8 @@ namespace SnapshotTesting {
 
     bool ignoreAll();
 
+    QString diff(QString original, QString current);
+
     QString capture(QObject* object, Options options = Options());
 
     bool matchStoredSnapshot(const QString& name, const QString& snapshot);
