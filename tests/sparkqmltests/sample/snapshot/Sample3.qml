@@ -3,6 +3,7 @@
 import QtQuick 2.0
 
 Item {
+    id: root
     width: 640
     height: 480
 
@@ -11,6 +12,7 @@ Item {
         Repeater {
             model: 5
             delegate: Item {
+                id: repeaterItem
                 width: 640
                 height: 48
             }
@@ -20,6 +22,7 @@ Item {
     ListView {
         model: 5
         delegate: Item {
+            id: listViewItem
             width: 640
             height: 48
         }

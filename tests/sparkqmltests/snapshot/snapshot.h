@@ -28,12 +28,20 @@ public:
     bool compare();
 
     bool captureVisibleItemOnly() const;
+
     void setCaptureVisibleItemOnly(bool captureVisibleItemOnly);
+
+    bool captureScreenshotEnabled() const;
+    void setCaptureScreenshotEnabled(bool captureScreenshotEnabled);
+
+    QImage screenshot() const;
 
 private:
     QString m_snapshotText;
     QString m_name;
     bool m_captureVisibleItemOnly;
+    bool m_captureScreenshotEnabled;
+    QImage m_screenshot;
 };
 
 #endif // SNAPSHOT_H

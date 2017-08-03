@@ -2,13 +2,15 @@ import QtQuick 2.0
 import QtQuick.Controls 1.4
 
 Item {
-    id: component
+    id: contentView
     implicitWidth: 640
     implicitHeight: 480
 
     property string diff: ""
     property string originalVersion: ""
     property string currentVersion: ""
+
+    property url screenshot: ""
 
     TabView {
         anchors.fill: parent
@@ -42,7 +44,18 @@ Item {
                 }
             }
         }
+
+        Tab {
+            title: "Screenshot"
+            Item {
+                Image {
+                    anchors.centerIn: parent
+                    source: contentView.screenshot;
+                }
+            }
+        }
     }
+
 
 
 }

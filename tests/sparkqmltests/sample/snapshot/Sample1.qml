@@ -19,7 +19,7 @@ Item {
 
     Item {
         id: item2
-        width: 100
+        width: 110
         height: 100
         anchors.right: parent.right
     }

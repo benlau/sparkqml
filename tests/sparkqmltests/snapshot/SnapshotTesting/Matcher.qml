@@ -9,6 +9,7 @@ Dialog {
     property alias diff: content.diff
     property alias previousSnapshot: content.originalVersion
     property alias snapshot: content.currentVersion
+    property alias screenshot: content.screenshot
 
     MatcherContentView {
         id: content

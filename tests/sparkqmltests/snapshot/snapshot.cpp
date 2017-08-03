@@ -3,7 +3,9 @@
 #include <QTest>
 #include <snapshot/snapshottesting.h>
 #include <snapshot/snapshottools.h>
+#include <QBuffer>
 #include <QQmlApplicationEngine>
+#include <QQuickItemGrabResult>
 #include <QStack>
 #include <functional>
 #include <math.h>
@@ -47,7 +49,14 @@ static QVariantMap dehydrate(const Snapshot& snapshot, QObject* source) {
         if (!topLevelContext) {
             return "";
         }
-        return topLevelContext->nameForObject(object);
+        QString res = topLevelContext->nameForObject(object);
+        if (res.isEmpty()) {
+            QQmlContext* context = qmlContext(object);
+            if (context) {
+                res = context->nameForObject(object);
+            }
+        }
+        return res;
     };
 
     auto obtainClassName = [=](QObject* object) {
@@ -414,6 +423,7 @@ static QString prettyText(QVariantMap snapshot) {
 Snapshot::Snapshot()
 {
     m_captureVisibleItemOnly = true;
+    m_captureScreenshotEnabled = false;
 }
 
 QString Snapshot::snapshotText() const
@@ -430,6 +440,17 @@ void Snapshot::capture(QObject *object)
 {
     QVariantMap data = dehydrate(*this, object);
     m_snapshotText = prettyText(data);
+
+    if (m_captureScreenshotEnabled) {
+        QQuickItem* item = qobject_cast<QQuickItem*>(object);
+        if (item) {
+            QSharedPointer<QQuickItemGrabResult> result = item->grabToImage();
+            QEventLoop loop;
+            QObject::connect(result.data(), SIGNAL(ready()),&loop,SLOT(quit()));
+            loop.exec();
+            m_screenshot = result->image();
+        }
+    }
 }
 
 Snapshot Snapshot::createFromQTest()
@@ -490,6 +511,18 @@ bool Snapshot::compare()
         dialog->setProperty("snapshot", m_snapshotText);
         dialog->setProperty("title", m_name);
 
+        if (!m_screenshot.isNull()) {
+            QByteArray ba;
+            QBuffer buffer(&ba);
+            buffer.open(QBuffer::WriteOnly);
+            m_screenshot.save(&buffer, "PNG");
+            buffer.close();
+            QString base64 = QString("data:image/png;base64,") + ba.toBase64();
+//            QUrl source = QUrl::fromEncoded(base64.toUtf8());
+            QUrl source(base64);
+            dialog->setProperty("screenshot", source);
+        }
+
         QMetaObject::invokeMethod(dialog, "open");
         QCoreApplication::exec();
 
@@ -519,6 +552,21 @@ void Snapshot::setCaptureVisibleItemOnly(bool captureVisibleItemOnly)
     m_captureVisibleItemOnly = captureVisibleItemOnly;
 }
 
+bool Snapshot::captureScreenshotEnabled() const
+{
+    return m_captureScreenshotEnabled;
+}
+
+void Snapshot::setCaptureScreenshotEnabled(bool captureScreenshotEnabled)
+{
+    m_captureScreenshotEnabled = captureScreenshotEnabled;
+}
+
+QImage Snapshot::screenshot() const
+{
+    return m_screenshot;
+}
+
 void Snapshot::setSnapshotText(const QString &snapshotText)
 {
     m_snapshotText = snapshotText;
@@ -526,7 +574,7 @@ void Snapshot::setSnapshotText(const QString &snapshotText)
 
 static void init() {
     QString text = QtShell::cat(":/SnapshotTesting/config/snapshot-config.json");
-
+    
     QJsonParseError error;
     QJsonDocument doc = QJsonDocument::fromJson(text.toUtf8(),&error);
 
