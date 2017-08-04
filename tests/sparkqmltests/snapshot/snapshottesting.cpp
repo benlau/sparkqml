@@ -43,7 +43,6 @@ static QMap<QString, QStringList> ignoreListMap;
 static QVariantMap dehydrate(const SnapshotTesting::Options& options, QObject* source) {
     QString topLevelContextName;
     QQmlContext* topLevelContext = qmlContext(source);
-    QStack<QString> contextStack;
     bool captureVisibleItemOnly = options.captureVisibleItemOnly;
     bool expandAll = options.expandAll;
 
@@ -65,7 +64,6 @@ static QVariantMap dehydrate(const SnapshotTesting::Options& options, QObject* s
     };
 
     topLevelContextName = obtainContextName(source);
-    contextStack.push(topLevelContextName);
 
     auto obtainId = [=](QObject* object) -> QString {
         if (!topLevelContext) {
@@ -107,9 +105,9 @@ static QVariantMap dehydrate(const SnapshotTesting::Options& options, QObject* s
             result = className.replace("QQuick", "");
         }
 
-        QString knownClassName = obtainKnownClassName(object);
-
         if (result.isNull()) {
+            QString knownClassName = obtainKnownClassName(object);
+
             result = classNameToItemNameTable[knownClassName];
         }
 
@@ -125,13 +123,6 @@ static QVariantMap dehydrate(const SnapshotTesting::Options& options, QObject* s
         }
 
         return result;
-    };
-
-    auto lastContext = [=]() {
-        if (contextStack.size() == 0) {
-            return QString("");
-        }
-        return contextStack.last();
     };
 
     auto obtainDynamicGeneratedDefaultValuesMap = [=](QObject* object) {
@@ -298,12 +289,14 @@ static QVariantMap dehydrate(const SnapshotTesting::Options& options, QObject* s
 
     std::function<QVariantMap(QObject*)> travel;
 
-    travel = [=, &travel, &contextStack](QObject* object) {
+    travel = [=, &travel](QObject* object) {
         if (!_allowTravel(object)) {
             return QVariantMap();
         }
 
         QVariantMap dest;
+
+        /*
         QString contextName = obtainContextName(object);
         bool popOnQuit = false;
 
@@ -314,6 +307,7 @@ static QVariantMap dehydrate(const SnapshotTesting::Options& options, QObject* s
             contextStack.push(contextName);
             popOnQuit = true;
         }
+        */
 
         dest = _dehyrdate(object);
 
@@ -363,9 +357,15 @@ static QVariantMap dehydrate(const SnapshotTesting::Options& options, QObject* s
         dest["$class"] = obtainKnownClassName(object);
         dest["$name"] = obtainItemName(object);
 
+        if (!expandAll && qmlContext(object) != topLevelContext) {
+            dest["$skip"] = true;
+        }
+
+        /*
         if (popOnQuit) {
             contextStack.pop();
         }
+        */
         return dest;
     };
 
@@ -423,12 +423,26 @@ static QString prettyText(QVariantMap snapshot) {
         }
 
         QStringList lines;
+
+        if (snapshot.contains("$skip")) {
+            QVariantList children = snapshot["$children"].toList();
+            for (int i = 0 ; i < children.size() ;i++) {
+                QVariantMap data = children[i].toMap();
+                QString line = _prettyText(data, indent);
+                if (!line.isEmpty())
+                    lines << line;
+            }
+            return lines.join("\n");
+        }
+
+        int currentIndent = indent + 4;
+
         lines << QString().fill(' ',indent) + snapshot["$name"].toString() + " {";
 
         QStringList keys = snapshot.keys();
 
         if (keys.indexOf("id") >= 0) {
-            lines << _prettyField("id", snapshot["id"], indent + 4).replace("\"","");
+            lines << _prettyField("id", snapshot["id"], currentIndent).replace("\"","");
             keys.removeOne("id");
         }
 
@@ -437,7 +451,7 @@ static QString prettyText(QVariantMap snapshot) {
             if (key.indexOf("$") == 0) {
                 continue;
             }
-            QString line = _prettyField(key, snapshot[key], indent + 4);
+            QString line = _prettyField(key, snapshot[key], currentIndent);
             if (!line.isEmpty())
                 lines << line;
         }
@@ -445,7 +459,9 @@ static QString prettyText(QVariantMap snapshot) {
         QVariantList children = snapshot["$children"].toList();
         for (int i = 0 ; i < children.size() ;i++) {
             QVariantMap data = children[i].toMap();
-            lines << _prettyText(data, indent + 4);
+            QString line = _prettyText(data, currentIndent);
+            if (!line.isEmpty())
+                lines << line;
         }
 
         lines << QString().fill(' ',indent) +  QString("}");
