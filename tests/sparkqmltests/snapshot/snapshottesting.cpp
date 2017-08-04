@@ -629,7 +629,7 @@ bool SnapshotTesting::matchStoredSnapshot(const QString &name, const QString &sn
 
     QString diff = SnapshotTesting::diff(originalVersion, snapshot);
 
-    qDebug().noquote() << "Snapshot::matchStoredSnapshot: The snapshot is different:";
+    qDebug().noquote() << "matchStoredSnapshot: The snapshot is different:";
     qDebug().noquote() << diff;
 
     if (m_acceptAll) {

@@ -55,7 +55,7 @@ static QObject *provider(QQmlEngine *engine, QJSEngine *scriptEngine) {
 }
 
 static void registerTypes() {
-    qmlRegisterSingletonType<Adapter>("SnapshotTesting", 1, 0, "SnapshotTesting", provider);
+    qmlRegisterSingletonType<Adapter>("SnapshotTesting.Private", 1, 0, "Adapter", provider);
 }
 
 Q_COREAPP_STARTUP_FUNCTION(registerTypes)

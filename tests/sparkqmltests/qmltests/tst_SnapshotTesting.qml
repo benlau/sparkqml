@@ -38,7 +38,7 @@ Item {
         function test_capture() {
             var snapshot = SnapshotTesting.capture(item1);
             console.log(snapshot);
-            compare(SnapshotTesting.matchStoredSnapshot("test_capture", snapshot), true);
+            SnapshotTesting.matchStoredSnapshot("test_capture", snapshot);
         }
 
     }
