@@ -19,10 +19,12 @@ namespace SnapshotTesting {
         bool hideId;
     };
 
+    /// Set the file name to save the stored snapshots
     void setSnapshotsFile(const QString& file);
 
     QString snapshotsFile();
 
+    /// Load "snapshots" from the "snapshotsFile"
     QVariantMap loadStoredSnapshots();
 
     void saveSnapshots();

@@ -40,5 +40,5 @@ Dialog {
         Qt.quit();
     }
 
-    standardButtons: StandardButton.No | StandardButton.Yes | StandardButton.NoToAll
+    standardButtons: StandardButton.No | StandardButton.Yes | StandardButton.NoToAll | StandardButton.YesToAll
 }

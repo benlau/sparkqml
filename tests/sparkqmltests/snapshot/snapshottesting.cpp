@@ -33,6 +33,7 @@ static QVariantMap m_snapshots;
 static bool m_snapshotsDirty = false;
 static bool m_interactiveEnabled = true;
 static bool m_ignoreAll = false;
+static bool m_acceptAll = false;
 
 static QStringList knownComponentList;
 static QMap<QString,QString> classNameToItemNameTable;
@@ -586,11 +587,13 @@ bool SnapshotTesting::matchStoredSnapshot(const QString &name, const QString &sn
 {
     QVariantMap snapshots = SnapshotTesting::loadStoredSnapshots();
 
+    /*
     if (!snapshots.contains(name)) {
         SnapshotTesting::setSnapshot(name, snapshot);
         SnapshotTesting::saveSnapshots();
         return true;
     }
+    */
 
     QString originalVersion = snapshots[name].toString();
 
@@ -602,6 +605,12 @@ bool SnapshotTesting::matchStoredSnapshot(const QString &name, const QString &sn
 
     qDebug().noquote() << "Snapshot::matchStoredSnapshot: The snapshot is different:";
     qDebug().noquote() << diff;
+
+    if (m_acceptAll) {
+        SnapshotTesting::setSnapshot(name, snapshot);
+        SnapshotTesting::saveSnapshots();
+        return true;
+    }
 
     if (SnapshotTesting::interactiveEnabled() && !SnapshotTesting::ignoreAll()) {
         QQmlApplicationEngine engine;
@@ -625,7 +634,9 @@ bool SnapshotTesting::matchStoredSnapshot(const QString &name, const QString &sn
         case 0x00020000: // No to all
             SnapshotTesting::setIgnoreAll(true);
             break;
-        case 0x00004000:
+        case 0x00008000: // Yes to all
+            m_acceptAll = true;
+        case 0x00004000: // Yes
         case 0x02000000:
             SnapshotTesting::setSnapshot(name, snapshot);
             SnapshotTesting::saveSnapshots();
