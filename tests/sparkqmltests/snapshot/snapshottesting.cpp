@@ -41,6 +41,11 @@ static QMap<QString,QString> classNameToItemNameTable;
 static QMap<QString, QVariantMap> defaultValueMap;
 static QMap<QString, QStringList> ignoreListMap;
 
+#define DEHYDRATE_FONT(dest, property, original, current, field) \
+    if (original.field() != current.field()) { \
+        dest[property + "." + #field] = current.field(); \
+    } \
+
 static QVariantMap dehydrate(QObject* source, const SnapshotTesting::Options& options) {
     QString topLevelContextName;
     QUrl topLevelBaseUrl;
@@ -214,7 +219,24 @@ static QVariantMap dehydrate(QObject* source, const SnapshotTesting::Options& op
         return result;
     };
 
-    auto _dehyrdate = [=](QObject* object) {
+    auto _dehydrateFont = [=](QVariantMap& dest, QString property, QFont original , QFont current) {
+        DEHYDRATE_FONT(dest,property,original,current, pixelSize);
+        DEHYDRATE_FONT(dest,property,original,current, bold);
+        DEHYDRATE_FONT(dest,property,original,current, capitalization);
+        DEHYDRATE_FONT(dest,property,original,current, family);
+        DEHYDRATE_FONT(dest,property,original,current, hintingPreference);
+        DEHYDRATE_FONT(dest,property,original,current, italic);
+        DEHYDRATE_FONT(dest,property,original,current, letterSpacing);
+
+        DEHYDRATE_FONT(dest,property,original,current, pointSize);
+        DEHYDRATE_FONT(dest,property,original,current, strikeOut);
+        DEHYDRATE_FONT(dest,property,original,current, styleName);
+        DEHYDRATE_FONT(dest,property,original,current, underline);
+        DEHYDRATE_FONT(dest,property,original,current, weight);
+        DEHYDRATE_FONT(dest,property,original,current, wordSpacing);
+    };
+
+    auto _dehydrate = [=](QObject* object) {
 
         QVariantMap dest;
         QVariantMap defaultValues = obtainDefaultValuesMap(object);
@@ -243,10 +265,14 @@ static QVariantMap dehydrate(QObject* source, const SnapshotTesting::Options& op
                 continue;
             }
 
-            if (value.canConvert<QObject*>()) {
+            if (value.canConvert<QFont>()) {
+                _dehydrateFont(dest, stringName, defaultValues[stringName].value<QFont>(), value.value<QFont>());
+                continue;
+            } else if (value.canConvert<QObject*>()) {
                 // ignore object value
                 continue;
             }
+
             dest[stringName] = value;
         }
         return dest;
@@ -300,7 +326,7 @@ static QVariantMap dehydrate(QObject* source, const SnapshotTesting::Options& op
 
         QVariantMap dest;
 
-        dest = _dehyrdate(object);
+        dest = _dehydrate(object);
 
         QObjectList children = object->children();
         QVariantList childrenDataList;
