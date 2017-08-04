@@ -67,7 +67,6 @@ HEADERS +=     tests.h \
     snapshot/dtl/variables.hpp \
     snapshottests.h \
     snapshot/snapshottesting.h \
-    snapshot/snapshottestingoptions.h \
     snapshot/snapshottestingadapter.h
 
 RESOURCES += \

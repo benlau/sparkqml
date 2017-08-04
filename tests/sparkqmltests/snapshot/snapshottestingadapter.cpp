@@ -22,6 +22,10 @@ QString Adapter::capture(QObject *object, QVariantMap options)
         opt.expandAll = options["expandAll"].toBool();
     }
 
+    if (options.contains("hideId")) {
+        opt.hideId = options["hideId"].toBool();
+    }
+
     return SnapshotTesting::capture(object, opt);
 }
 

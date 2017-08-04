@@ -40,7 +40,7 @@ static QMap<QString,QString> classNameToItemNameTable;
 static QMap<QString, QVariantMap> defaultValueMap;
 static QMap<QString, QStringList> ignoreListMap;
 
-static QVariantMap dehydrate(const SnapshotTesting::Options& options, QObject* source) {
+static QVariantMap dehydrate(QObject* source, const SnapshotTesting::Options& options) {
     QString topLevelContextName;
     QQmlContext* topLevelContext = qmlContext(source);
     bool captureVisibleItemOnly = options.captureVisibleItemOnly;
@@ -219,7 +219,7 @@ static QVariantMap dehydrate(const SnapshotTesting::Options& options, QObject* s
         const QMetaObject* meta = object->metaObject();
 
         QString id = obtainId(object);
-        if (!id.isNull()) {
+        if (!id.isNull() && !options.hideId) {
             dest["id"] = id;
         }
 
@@ -296,19 +296,6 @@ static QVariantMap dehydrate(const SnapshotTesting::Options& options, QObject* s
 
         QVariantMap dest;
 
-        /*
-        QString contextName = obtainContextName(object);
-        bool popOnQuit = false;
-
-        if (lastContext() != contextName) {
-            if (!expandAll && contextStack.size() >= 2) {
-                return dest;
-            }
-            contextStack.push(contextName);
-            popOnQuit = true;
-        }
-        */
-
         dest = _dehyrdate(object);
 
         QObjectList children = object->children();
@@ -361,11 +348,6 @@ static QVariantMap dehydrate(const SnapshotTesting::Options& options, QObject* s
             dest["$skip"] = true;
         }
 
-        /*
-        if (popOnQuit) {
-            contextStack.pop();
-        }
-        */
         return dest;
     };
 
@@ -573,7 +555,7 @@ bool SnapshotTesting::ignoreAll()
 
 QString SnapshotTesting::capture(QObject *object, SnapshotTesting::Options options)
 {
-    QVariantMap data = dehydrate(options, object);
+    QVariantMap data = dehydrate(object, options);
     return prettyText(data);
 }
 

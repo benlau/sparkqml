@@ -2,9 +2,22 @@
 
 #include <QString>
 #include <QVariantMap>
-#include <snapshot/snapshottestingoptions.h>
 
 namespace SnapshotTesting {
+
+    class Options {
+    public:
+
+        inline Options() {
+            captureVisibleItemOnly = true;
+            expandAll = false;
+            hideId = false;
+        }
+
+        bool captureVisibleItemOnly;
+        bool expandAll;
+        bool hideId;
+    };
 
     void setSnapshotsFile(const QString& file);
 

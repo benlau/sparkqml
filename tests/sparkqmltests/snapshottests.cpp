@@ -55,7 +55,7 @@ void SnapshotTests::test_SnapshotTesting_capture_QObject()
     QCOMPARE(snapshot, QString(""));
 }
 
-void SnapshotTests::test_Snapshot_matchStoredSnapshot()
+void SnapshotTests::test_SnapshotTesting_matchStoredSnapshot()
 {
     QFETCH(QString, input);
 
@@ -77,7 +77,7 @@ void SnapshotTests::test_Snapshot_matchStoredSnapshot()
     QVERIFY(SnapshotTesting::matchStoredSnapshot(name, text));
 }
 
-void SnapshotTests::test_Snapshot_matchStoredSnapshot_data()
+void SnapshotTests::test_SnapshotTesting_matchStoredSnapshot_data()
 {
     QTest::addColumn<QString>("input");
 
@@ -88,7 +88,7 @@ void SnapshotTests::test_Snapshot_matchStoredSnapshot_data()
     }
 }
 
-void SnapshotTests::test_Snapshot_matchStoredSnapshot_expandAll()
+void SnapshotTests::test_SnapshotTesting_matchStoredSnapshot_expandAll()
 {
     QFETCH(QString, input);
 
@@ -113,7 +113,42 @@ void SnapshotTests::test_Snapshot_matchStoredSnapshot_expandAll()
     QVERIFY(SnapshotTesting::matchStoredSnapshot(name, text));
 }
 
-void SnapshotTests::test_Snapshot_matchStoredSnapshot_expandAll_data()
+void SnapshotTests::test_SnapshotTesting_matchStoredSnapshot_expandAll_data()
+{
+    scanSamples();
+}
+
+void SnapshotTests::test_SnapshotTesting_matchStoredSnapshot_hideId()
+{
+    QFETCH(QString, input);
+
+    QString fileName = QtShell::basename(input);
+
+    QQmlApplicationEngine engine;
+
+    QUrl url = QUrl::fromLocalFile(input);
+
+    QQmlComponent component(&engine,url);
+    QQuickItem *childItem = qobject_cast<QQuickItem*>(component.create());
+    QVERIFY(childItem);
+
+    SnapshotTesting::Options options;
+    options.hideId = true;
+    QString name = QString("%1_%2").arg(QTest::currentTestFunction()).arg(fileName);
+
+    QString text = SnapshotTesting::capture(childItem, options);
+    text.replace(QUrl::fromLocalFile(QString(SRCDIR)).toString(), "");
+    text.replace(QString(SRCDIR), "");
+
+    QVERIFY(SnapshotTesting::matchStoredSnapshot(name, text));
+}
+
+void SnapshotTests::test_SnapshotTesting_matchStoredSnapshot_hideId_data()
+{
+    scanSamples();
+}
+
+void SnapshotTests::scanSamples()
 {
     QTest::addColumn<QString>("input");
 

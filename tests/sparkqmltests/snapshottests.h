@@ -22,12 +22,18 @@ private slots:
 
     void test_SnapshotTesting_capture_QObject();
 
-    void test_Snapshot_matchStoredSnapshot();
-    void test_Snapshot_matchStoredSnapshot_data();
+    void test_SnapshotTesting_matchStoredSnapshot();
+    void test_SnapshotTesting_matchStoredSnapshot_data();
 
-    void test_Snapshot_matchStoredSnapshot_expandAll();
-    void test_Snapshot_matchStoredSnapshot_expandAll_data();
+    void test_SnapshotTesting_matchStoredSnapshot_expandAll();
+    void test_SnapshotTesting_matchStoredSnapshot_expandAll_data();
 
+    void test_SnapshotTesting_matchStoredSnapshot_hideId();
+    void test_SnapshotTesting_matchStoredSnapshot_hideId_data();
+
+private:
+    void scanSamples();
 };
+
 
 #endif // SNAPSHOTTESTS_H
