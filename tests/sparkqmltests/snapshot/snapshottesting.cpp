@@ -42,6 +42,7 @@ static QMap<QString, QStringList> ignoreListMap;
 
 static QVariantMap dehydrate(QObject* source, const SnapshotTesting::Options& options) {
     QString topLevelContextName;
+    QUrl topLevelBaseUrl;
     QQmlContext* topLevelContext = qmlContext(source);
     bool captureVisibleItemOnly = options.captureVisibleItemOnly;
     bool expandAll = options.expandAll;
@@ -64,6 +65,9 @@ static QVariantMap dehydrate(QObject* source, const SnapshotTesting::Options& op
     };
 
     topLevelContextName = obtainContextName(source);
+    if (topLevelContext) {
+        topLevelBaseUrl = topLevelContext->baseUrl();
+    }
 
     auto obtainId = [=](QObject* object) -> QString {
         if (!topLevelContext) {
@@ -209,7 +213,6 @@ static QVariantMap dehydrate(QObject* source, const SnapshotTesting::Options& op
         return result;
     };
 
-
     auto _dehyrdate = [=](QObject* object) {
 
         QVariantMap dest;
@@ -344,7 +347,13 @@ static QVariantMap dehydrate(QObject* source, const SnapshotTesting::Options& op
         dest["$class"] = obtainKnownClassName(object);
         dest["$name"] = obtainItemName(object);
 
-        if (!expandAll && qmlContext(object) != topLevelContext) {
+        QUrl baseUrl;
+        QQmlContext *context = qmlContext(object);
+        if (context) {
+            baseUrl = context->baseUrl();
+        }
+
+        if (!expandAll && baseUrl != topLevelBaseUrl) {
             dest["$skip"] = true;
         }
 
@@ -359,6 +368,9 @@ static QVariantMap dehydrate(QObject* source, const SnapshotTesting::Options& op
 }
 
 static QString prettyText(QVariantMap snapshot) {
+    QStringList priorityFields;
+
+    priorityFields << "objectName" << "x" << "y" << "width" << "height";
 
     auto _prettyField = [=](QString field, QVariant v, int indent) {
         QString res;
@@ -426,6 +438,17 @@ static QString prettyText(QVariantMap snapshot) {
         if (keys.indexOf("id") >= 0) {
             lines << _prettyField("id", snapshot["id"], currentIndent).replace("\"","");
             keys.removeOne("id");
+        }
+
+        for (int i = 0 ; i < priorityFields.size() ; i++) {
+            QString key = priorityFields[i];
+            if (keys.indexOf(key) >= 0) {
+                QString line = _prettyField(key, snapshot[key], currentIndent);
+                if (!line.isEmpty()) {
+                    lines << line;
+                }
+                keys.removeOne(key);
+            }
         }
 
         for (int i = 0 ; i < keys.size();i++) {
