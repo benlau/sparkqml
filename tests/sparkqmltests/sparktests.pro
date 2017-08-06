@@ -7,10 +7,7 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 SOURCES +=     main.cpp     tests.cpp \
-    hotloadertests.cpp \
-    snapshottests.cpp \
-    snapshot/snapshottesting.cpp \
-    snapshot/snapshottestingadapter.cpp
+    hotloadertests.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 ROOTDIR = $$PWD/../../
@@ -47,29 +44,10 @@ DISTFILES +=     qpm.json \
     mockup/mockup_BoxPackingFlow.qml \
     mockup/mockup_UIBoxPackingFlow.qml \
     qmltests/tst_BoardLayout.qml \
-    mockup/mockup_BoardLayout.qml \
-    sample/snapshot/Sample1.qml \
-    snapshot/snapshots.json \
-    sample/snapshot/Sample2.qml \
-    sample/snapshot/Sample3.qml \
-    qmltests/tst_SnapshotTesting.qml \
-    sample/snapshot/Sample4.qml
+    mockup/mockup_BoardLayout.qml
 
 HEADERS +=     tests.h \
-    hotloadertests.h \
-    snapshot/dtl/Diff.hpp \
-    snapshot/dtl/Diff3.hpp \
-    snapshot/dtl/dtl.hpp \
-    snapshot/dtl/functors.hpp \
-    snapshot/dtl/Lcs.hpp \
-    snapshot/dtl/Sequence.hpp \
-    snapshot/dtl/Ses.hpp \
-    snapshot/dtl/variables.hpp \
-    snapshottests.h \
-    snapshot/snapshottesting.h \
-    snapshot/snapshottestingadapter.h
+    hotloadertests.h
 
 RESOURCES += \
-    hotloadertests.qrc \
-    snapshot/snapshottesting.qrc
-
+    hotloadertests.qrc

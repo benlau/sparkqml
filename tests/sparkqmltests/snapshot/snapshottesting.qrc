@@ -1,9 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>SnapshotTesting/Matcher.qml</file>
-        <file>SnapshotTesting/MatcherContentView.qml</file>
-        <file>SnapshotTesting/config/snapshot-config.json</file>
-        <file>SnapshotTesting/SnapshotTesting.qml</file>
-        <file>SnapshotTesting/qmldir</file>
-    </qresource>
-</RCC>
