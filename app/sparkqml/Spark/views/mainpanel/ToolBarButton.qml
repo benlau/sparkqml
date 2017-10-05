@@ -14,7 +14,7 @@ Button {
 
     property string toolTip: ""
 
-    property string icon: FontAwesome.tasks
+    property string iconSource: FontAwesome.tasks
 
     baselineOffset: 0
 
@@ -32,7 +32,7 @@ Button {
     bottomPadding: 0
 
     contentItem: Text {
-        text: component.icon
+        text: component.iconSource
         color: "#deffffff"
         font.pixelSize: 14
         verticalAlignment: Text.AlignVCenter

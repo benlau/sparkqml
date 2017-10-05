@@ -23,7 +23,7 @@ Rectangle {
             id: barButton
             height: 24
             Layout.fillHeight: true
-            icon: FontAwesome.bars
+            iconSource: FontAwesome.bars
             onClicked: actions.openDrawer();
         }
 
@@ -35,7 +35,7 @@ Rectangle {
 
         ToolBarButton {
             id: saveButton
-            icon: FontAwesome.fileO
+            iconSource: FontAwesome.fileO
             toolTip: qsTr("Save")
             onClicked: {
                 actions.askToSaveFile();
@@ -46,7 +46,7 @@ Rectangle {
             id: clipboardButton
             x: 119
             y: 8
-            icon: FontAwesome.clipboard
+            iconSource: FontAwesome.clipboard
             toolTip: qsTr("Copy to Clpboard")
             onClicked: {
                 actions.copyToClipboard();
@@ -55,7 +55,7 @@ Rectangle {
 
         ToolBarButton {
             id: resizeButton
-            icon: FontAwesome.windowMaximize
+            iconSource: FontAwesome.windowMaximize
             toolTip: qsTr("Resize to Fit")
             onClicked: {
                 actions.resizeToFit();
@@ -65,7 +65,7 @@ Rectangle {
         ToolBarButton {
             id: scaleToFitButton
             toolTip: qsTr("Scale to Fit")
-            icon: FontAwesome.arrowsAlt
+            iconSource: FontAwesome.arrowsAlt
             Layout.fillWidth: false
             Layout.fillHeight: true
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -79,7 +79,7 @@ Rectangle {
             toolTip: qsTr("Reload")
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
             Layout.minimumHeight: 0
-            icon: FontAwesome.refresh
+            iconSource: FontAwesome.refresh
             onClicked: actions.reload();
         }
     }
