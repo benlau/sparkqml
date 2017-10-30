@@ -15,6 +15,7 @@ ROOTDIR = $$PWD/../../
 include(vendor/vendor.pri)
 include($$ROOTDIR/app/sparkqml/sparkqml.pri)
 include($$ROOTDIR/lib/quikit/quikit.pri)
+include(docgen/docgen.pri)
 
 DEFINES += QUICK_TEST_SOURCE_DIR=\\\"$$PWD\\\"
 
@@ -51,3 +52,5 @@ HEADERS +=     tests.h \
 
 RESOURCES += \
     hotloadertests.qrc
+
+write_file(qmlimport.path, QML_IMPORT_PATH)

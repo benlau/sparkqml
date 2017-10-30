@@ -39,3 +39,4 @@ vendor
 mockup/designer
 *.jsc
 *.qmlc
+qmlimport.path

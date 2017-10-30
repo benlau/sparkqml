@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>DocGen/ClassComponent.qml</file>
+        <file>DocGen/qmldir</file>
+    </qresource>
+</RCC>
