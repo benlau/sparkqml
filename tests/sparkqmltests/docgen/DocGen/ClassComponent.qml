@@ -29,14 +29,16 @@ Rectangle {
         id: column
 
         Item {
-            width: nameMetrics.tightBoundingRect(component.name).width + component.padding * 2
-            height: nameMetrics.tightBoundingRect(component.name).height + component.padding * 2
+            implicitWidth: nameMetrics.tightBoundingRect(component.name).width + component.padding * 2 + 50
+            implicitHeight: nameMetrics.tightBoundingRect(component.name).height + component.padding * 2
 
             Text {
                 id: nameText
 
                 text: component.name
-                anchors.centerIn: parent
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                anchors.fill: parent
             }
         }
 
@@ -47,13 +49,14 @@ Rectangle {
         }
 
         Column {
+            id: propertiesColumn
 
             Repeater {
                 model: component.properties
                 delegate: Item {
 
-                    width: attributeMetrics.tightBoundingRect(modelData).width + component.padding * 2
-                    height: attributeMetrics.tightBoundingRect(modelData).height + component.padding * 2
+                    implicitWidth: attributeMetrics.tightBoundingRect(modelData).width + component.padding * 2
+                    implicitHeight: attributeMetrics.tightBoundingRect(modelData).height + component.padding * 2
 
                     Text {
                         anchors.fill: parent

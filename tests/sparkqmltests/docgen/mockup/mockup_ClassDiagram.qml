@@ -7,9 +7,9 @@ Item {
 
 
     ClassComponent {
-        name: "Class A"
+        name: "Class A 09s8erfjkhsdfioj skldfjklsdj f"
 
-        properties: ["value1", "value2"]
+        properties: ["value1", "value2" , "value3_extended"]
 
     }
 

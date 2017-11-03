@@ -28,6 +28,7 @@ private slots:
     void test_Dehydrator();
 
 #if 0
+    /// QTBUG-56935
     void test_AppView();
 #endif
 };
