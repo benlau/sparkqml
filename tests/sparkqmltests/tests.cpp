@@ -5,8 +5,10 @@
 #include <QQmlEngine>
 #include <QQmlInfo>
 #include <QFutureWatcher>
+#include <snapshottesting.h>
 #include <appview.h>
 #include <qmlfilelistmodel.h>
+#include <QQuickWindow>
 #include "qmlengine.h"
 #include "mockupactor.h"
 #include "tests.h"
@@ -267,6 +269,57 @@ void Tests::test_Dehydrator()
         QVariantList list = data["$children"].toList();
         QCOMPARE(list.size(), 1);
         QCOMPARE(list[0].toMap()["objectName"].toString() , QString("child"));
+    }
+}
+
+void Tests::test_Snapshot()
+{
+    QFETCH(QString, input);
+
+    QQmlEngine engine;
+    engine.addImportPath("qrc:///");
+
+    QQmlComponent comp(&engine);
+    comp.loadUrl(QUrl(input));
+
+    QObject * object = comp.create();
+
+    QString text = SnapshotTesting::capture(object);
+
+    QString name = QString("%1/%2").arg(QTest::currentTestFunction()).arg(QtShell::basename(input));
+
+    QQuickItem* item = qobject_cast<QQuickItem*>(object);
+    QQuickWindow window ;
+
+    if (item) {
+
+        window.setWidth(640);
+        window.setHeight(480);
+        window.setGeometry(0,0,640,480);
+        window.show();
+        item->setParentItem(window.contentItem());
+    }
+
+    SnapshotTesting::matchStoredSnapshot(name, text);
+
+    delete object;
+}
+
+void Tests::test_Snapshot_data()
+{
+    QTest::addColumn<QString>("input");
+    QStringList files;
+    files << QtShell::find(QtShell::realpath_strip(SRCDIR,"../../app/sparkqml/Spark"), "*.qml");
+
+    foreach (QString file , files) {
+        QString content = QtShell::cat(file);
+        content = content.toLower();
+
+        if (content.indexOf("pragma singleton") != -1) {
+            continue;
+        }
+
+        QTest::newRow(QtShell::basename(file).toLocal8Bit().constData()) << file;
     }
 }
 

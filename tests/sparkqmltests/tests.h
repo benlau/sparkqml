@@ -27,6 +27,10 @@ private slots:
 
     void test_Dehydrator();
 
+    void test_Snapshot();
+    void test_Snapshot_data();
+
+
 #if 0
     /// QTBUG-56935
     void test_AppView();

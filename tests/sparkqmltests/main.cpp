@@ -2,6 +2,7 @@
 #include <QtTest>
 #include <QtShell>
 #include <TestRunner>
+#include <snapshottesting.h>
 #include <QtQuickTest/quicktest.h>
 #include "tests.h"
 #include "privateapitests.h"
@@ -37,6 +38,8 @@ int main(int argc, char *argv[])
     qputenv("QML_DISABLE_DISK_CACHE", "1");
 
     QGuiApplication app(argc, argv);
+
+    SnapshotTesting::setSnapshotsFile(QtShell::realpath_strip(SRCDIR) + "/snapshot.json");
 
     QThreadPool::globalInstance()->setMaxThreadCount(qMax(4, QThread::idealThreadCount()));
 
