@@ -276,11 +276,14 @@ void Tests::test_Snapshot()
 {
     QFETCH(QString, input);
 
+    QUrl url = QUrl::fromLocalFile(QtShell::realpath_strip(input));
+    qDebug() << input << url;
+
     QQmlEngine engine;
     engine.addImportPath("qrc:///");
 
     QQmlComponent comp(&engine);
-    comp.loadUrl(QUrl(input));
+    comp.loadUrl(url);
 
     QObject * object = comp.create();
 
