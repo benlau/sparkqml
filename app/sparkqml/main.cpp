@@ -7,6 +7,7 @@
 #include "sparkqmlfunctions.h"
 
 #if defined(Q_OS_MAC) || defined(Q_OS_LINUX)
+#include <QApplication>
 #include <execinfo.h>
 #include <signal.h>
 #include <unistd.h>
@@ -34,7 +35,7 @@ int main(int argc, char *argv[])
     qputenv("QML_DISABLE_DISK_CACHE", "1");
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
     app.setApplicationName("sparkqml");
 
     QStringList args = app.arguments();
