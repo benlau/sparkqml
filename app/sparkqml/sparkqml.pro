@@ -4,6 +4,7 @@ QT += qml quick
 CONFIG += c++11
 
 QT += quick qml multimedia
+QT += charts gui widgets
 
 include(sparkqml.pri)
 

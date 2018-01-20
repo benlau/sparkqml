@@ -2,8 +2,9 @@
 .import "qrc:/QuickPromise/promise.js" as Q
 .import QUIKit 1.0 as QUIKit
 .import Spark.sys 1.0 as SparkSys
+.import Shell 1.0 as ShellPkg
 
-var Shell = QUIKit.Shell;
+var Shell = ShellPkg.Shell;
 var Url = SparkSys.Url;
 var FileInfo = SparkSys.FileInfo;
 

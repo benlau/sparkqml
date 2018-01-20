@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import QtQml.Models 2.2
-import "../../../lib/quikit/QUIKit/"
+import QUIKit 1.0
 
 Item {
     width: 320

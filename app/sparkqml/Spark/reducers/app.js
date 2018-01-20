@@ -1,13 +1,14 @@
 .pragma library
 .import QUIKit 1.0 as QUIKit
+.import Shell 1.0 as ShellPkg
 .import Spark.sys 1.0 as SparkSys
 .import "../js/lodash/lodashwrapper.js" as Lodash
 .import "../actions/actiontypes.js" as ActionTypes
 .import "qrc:/QRedux/qredux.js" as QRedux
 
 var update = QRedux.update;
-var Shell = QUIKit.Shell;
 var Url = SparkSys.Url;
+var Shell = ShellPkg.Shell;
 
 var initState = {
     mainWindowVisible: false,

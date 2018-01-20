@@ -1,10 +1,8 @@
 {
-  "name": "",
-  "description": "",
   "dependencies": [
     "com.github.benlau.testable@1.0.2.15",
     "com.github.benlau.quickflux@1.0.5.4",
-    "com.github.benlau.qtshell@0.4.4",
+    "com.github.benlau.qtshell@0.4.5",
     "com.github.benlau.quickcross@1.0.2.20",
     "quick.future.pri@1.0.0.0",
     "com.github.benlau.quickpromise@1.0.3",
@@ -14,9 +12,8 @@
     "async.future.pri@0.3.6.4",
     "net.efever.aconcurrent@0.1.13",
     "net.efever.viewstack@0.0.1",
-    "net.efever.snapshottesting@0.0.15"
-  ],
-  "license": "NONE",
-  "pri_filename": "",
-  "webpage": ""
+    "net.efever.snapshottesting@0.0.15",
+    "net.efever.qmlshell@0.0.2",
+    "net.efever.quikit@0.0.8"
+  ]
 }
