@@ -7,13 +7,12 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 SOURCES +=     main.cpp     tests.cpp \
-    hotloadertests.cpp \
-    privateapitests.cpp
+    hotloadertests.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 ROOTDIR = $$PWD/../../
 
-include(vendor/vendor.pri)
+include(qpm.pri)
 include($$ROOTDIR/app/sparkqml/sparkqml.pri)
 include($$ROOTDIR/lib/quikit/quikit.pri)
 include(docgen/docgen.pri)
@@ -49,8 +48,7 @@ DISTFILES +=     qpm.json \
     mockup/mockup_BoardLayout.qml
 
 HEADERS +=     tests.h \
-    hotloadertests.h \
-    privateapitests.h
+    hotloadertests.h
 
 RESOURCES += \
     hotloadertests.qrc

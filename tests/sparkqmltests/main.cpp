@@ -5,7 +5,6 @@
 #include <snapshottesting.h>
 #include <QtQuickTest/quicktest.h>
 #include "tests.h"
-#include "privateapitests.h"
 #include "hotloadertests.h"
 
 namespace AutoTestRegister {
@@ -45,7 +44,6 @@ int main(int argc, char *argv[])
 
     TestRunner runner;
     runner.addImportPath("qrc:///");
-    runner.add<PrivateApiTests>();
     runner.add<Tests>();
     runner.add<HotLoaderTests>();
     runner.add(QString(SRCDIR) + "/qmltests");
