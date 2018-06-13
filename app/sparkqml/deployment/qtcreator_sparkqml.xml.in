@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Written on Sun Feb 5 14:01:10 2017 by Qt Creator 4.2.1-->
+<externaltool id="qtcreator_sparkqml">
+    <description>This tool prints a line of useful text</description>
+    <displayname>SparkQML Viewer</displayname>
+    <category></category>
+    <executable output="showinpane" error="showinpane" modifiesdocument="no">
+        <path>$${SPARKQML_BIN}</path>
+        <arguments>%{CurrentDocument:FilePath} %{CurrentProject:Path}/qmlimport.path </arguments>
+    </executable>
+</externaltool>
