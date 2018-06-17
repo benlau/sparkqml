@@ -16,8 +16,8 @@ before_install:
 script:
     - git clone https://github.com/benlau/qtci.git
     - source qtci/path.env
-    - qt-5.8.0
-    - source qt-5.8.0.env
+    - install-qt-5.9.2
+    - source qt-5.9.2.env
     - mkdir build
     - cd build
     - run-unittests ../tests/sparkqmltests/sparktests.pro
