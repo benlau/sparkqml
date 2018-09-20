@@ -106,7 +106,6 @@ function reducer(state, action) {
         return initState;
     }
 
-    //@TODO - Migrate to use mapReducers
     state = mapReducers(state, action);
 
     var ops = {};

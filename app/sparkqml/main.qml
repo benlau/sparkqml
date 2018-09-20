@@ -13,7 +13,7 @@ import "./Spark/views/mainpanel"
 import "./Spark/views"
 import "./Spark/views/navigationpanel"
 
-Item {
+Object {
     id: component
 
     property var store
@@ -49,9 +49,11 @@ Item {
 
     Loader {
         asynchronous: true
-        active: provider.mainWindowVisible
+
         sourceComponent: MainWindow {
             id: mainWindow
+
+            visible: provider.mainWindowVisible
 
             FileDialog {
                 id: mainFileDialog
