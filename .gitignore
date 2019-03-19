@@ -40,3 +40,4 @@ mockup/designer
 *.jsc
 *.qmlc
 qmlimport.path
+.DS_Store

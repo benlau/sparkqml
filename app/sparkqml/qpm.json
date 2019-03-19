@@ -14,7 +14,7 @@
     "net.efever.viewstack@0.0.1",
     "com.github.benlau.qmlbox2d@2.3.2.5",
     "net.efever.quikit@0.0.10",
-    "net.efever.qmlshell@0.0.2",
+    "net.efever.qmlshell@0.0.3",
     "io.qpm.qml-explorer@0.0.3"
   ]
 }

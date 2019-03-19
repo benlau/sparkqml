@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=SparkQML
+Exec=AppRun %F
+Icon=default
+Categories=Development;
+
