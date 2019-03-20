@@ -12,7 +12,7 @@ docker run --rm  -i --name sparkqml-builder -v ${PWD}/..:/src -t sparkqml-builde
 
 Test docker image
 ```
-docker run --rm  -i --name sparkqml-builder -v ${PWD}/..:/src -t sparkqml-builder /bin/sh
+docker run --rm  -i --name sparkqml-builder -v ${PWD}/..:/src -t sparkqml-builder /bin/bash
 ```
 
 

@@ -4,7 +4,7 @@ VOLUME ["/src"]
 
 # USERID should be same as the current user
 ARG USERID
-ARG USERNAME=ci
+ARG USERNAME=docker
 
 WORKDIR /home/$USERNAME
 
@@ -14,7 +14,7 @@ RUN useradd --create-home --no-user-group -u $USERID $USERNAME -s /bin/bash && a
 
 RUN apt-get update && \
 	apt-get install -y --no-install-recommends python patchelf \
-	mesa-common-dev file \
+	mesa-common-dev file sudo \
 	build-essential ca-certificates wget libfontconfig1 libx11-xcb1 \
 	git libpulse-mainloop-glib0 libgl1-mesa-dev && \
 	rm -rf /var/lib/apt/lists/* && \
@@ -30,13 +30,16 @@ RUN wget https://raw.githubusercontent.com/benlau/qtci/master/bin/extract-qt-ins
 	cd /usr/local/lib/appimagetool && \
 	chmod u+x appimagetool && \
 	./appimagetool --appimage-extract && \
-	ln -s /usr/local/lib/appimagetool/squashfs-root/AppRun /usr/local/bin/appimagetool
+	ln -s /usr/local/lib/appimagetool/squashfs-root/AppRun /usr/local/bin/appimagetool && \
+	chmod -R o+rx  /usr/local/lib/appimagetool
 
-RUN VERBOSE=true install-qt-online 'qt.qt5.5122.gcc_64' /opt
+RUN VERBOSE=true install-qt-online 'qt.qt5.5122.gcc_64,qt.qt5.5122.qtvirtualkeyboard' /opt
 
 ENV PATH="/opt/Qt/5.12.2/gcc_64/bin:${PATH}"
 
-RUN echo 'export PATH=/opt/Qt/5.12.2/gcc_64/bin:${PATH}' >> /root/.bashrc
+RUN echo 'export PATH=/opt/Qt/5.12.2/gcc_64/bin:${PATH}' >> /home/docker/.bashrc
+
+USER $USERNAME
 
 CMD ["bash"]
 

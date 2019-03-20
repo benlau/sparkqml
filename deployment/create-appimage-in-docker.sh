@@ -13,6 +13,7 @@ QMAKE=`which qmake`
 set -v
 set -e
 
+rm -rf $BUILD_PATH
 mkdir -p $BUILD_PATH
 mkdir -p $APPIMAGE_PATH
 
