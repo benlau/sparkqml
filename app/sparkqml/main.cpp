@@ -37,6 +37,8 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
     app.setApplicationName("sparkqml");
+    app.setOrganizationName("Open Source");
+    app.setOrganizationDomain("github.com");
 
     QStringList args = app.arguments();
 

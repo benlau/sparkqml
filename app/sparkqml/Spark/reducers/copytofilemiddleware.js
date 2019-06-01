@@ -23,7 +23,7 @@ function askToSaveFile(dialog, settings, store) {
     promise.resolve(dialog.onAccepted);
     promise.reject(dialog.onRejected);
     promise.then(function() {
-        var path = Url.path(dialog.fileUrl.toString());
+        var path = Url.path(dialog.file.toString());
         store.dispatch({
             type: "copyToFile",
             arguments: [path]
@@ -35,12 +35,13 @@ function askToSaveFile(dialog, settings, store) {
     if (folder === "") {
         folder = Shell.dirname(Url.path(state.source));
     }
-    folder = "file:" + folder + "/" + convertToImageName(state.fileName, state.selectedState);
+    var fileName = convertToImageName(state.fileName, state.selectedState);;
+    folder = "file:" + folder;
+    var fileUrl = folder + "/" + fileName;
 
-    dialog.selectMultiple = false;
-    dialog.selectExisting = false;
     dialog.nameFilters = [ "Image files (*.png)"];
     dialog.folder = folder;
+    dialog.currentFile = fileUrl;
     dialog.open();
 }
 

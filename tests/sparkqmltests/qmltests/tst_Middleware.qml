@@ -38,6 +38,8 @@ Item {
             property bool selectExisting
             property var nameFilters
             property string folder
+            property var currentFile
+            property var file
 
             signal accepted
             signal rejected
