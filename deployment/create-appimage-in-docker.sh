@@ -31,5 +31,7 @@ linuxdeployqt.py ${BIN_PATH} \
 rm ${APPIMAGE_PATH}/default.desktop
 cp ${SCRIPT_PATH}/sparkqml.desktop ${APPIMAGE_PATH}/SparkQML.desktop
 
-appimagetool ${APPIMAGE_PATH}
+mkdir -p  ${APPIMAGE_PATH}/plugins/platformthemes
+cp -a `qmake -query QT_INSTALL_PREFIX`/plugins/platformthemes/libqgtk3.so ${APPIMAGE_PATH}/plugins/platformthemes
 
+appimagetool ${APPIMAGE_PATH}
